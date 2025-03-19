@@ -3,6 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Customs\CustomSessionHandler;
+use Illuminate\Session\DatabaseSessionHandler;
+use Illuminate\Database\ConnectionInterface;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        
     }
 
     /**
