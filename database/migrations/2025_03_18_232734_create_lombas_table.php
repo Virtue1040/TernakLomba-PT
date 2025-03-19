@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('lombas', function (Blueprint $table) {
             $table->integer("id_lomba")->primary();
-            $table->date("end_date");
+            $table->timestamps("start_date");
+            $table->timestamps("end_date");
             $table->timestamps();
         });
     }

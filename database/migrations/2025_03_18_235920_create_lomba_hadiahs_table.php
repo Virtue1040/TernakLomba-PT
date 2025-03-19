@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Lomba;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +14,11 @@ return new class extends Migration
     {
         Schema::create('lomba_hadiahs', function (Blueprint $table) {
             $table->integer("id_hadiah")->primary();
-            $table->integer("type_hadiah");
+            $table->integer("id_lomba");
+            $table->integer("id_typeHadiah");
             $table->integer("quantity");
+
+            $table->foreignIdFor(Lomba::class)->onDelete("cascade");
             $table->timestamps();
         });
     }

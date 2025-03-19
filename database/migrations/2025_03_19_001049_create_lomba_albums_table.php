@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Lomba;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,12 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mahasiswa_details', function (Blueprint $table) {
-            $table->integer("id_user")->primary();
-            $table->string("kampus");
-            $table->string("jurusan");
+        Schema::create('lomba_albums', function (Blueprint $table) {
+            $table->integer("id_lombaAlbum")->primary();
+            $table->integer("id_lomba");
+            $table->string("title");
+            $table->string("imagePath");
 
-            $table->foreignIdFor(User::class)->onDelete("cascade");
+            $table->foreignIdFor(Lomba::class)->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswa_details');
+        Schema::dropIfExists('lomba_albums');
     }
 };
