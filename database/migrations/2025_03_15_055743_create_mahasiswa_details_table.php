@@ -13,11 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mahasiswa_details', function (Blueprint $table) {
-            $table->integer("id_user")->primary();
+            $table->bigInteger("user_id")->primary();
             $table->string("kampus");
             $table->string("jurusan");
-
-            $table->foreignIdFor(User::class)->onDelete("cascade");
+    
+            $table->foreign("user_id")->references("id_user")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

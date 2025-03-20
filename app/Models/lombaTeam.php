@@ -9,4 +9,11 @@ class lombaTeam extends Model
 {
     /** @use HasFactory<\Database\Factories\LombaTeamFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'lomba_id',
+        'isApproved'
+    ];
+    
+    protected $primaryKey = 'id_team';
 }

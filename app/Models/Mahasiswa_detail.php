@@ -9,4 +9,12 @@ class Mahasiswa_detail extends Model
 {
     /** @use HasFactory<\Database\Factories\MahasiswaDetailFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'kampus',
+        'jurusan'
+    ];
+
+    protected $primaryKey = 'user_id';
 }

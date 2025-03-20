@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             PenyelenggaraDetailSeeder::class,
             TypeHadiahSeeder::class,
             UsersDetailSeeder::class,
-            VerificationTokenSeeder::class
+            VerificationTokenSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

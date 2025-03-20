@@ -9,4 +9,12 @@ class lombaHadiah extends Model
 {
     /** @use HasFactory<\Database\Factories\LombaHadiahFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'lomba_id',
+        'id_typeHadiah',
+        'quantity'
+    ];
+
+    protected $primaryKey = 'id_hadiah';
 }

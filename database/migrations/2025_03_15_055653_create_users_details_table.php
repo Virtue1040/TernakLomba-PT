@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users_details', function (Blueprint $table) {
-            $table->integer("id_user")->primary();
+            $table->bigInteger("user_id")->primary();
             $table->string("first_name");
             $table->string("last_name");
             $table->string("bio");
@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string("social_type")->nullable();
             $table->string("social_avatar")->nullable();
             $table->integer("avatarPath")->nullable();
-            $table->boolean("avatar_type");
+            $table->boolean("avatar_type")->default(0);
 
-            $table->foreignIdFor(User::class)->onDelete("cascade");
+            $table->foreign("user_id")->references("id_user")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

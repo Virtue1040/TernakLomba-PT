@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lombas', function (Blueprint $table) {
-            $table->integer("id_lomba")->primary();
-            $table->timestamps("start_date");
-            $table->timestamps("end_date");
+            $table->bigInteger("id_lomba", 1)->primary();
+            $table->integer("max_member")->default(1);
+            $table->integer("min_member")->default(1);
+            $table->bigInteger("lombaCategory_id");
+            $table->timestamp("start_date");
+            $table->timestamp("end_date");
+
+            $table->foreign("lombaCategory_id")->references("id_lombaCategory")->on("lomba_categories")->onDelete("cascade");
             $table->timestamps();
         });
     }

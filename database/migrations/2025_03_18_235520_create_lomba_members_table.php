@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lomba_members', function (Blueprint $table) {
-            $table->integer("id_member")->primary();
-            $table->integer("id_team");
+            $table->bigInteger("id_member", 1)->primary();
+            $table->bigInteger("team_id");
 
-            $table->foreignIdFor(lombaTeam::class)->onDelete("cascade");
+            $table->foreign("team_id")->references("id_team")->on("lomba_teams")->onDelete("cascade");
             $table->timestamps();
         });
     }

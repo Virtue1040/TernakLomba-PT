@@ -13,12 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lomba_albums', function (Blueprint $table) {
-            $table->integer("id_lombaAlbum")->primary();
-            $table->integer("id_lomba");
+            $table->bigInteger("id_lombaAlbum", 1)->primary();
+            $table->bigInteger("lomba_id");
             $table->string("title");
             $table->string("imagePath");
 
-            $table->foreignIdFor(Lomba::class)->onDelete("cascade");
+            $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");
             $table->timestamps();
         });
     }
