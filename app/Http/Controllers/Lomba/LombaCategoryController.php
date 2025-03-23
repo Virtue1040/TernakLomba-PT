@@ -21,7 +21,7 @@ class LombaCategoryController extends Controller
      * Get All Lomba Category
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaCategory",
+     *     path="/api/v1/lombaCategory",
      *     tags={"Lomba Category"},
      *     operationId="lombaCategory-all",
      *     summary="Get All Lomba Category",
@@ -56,6 +56,17 @@ class LombaCategoryController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -73,7 +84,7 @@ class LombaCategoryController extends Controller
      * Get One Lomba Category
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaCategory/get/{id_lombaCategory}",
+     *     path="/api/v1/lombaCategory/get/{id_lombaCategory}",
      *     tags={"Lomba Category"},
      *     operationId="lombaCategory-get",
      *     summary="Get One Lomba Category",
@@ -114,6 +125,17 @@ class LombaCategoryController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(lombaCategory $lombaCategory, $id_lomba)
@@ -133,7 +155,7 @@ class LombaCategoryController extends Controller
      * Store Lomba Category
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaCategory",
+     *     path="/api/v1/lombaCategory",
      *     tags={"Lomba Category"},
      *     operationId="lombaCategory-create",
      *     summary="Create Lomba Category",
@@ -171,6 +193,17 @@ class LombaCategoryController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -215,7 +248,7 @@ class LombaCategoryController extends Controller
      * Update Lomba Category
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaCategory/{id_lombaCategory}",
+     *     path="/api/v1/lombaCategory/{id_lombaCategory}",
      *     tags={"Lomba Category"},
      *     operationId="lombaCategory-update",
      *     summary="Update Lomba Category",
@@ -264,6 +297,17 @@ class LombaCategoryController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatelombaCategoryRequest $request, lombaCategory $lombaCategory, $id_lombaCategory)
@@ -290,7 +334,7 @@ class LombaCategoryController extends Controller
      * Delete Lomba Category
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaCategory/{id_lombaCategory}",
+     *     path="/api/v1/lombaCategory/{id_lombaCategory}",
      *     tags={"Lomba Category"},
      *     operationId="lombaCategory-delete",
      *     summary="Delete Lomba Category",
@@ -322,6 +366,17 @@ class LombaCategoryController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

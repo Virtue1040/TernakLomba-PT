@@ -95,7 +95,7 @@
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "Password",
+                        "description": "Password (8 Characters)",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -178,7 +178,7 @@
                 }
             }
         },
-        "/api/lombaAlbum": {
+        "/api/v1/lombaAlbum": {
             "get": {
                 "tags": [
                     "Lomba Album"
@@ -216,6 +216,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -261,7 +274,7 @@
                         "description": "Image Path",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "example": "/src/a.png"
                     }
@@ -297,6 +310,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -306,7 +332,7 @@
                 ]
             }
         },
-        "/api/lombaAlbum/get/{id_lombaAlbum}": {
+        "/api/v1/lombaAlbum/get/{id_lombaAlbum}": {
             "get": {
                 "tags": [
                     "Lomba Album"
@@ -357,6 +383,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -366,7 +405,7 @@
                 ]
             }
         },
-        "/api/lombaAlbum/{id_lombaAlbum}": {
+        "/api/v1/lombaAlbum/{id_lombaAlbum}": {
             "put": {
                 "tags": [
                     "Lomba Album"
@@ -424,6 +463,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -502,7 +554,7 @@
                 ]
             }
         },
-        "/api/lombaCategory": {
+        "/api/v1/lombaCategory": {
             "get": {
                 "tags": [
                     "Lomba Category"
@@ -541,6 +593,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -603,6 +668,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -612,7 +690,7 @@
                 ]
             }
         },
-        "/api/lombaCategory/get/{id_lombaCategory}": {
+        "/api/v1/lombaCategory/get/{id_lombaCategory}": {
             "get": {
                 "tags": [
                     "Lomba Category"
@@ -664,6 +742,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -673,7 +764,7 @@
                 ]
             }
         },
-        "/api/lombaCategory/{id_lombaCategory}": {
+        "/api/v1/lombaCategory/{id_lombaCategory}": {
             "put": {
                 "tags": [
                     "Lomba Category"
@@ -735,6 +826,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -788,6 +892,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -797,7 +914,7 @@
                 ]
             }
         },
-        "/api/lomba": {
+        "/api/v1/lomba": {
             "get": {
                 "tags": [
                     "Lomba"
@@ -849,6 +966,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -986,6 +1116,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -995,7 +1138,7 @@
                 ]
             }
         },
-        "/api/lomba/get/{id_lomba}": {
+        "/api/v1/lomba/get/{id_lomba}": {
             "get": {
                 "tags": [
                     "Lomba"
@@ -1051,6 +1194,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1060,7 +1216,7 @@
                 ]
             }
         },
-        "/api/lomba/{id_lomba}": {
+        "/api/v1/lomba/{id_lomba}": {
             "put": {
                 "tags": [
                     "Lomba"
@@ -1197,6 +1353,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1250,6 +1419,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1259,7 +1441,7 @@
                 ]
             }
         },
-        "/api/lombaDetail": {
+        "/api/v1/lombaDetail": {
             "get": {
                 "tags": [
                     "Lomba Detail"
@@ -1302,6 +1484,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1311,7 +1506,7 @@
                 ]
             }
         },
-        "/api/lombaDetail/get/{id_lomba}": {
+        "/api/v1/lombaDetail/get/{id_lomba}": {
             "get": {
                 "tags": [
                     "Lomba Detail"
@@ -1364,6 +1559,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1373,7 +1581,7 @@
                 ]
             }
         },
-        "/api/lombaHadiah": {
+        "/api/v1/lombaHadiah": {
             "get": {
                 "tags": [
                     "Lomba Hadiah"
@@ -1411,6 +1619,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -1492,6 +1713,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1501,7 +1735,7 @@
                 ]
             }
         },
-        "/api/lombaHadiah/get/{id_hadiah}": {
+        "/api/v1/lombaHadiah/get/{id_hadiah}": {
             "get": {
                 "tags": [
                     "Lomba Hadiah"
@@ -1552,6 +1786,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1561,7 +1808,7 @@
                 ]
             }
         },
-        "/api/lombaHadiah/{id_hadiah}": {
+        "/api/v1/lombaHadiah/{id_hadiah}": {
             "put": {
                 "tags": [
                     "Lomba Hadiah"
@@ -1632,6 +1879,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1685,6 +1945,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1694,7 +1967,7 @@
                 ]
             }
         },
-        "/api/lombaMember": {
+        "/api/v1/lombaMember": {
             "get": {
                 "tags": [
                     "Lomba Member"
@@ -1733,6 +2006,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -1815,6 +2101,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1824,7 +2123,7 @@
                 ]
             }
         },
-        "/api/lombaMember/get/{id_member}": {
+        "/api/v1/lombaMember/get/{id_member}": {
             "get": {
                 "tags": [
                     "Lomba Member"
@@ -1876,6 +2175,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1885,7 +2197,7 @@
                 ]
             }
         },
-        "/api/lombaMember/{id_member}": {
+        "/api/v1/lombaMember/{id_member}": {
             "put": {
                 "tags": [
                     "Lomba Member"
@@ -1957,6 +2269,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2010,6 +2335,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2019,7 +2357,7 @@
                 ]
             }
         },
-        "/api/lombaTeam": {
+        "/api/v1/lombaTeam": {
             "get": {
                 "tags": [
                     "Lomba Team"
@@ -2041,6 +2379,8 @@
                                         {
                                             "id_team": 1,
                                             "lomba_id": 1,
+                                            "team_code": "0019",
+                                            "isPrivate": false,
                                             "isApproved": false
                                         }
                                     ]
@@ -2057,6 +2397,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -2110,6 +2463,8 @@
                                     "data": {
                                         "id_team": 1,
                                         "lomba_id": 1,
+                                        "team_code": "0019",
+                                        "isPrivate": false,
                                         "isApproved": false
                                     }
                                 }
@@ -2128,6 +2483,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2137,7 +2505,7 @@
                 ]
             }
         },
-        "/api/lombaTeam/get/{id_team}": {
+        "/api/v1/lombaTeam/get/{id_team}": {
             "get": {
                 "tags": [
                     "Lomba Team"
@@ -2170,6 +2538,8 @@
                                     "data": {
                                         "id_team": 1,
                                         "lomba_id": 1,
+                                        "team_code": "0019",
+                                        "isPrivate": false,
                                         "isApproved": false
                                     }
                                 }
@@ -2188,6 +2558,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2197,7 +2580,7 @@
                 ]
             }
         },
-        "/api/lombaTeam/{id_team}": {
+        "/api/v1/lombaTeam/{id_team}": {
             "put": {
                 "tags": [
                     "Lomba Team"
@@ -2240,7 +2623,9 @@
                                     "data": {
                                         "id_team": 1,
                                         "lomba_id": 1,
-                                        "isApproved": true
+                                        "team_code": "0019",
+                                        "isPrivate": false,
+                                        "isApproved": false
                                     }
                                 }
                             }
@@ -2255,6 +2640,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -2311,6 +2709,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2320,7 +2731,7 @@
                 ]
             }
         },
-        "/api/typeHadiah": {
+        "/api/v1/typeHadiah": {
             "get": {
                 "tags": [
                     "Type Hadiah"
@@ -2357,6 +2768,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -2427,6 +2851,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2436,7 +2873,7 @@
                 ]
             }
         },
-        "/api/typeHadiah/get/{id_typeHadiah}": {
+        "/api/v1/typeHadiah/get/{id_typeHadiah}": {
             "get": {
                 "tags": [
                     "Type Hadiah"
@@ -2486,6 +2923,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2495,7 +2945,7 @@
                 ]
             }
         },
-        "/api/typeHadiah/{id_typeHadiah}": {
+        "/api/v1/typeHadiah/{id_typeHadiah}": {
             "put": {
                 "tags": [
                     "Type Hadiah"
@@ -2555,6 +3005,19 @@
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2605,6 +3068,19 @@
                                     "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
                                 }
                             }
                         }
@@ -3063,6 +3539,8 @@
                 "required": [
                     "id_team",
                     "lomba_id",
+                    "team_code",
+                    "isPrivate",
                     "isApproved"
                 ],
                 "properties": {
@@ -3076,6 +3554,16 @@
                         "title": "lomba_id",
                         "type": "integer",
                         "format": "int64",
+                        "readOnly": true
+                    },
+                    "team_code": {
+                        "title": "team_code",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "isPrivate": {
+                        "title": "isPrivate",
+                        "type": "boolean",
                         "readOnly": true
                     },
                     "isApproved": {

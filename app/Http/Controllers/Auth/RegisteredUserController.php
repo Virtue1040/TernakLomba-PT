@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
-     *         description="Password",
+     *         description="Password (8 Characters)",
      *         required=true,
      *         @OA\Schema(type="string", format="password")
      *     ),
@@ -112,9 +112,9 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults(), "max:255"],
             'first_name' => ["required", "string", "max:255"],
             'last_name' => ["required", "string", "max:255"],
             'gender' => ["required", "string", "max:255", "in:male,female"],

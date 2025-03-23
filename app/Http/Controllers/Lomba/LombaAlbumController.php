@@ -22,7 +22,7 @@ class LombaAlbumController extends Controller
      * Get All Lomba Album
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaAlbum",
+     *     path="/api/v1/lombaAlbum",
      *     tags={"Lomba Album"},
      *     operationId="lombaAlbum-all",
      *     summary="Get All Lomba Album",
@@ -56,6 +56,17 @@ class LombaAlbumController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -73,7 +84,7 @@ class LombaAlbumController extends Controller
      * Get One Lomba Album
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaAlbum/get/{id_lombaAlbum}",
+     *     path="/api/v1/lombaAlbum/get/{id_lombaAlbum}",
      *     tags={"Lomba Album"},
      *     operationId="lombaAlbum-get",
      *     summary="Get One Lomba Album",
@@ -113,6 +124,17 @@ class LombaAlbumController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(lombaAlbum $lombaAlbum, $id_lombaAlbum)
@@ -132,7 +154,7 @@ class LombaAlbumController extends Controller
      * Store Lomba Album
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaAlbum",
+     *     path="/api/v1/lombaAlbum",
      *     tags={"Lomba Album"},
      *     operationId="lombaAlbum-store",
      *     summary="Create Lomba Album",
@@ -159,7 +181,7 @@ class LombaAlbumController extends Controller
      *         description="Image Path",
      *         example = "/src/a.png",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response="200",
@@ -185,6 +207,17 @@ class LombaAlbumController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -235,7 +268,7 @@ class LombaAlbumController extends Controller
      * Update Lomba Album
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaAlbum/{id_lombaAlbum}",
+     *     path="/api/v1/lombaAlbum/{id_lombaAlbum}",
      *     tags={"Lomba Album"},
      *     operationId="lombaAlbum-update",
      *     summary="Update Lomba Album",
@@ -283,6 +316,17 @@ class LombaAlbumController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatelombaAlbumRequest $request, lombaAlbum $lombaAlbum, $id_lombaAlbum)
@@ -311,7 +355,7 @@ class LombaAlbumController extends Controller
      * Delete Lomba Album
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaAlbum/{id_lombaAlbum}",
+     *     path="/api/v1/lombaAlbum/{id_lombaAlbum}",
      *     tags={"Lomba Album"},
      *     operationId="lombaAlbum-delete",
      *     summary="Delete Lomba Album",

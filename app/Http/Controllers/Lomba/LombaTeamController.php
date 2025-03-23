@@ -23,7 +23,7 @@ class LombaTeamController extends Controller
      * Get All Lomba Team
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaTeam",
+     *     path="/api/v1/lombaTeam",
      *     tags={"Lomba Team"},
      *     operationId="lombaTeam-all",
      *     summary="Get All Lomba Team",
@@ -39,8 +39,10 @@ class LombaTeamController extends Controller
      *                 "data": {
      *                      {
      *                          "id_team": 1,
-     *                      "lomba_id": 1,
-     *                      "isApproved": false
+     *                          "lomba_id": 1,
+     *                          "team_code": "0019",
+     *                          "isPrivate": false,
+     *                          "isApproved": false
      *                      }
      *                 },
      *             }
@@ -54,6 +56,17 @@ class LombaTeamController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -74,7 +87,7 @@ class LombaTeamController extends Controller
      * Get One Lomba Member Team
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaTeam/get/{id_team}",
+     *     path="/api/v1/lombaTeam/get/{id_team}",
      *     tags={"Lomba Team"},
      *     operationId="lombaTeam-get",
      *     summary="Get One Lomba Team",
@@ -96,9 +109,11 @@ class LombaTeamController extends Controller
      *                 "status_code": 200,
      *                 "message": "Berhasil mengambil data lomba team",
      *                 "data": {
-     *                      "id_team": 1,
-     *                      "lomba_id": 1,
-     *                      "isApproved": false
+     *                          "id_team": 1,
+     *                          "lomba_id": 1,
+     *                          "team_code": "0019",
+     *                          "isPrivate": false,
+     *                          "isApproved": false
      *                 },
      *             }
      *         ),
@@ -111,6 +126,17 @@ class LombaTeamController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -133,7 +159,7 @@ class LombaTeamController extends Controller
      * Store Lomba Team
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaTeam",
+     *     path="/api/v1/lombaTeam",
      *     tags={"Lomba Team"},
      *     operationId="lombaTeam-store",
      *     summary="Create Team Lomba",
@@ -163,9 +189,11 @@ class LombaTeamController extends Controller
      *                 "status_code": 200,
      *                 "message": "Berhasil menambahkan data team lomba",
      *                 "data": {
-     *                      "id_team": 1,
-     *                      "lomba_id": 1,
-     *                      "isApproved": false
+     *                          "id_team": 1,
+     *                          "lomba_id": 1,
+     *                          "team_code": "0019",
+     *                          "isPrivate": false,
+     *                          "isApproved": false
      *                  }
      *             }
      *         ),
@@ -181,6 +209,17 @@ class LombaTeamController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function store(StorelombaTeamRequest $request)
@@ -188,12 +227,12 @@ class LombaTeamController extends Controller
         $request->validate([
             'lomba_id' => ["required", "integer", "exists:".Lomba::class],
         ]);
-
         $lomba_id = $request->lomba_id;
-        $leader_member_id = $request->leader_member_id;
 
         $team = lombaTeam::create([
             'lomba_id' => $lomba_id,
+            'team_code' => rand(1000, 9999),
+            'isPrivate' => false,
             'isApproved' => false
         ]);
 
@@ -225,7 +264,7 @@ class LombaTeamController extends Controller
      * Update Lomba Team
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaTeam/{id_team}",
+     *     path="/api/v1/lombaTeam/{id_team}",
      *     tags={"Lomba Team"},
      *     operationId="lombaTeam-update",
      *     summary="Update Team Lomba",
@@ -255,9 +294,11 @@ class LombaTeamController extends Controller
      *                 "status_code": 200,
      *                 "message": "Berhasil menambahkan data team lomba",
      *                 "data": {
-     *                      "id_team": 1,
-     *                      "lomba_id": 1,
-     *                      "isApproved": true
+     *                          "id_team": 1,
+     *                          "lomba_id": 1,
+     *                          "team_code": "0019",
+     *                          "isPrivate": false,
+     *                          "isApproved": false
      *                  }
      *             }
      *         ),
@@ -273,6 +314,17 @@ class LombaTeamController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatelombaTeamRequest $request, lombaTeam $lombaTeam, $id_team)
@@ -280,7 +332,6 @@ class LombaTeamController extends Controller
         $request->validate([
             "isApproved" => ["required", "boolean"]
         ]);
-
         $isApproved = $request->isApproved;
 
         $team = $lombaTeam::findOrFail($id_team);
@@ -298,7 +349,7 @@ class LombaTeamController extends Controller
      * Delete Lomba Team
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaTeam/{id_team}",
+     *     path="/api/v1/lombaTeam/{id_team}",
      *     tags={"Lomba Team"},
      *     operationId="lombaTeam-delete",
      *     summary="Menghapus Team Lomba",
@@ -330,6 +381,17 @@ class LombaTeamController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

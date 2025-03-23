@@ -69,57 +69,57 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('logout');
 
     // Lomba Route 
-    Route::get("lomba", [LombaController::class, 'all'])->name("lomba-get");
-    Route::get("lombaCategory/{id_lomba}", [LombaController::class, 'get'])->name("lomba-get");
-    Route::post("lomba", [LombaController::class, 'store'])->name("lomba-store");
-    Route::put("lomba/{id_lomba}", [LombaController::class, 'update'])->name("lomba-update");
-    Route::delete("lomba/{id_lomba}", [LombaController::class, 'destroy'])->name("lomba-delete");
+    Route::get("v1/lomba", [LombaController::class, 'all'])->name("lomba-get");
+    Route::get("v1/lombaCategory/{id_lomba}", [LombaController::class, 'get'])->name("lomba-get");
+    Route::post("v1/lomba", [LombaController::class, 'store'])->name("lomba-store");
+    Route::put("v1/lomba/{id_lomba}", [LombaController::class, 'update'])->name("lomba-update");
+    Route::delete("v1/lomba/{id_lomba}", [LombaController::class, 'destroy'])->name("lomba-delete");
 
     // Lomba Category Route
-    Route::get("lombaCategory", [LombaCategoryController::class, 'all'])->name("lombaCategory-all");
-    Route::get("lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'get'])->name("lombaCategory-get");
-    Route::post("lombaCategory", [LombaCategoryController::class, 'store'])->name("lombaCategory-store");
-    Route::put("lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'update'])->name("lombaCategory-update");
-    Route::delete("lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'destroy'])->name("lombaCategory-delete");
+    Route::get("v1/lombaCategory", [LombaCategoryController::class, 'all'])->name("lombaCategory-all");
+    Route::get("v1/lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'get'])->name("lombaCategory-get");
+    Route::post("v1/lombaCategory", [LombaCategoryController::class, 'store'])->name("lombaCategory-store");
+    Route::put("v1/lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'update'])->name("lombaCategory-update");
+    Route::delete("v1/lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'destroy'])->name("lombaCategory-delete");
 
     // Lomba Detail Route
-    Route::get("lombaDetail", [LombaDetailController::class, 'all'])->name("lombaDetail-all");
-    Route::get("lombaDetail/get/{id_lomba}", [LombaDetailController::class, 'get'])->name("lombaDetail-get");
+    Route::get("v1/lombaDetail", [LombaDetailController::class, 'all'])->name("lombaDetail-all");
+    Route::get("v1/lombaDetail/get/{id_lomba}", [LombaDetailController::class, 'get'])->name("lombaDetail-get");
 
     // Lomba Member Route
-    Route::get("lombaMember", [LombaMemberController::class, 'all'])->name("lombaMember-all");
-    Route::get("lombaMember/{id_member}", [LombaMemberController::class, 'get'])->name("lombaMember-get");
-    Route::post("lombaMember", [LombaMemberController::class, 'store'])->name("lombaMember-store");
-    Route::put("lombaMember/{id_member}", [LombaMemberController::class, 'update'])->name("lombaMember-update");
-    Route::delete("lombaMember/{id_member}", [LombaMemberController::class, 'destroy'])->name("lombaMember-delete");
+    Route::get("v1/lombaMember", [LombaMemberController::class, 'all'])->name("lombaMember-all");
+    Route::get("v1/lombaMember/{id_member}", [LombaMemberController::class, 'get'])->name("lombaMember-get");
+    Route::post("v1/lombaMember", [LombaMemberController::class, 'store'])->name("lombaMember-store");
+    Route::put("v1/lombaMember/{id_member}", [LombaMemberController::class, 'update'])->name("lombaMember-update");
+    Route::delete("v1/lombaMember/{id_member}", [LombaMemberController::class, 'destroy'])->name("lombaMember-delete");
 
     // Lomba Team Route
-    Route::get("lombaTeam", [LombaTeamController::class, 'all'])->name("lombaTeam-all");
-    Route::get("lombaTeam/{id_team}", [LombaTeamController::class, 'get'])->name("lombaTeam-get");
-    Route::post("lombaTeam", [LombaTeamController::class, 'store'])->name("lombaTeam-store");
-    Route::put("lombaTeam/{id_team}", [LombaTeamController::class, 'update'])->name("lombaTeam-update");
-    Route::delete("lombaTeam/{id_team}", [LombaTeamController::class, 'destroy'])->name("lombaTeam-delete");
+    Route::get("v1/lombaTeam", [LombaTeamController::class, 'all'])->name("lombaTeam-all");
+    Route::get("v1/lombaTeam/{id_team}", [LombaTeamController::class, 'get'])->name("lombaTeam-get");
+    Route::post("v1/lombaTeam", [LombaTeamController::class, 'store'])->name("lombaTeam-store");
+    Route::put("v1/lombaTeam/{id_team}", [LombaTeamController::class, 'update'])->name("lombaTeam-update");
+    Route::delete("v1/lombaTeam/{id_team}", [LombaTeamController::class, 'destroy'])->name("lombaTeam-delete");
 
     // Type Hadiah Route
-    Route::get("typeHadiah", [TypeHadiahController::class, 'all'])->name("typeHadiah-all");
-    Route::get("typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'get'])->name("typeHadiah-get");
-    Route::post("typeHadiah", [TypeHadiahController::class, 'store'])->name("typeHadiah-store");
-    Route::put("typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'update'])->name("typeHadiah-update");
-    Route::delete("typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'destroy'])->name("typeHadiah-delete");
+    Route::get("v1/typeHadiah", [TypeHadiahController::class, 'all'])->name("typeHadiah-all");
+    Route::get("v1/typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'get'])->name("typeHadiah-get");
+    Route::post("v1/typeHadiah", [TypeHadiahController::class, 'store'])->name("typeHadiah-store");
+    Route::put("v1/typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'update'])->name("typeHadiah-update");
+    Route::delete("v1/typeHadiah/{id_typeHadiah}", [TypeHadiahController::class, 'destroy'])->name("typeHadiah-delete");
 
     // Lomba Hadiah Route
-    Route::get("lombaHadiah", [LombaHadiahController::class, 'all'])->name("lombaHadiah-all");
-    Route::get("lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'get'])->name("lombaHadiah-get");
-    Route::post("lombaHadiah", [LombaHadiahController::class, 'store'])->name("lombaHadiah-store");
-    Route::put("lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'update'])->name("lombaHadiah-update");
-    Route::delete("lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'destroy'])->name("lombaHadiah-delete");
+    Route::get("v1/lombaHadiah", [LombaHadiahController::class, 'all'])->name("lombaHadiah-all");
+    Route::get("v1/lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'get'])->name("lombaHadiah-get");
+    Route::post("v1/lombaHadiah", [LombaHadiahController::class, 'store'])->name("lombaHadiah-store");
+    Route::put("v1/lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'update'])->name("lombaHadiah-update");
+    Route::delete("v1/lombaHadiah/{id_hadiah}", [LombaHadiahController::class, 'destroy'])->name("lombaHadiah-delete");
 
     // Lomba Album Route
-    Route::get("lombaAlbum", [LombaAlbumController::class, 'all'])->name("lombaAlbum-all");
-    Route::get("lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'get'])->name("lombaAlbum-get");
-    Route::post("lombaAlbum", [LombaAlbumController::class, 'store'])->name("lombaAlbum-store");
-    Route::put("lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'update'])->name("lombaAlbum-update");
-    Route::delete("lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'destroy'])->name("lombaAlbum-delete");
+    Route::get("v1/lombaAlbum", [LombaAlbumController::class, 'all'])->name("lombaAlbum-all");
+    Route::get("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'get'])->name("lombaAlbum-get");
+    Route::post("v1/lombaAlbum", [LombaAlbumController::class, 'store'])->name("lombaAlbum-store");
+    Route::put("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'update'])->name("lombaAlbum-update");
+    Route::delete("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'destroy'])->name("lombaAlbum-delete");
 });
 
 Route::get('/user', function (Request $request) {

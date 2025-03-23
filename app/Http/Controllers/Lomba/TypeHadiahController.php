@@ -22,7 +22,7 @@ class TypeHadiahController extends Controller
      * Get All Type Hadiah
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/typeHadiah",
+     *     path="/api/v1/typeHadiah",
      *     tags={"Type Hadiah"},
      *     operationId="typeHadiah-all",
      *     summary="Get All Type Hadiah",
@@ -55,6 +55,17 @@ class TypeHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -72,7 +83,7 @@ class TypeHadiahController extends Controller
      * Get One Type Hadiah
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/typeHadiah/get/{id_typeHadiah}",
+     *     path="/api/v1/typeHadiah/get/{id_typeHadiah}",
      *     tags={"Type Hadiah"},
      *     operationId="typeHadiah-get",
      *     summary="Get One Type Hadiah",
@@ -111,6 +122,17 @@ class TypeHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(Lomba $lomba, $id_lomba)
@@ -130,7 +152,7 @@ class TypeHadiahController extends Controller
      * Store Type Hadiah
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/typeHadiah",
+     *     path="/api/v1/typeHadiah",
      *     tags={"Type Hadiah"},
      *     operationId="typeHadiah-store",
      *     summary="Create Type Hadiah",
@@ -174,6 +196,17 @@ class TypeHadiahController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -221,7 +254,7 @@ class TypeHadiahController extends Controller
      * Update Type Hadiah
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/typeHadiah/{id_typeHadiah}",
+     *     path="/api/v1/typeHadiah/{id_typeHadiah}",
      *     tags={"Type Hadiah"},
      *     operationId="typeHadiah-update",
      *     summary="Create Type Hadiah",
@@ -268,15 +301,24 @@ class TypeHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatetypeHadiahRequest $request, typeHadiah $typeHadiah, $id_typeHadiah)
     {
         $request->validate([
-            "lomba_id" => ["integer", "nullable", "exists:".Lomba::class],
             "name" => ["required", "string", "max:255", "unique:".typeHadiah::class],
         ]);
-        $lomba_id = $request->lomba_id;
         $name = $request->name;
 
         $typeHadiah = $typeHadiah::findOrFail($id_typeHadiah);
@@ -295,7 +337,7 @@ class TypeHadiahController extends Controller
      * Delete Type Hadiah
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/typeHadiah/{id_typeHadiah}",
+     *     path="/api/v1/typeHadiah/{id_typeHadiah}",
      *     tags={"Type Hadiah"},
      *     operationId="typeHadiah-delete",
      *     summary="Delete Type Hadiah",
@@ -327,6 +369,17 @@ class TypeHadiahController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

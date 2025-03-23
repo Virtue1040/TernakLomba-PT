@@ -27,7 +27,7 @@ class LombaController extends Controller
      * Get All Lomba
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lomba",
+     *     path="/api/v1/lomba",
      *     tags={"Lomba"},
      *     operationId="lomba-all",
      *     summary="Get All Lomba",
@@ -75,6 +75,17 @@ class LombaController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -92,7 +103,7 @@ class LombaController extends Controller
      * Get One Lomba
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lomba/get/{id_lomba}",
+     *     path="/api/v1/lomba/get/{id_lomba}",
      *     tags={"Lomba"},
      *     operationId="lomba-get",
      *     summary="Get One Lomba",
@@ -137,6 +148,17 @@ class LombaController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(Lomba $lomba, $id_lomba)
@@ -156,7 +178,7 @@ class LombaController extends Controller
      * Store Lomba
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lomba",
+     *     path="/api/v1/lomba",
      *     tags={"Lomba"},
      *     operationId="lomba-store",
      *     summary="Create Lomba",
@@ -258,6 +280,17 @@ class LombaController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function store(StoreLombaRequest $request)
@@ -324,7 +357,7 @@ class LombaController extends Controller
      * Update Lomba
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lomba/{id_lomba}",
+     *     path="/api/v1/lomba/{id_lomba}",
      *     tags={"Lomba"},
      *     operationId="lomba-update",
      *     summary="Update Lomba",
@@ -434,6 +467,17 @@ class LombaController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdateLombaRequest $request, Lomba $lomba, $id_lomba)
@@ -482,7 +526,7 @@ class LombaController extends Controller
      * Delete Lomba
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lomba/{id_lomba}",
+     *     path="/api/v1/lomba/{id_lomba}",
      *     tags={"Lomba"},
      *     operationId="lomba-delete",
      *     summary="Delete Lomba",
@@ -514,6 +558,17 @@ class LombaController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

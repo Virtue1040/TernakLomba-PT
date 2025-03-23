@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('lomba_teams', function (Blueprint $table) {
             $table->bigInteger("id_team", 1)->primary();
             $table->bigInteger("lomba_id");
+            $table->string("team_code");
+            $table->boolean("isPrivate")->default(0);
             $table->boolean("isApproved")->default(0);
 
             $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");

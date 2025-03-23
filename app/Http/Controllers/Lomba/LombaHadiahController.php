@@ -23,7 +23,7 @@ class LombaHadiahController extends Controller
      * Get All Lomba Hadiah
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaHadiah",
+     *     path="/api/v1/lombaHadiah",
      *     tags={"Lomba Hadiah"},
      *     operationId="lombaHadiah-all",
      *     summary="Get All Lomba Hadiah",
@@ -57,6 +57,17 @@ class LombaHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -74,7 +85,7 @@ class LombaHadiahController extends Controller
      * Get One Lomba Hadiah
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaHadiah/get/{id_hadiah}",
+     *     path="/api/v1/lombaHadiah/get/{id_hadiah}",
      *     tags={"Lomba Hadiah"},
      *     operationId="lombaHadiah-get",
      *     summary="Get One Lomba Hadiah",
@@ -114,6 +125,17 @@ class LombaHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(lombaHadiah $lombaHadiah, $id_hadiah)
@@ -133,7 +155,7 @@ class LombaHadiahController extends Controller
      * Store Lomba Hadiah
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaHadiah",
+     *     path="/api/v1/lombaHadiah",
      *     tags={"Lomba Hadiah"},
      *     operationId="lombaHadiah-store",
      *     summary="Create Lomba Hadiah",
@@ -189,6 +211,17 @@ class LombaHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function store(StorelombaHadiahRequest $request)
@@ -236,7 +269,7 @@ class LombaHadiahController extends Controller
      * Update Lomba Hadiah
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaHadiah/{id_hadiah}",
+     *     path="/api/v1/lombaHadiah/{id_hadiah}",
      *     tags={"Lomba Hadiah"},
      *     operationId="lombaHadiah-update",
      *     summary="Update Lomba Hadiah",
@@ -292,6 +325,17 @@ class LombaHadiahController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatelombaHadiahRequest $request, lombaHadiah $lombaHadiah, $id_hadiah)
@@ -320,7 +364,7 @@ class LombaHadiahController extends Controller
      * Delete Lomba Hadiah
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaHadiah/{id_hadiah}",
+     *     path="/api/v1/lombaHadiah/{id_hadiah}",
      *     tags={"Lomba Hadiah"},
      *     operationId="lombaHadiah-delete",
      *     summary="Delete Lomba Hadiah",
@@ -352,6 +396,17 @@ class LombaHadiahController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

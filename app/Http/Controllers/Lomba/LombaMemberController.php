@@ -22,7 +22,7 @@ class LombaMemberController extends Controller
      * Get All Lomba Members
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaMember",
+     *     path="/api/v1/lombaMember",
      *     tags={"Lomba Member"},
      *     operationId="lombaMember-all",
      *     summary="Get All Lomba Member",
@@ -57,6 +57,17 @@ class LombaMemberController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function all()
@@ -74,7 +85,7 @@ class LombaMemberController extends Controller
      * Get One Lomba Member
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaMember/get/{id_member}",
+     *     path="/api/v1/lombaMember/get/{id_member}",
      *     tags={"Lomba Member"},
      *     operationId="lombaMember-get",
      *     summary="Get One Lomba Member",
@@ -115,6 +126,17 @@ class LombaMemberController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
     */
     public function get(lombaMember $lombaMember, $id_member)
@@ -134,7 +156,7 @@ class LombaMemberController extends Controller
      * Store Lomba Member
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaMember",
+     *     path="/api/v1/lombaMember",
      *     tags={"Lomba Member"},
      *     operationId="lombaMember-store",
      *     summary="Create Lomba Member",
@@ -191,6 +213,17 @@ class LombaMemberController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function store(StorelombaMemberRequest $request)
@@ -238,7 +271,7 @@ class LombaMemberController extends Controller
      * Update Lomba Member
      * @OA\Put(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaMember/{id_member}",
+     *     path="/api/v1/lombaMember/{id_member}",
      *     tags={"Lomba Member"},
      *     operationId="lombaMember-update",
      *     summary="Update Lomba Member",
@@ -295,6 +328,17 @@ class LombaMemberController extends Controller
      *             }
      *         ),
      *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
      * )
      */
     public function update(UpdatelombaMemberRequest $request, lombaMember $lombaMember, $id_member)
@@ -325,7 +369,7 @@ class LombaMemberController extends Controller
      * Delete Lomba Member
      * @OA\Delete(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaMember/{id_member}",
+     *     path="/api/v1/lombaMember/{id_member}",
      *     tags={"Lomba Member"},
      *     operationId="lombaMember-delete",
      *     summary="Menghapus Lomba Member",
@@ -357,6 +401,17 @@ class LombaMemberController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

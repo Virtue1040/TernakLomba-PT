@@ -89,7 +89,7 @@
 
             </div>
 
-            <div class="flex flex-wrap gap-3 mt-6 md:gap-4 md:mt-8">
+            <div class="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap md:gap-4 mt-6 md:mt-8">
                 <div class="border rounded-md p-3 md:p-4 w-[110px] md:w-36 overflow-hidden">
                     <h4 class="text-lg font-bold md:text-xl">20 Juta</h4>
                     <p class="text-xs text-gray-600 md:text-sm">Total Hadiah</p>

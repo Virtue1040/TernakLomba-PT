@@ -21,7 +21,7 @@ class LombaDetailController extends Controller
      * Get All Lomba Detail
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaDetail",
+     *     path="/api/v1/lombaDetail",
      *     tags={"Lomba Detail"},
      *     operationId="lombaDetail-all",
      *     summary="Get All Lomba Detail",
@@ -54,6 +54,17 @@ class LombaDetailController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),
@@ -90,7 +101,7 @@ class LombaDetailController extends Controller
      * Get One Lomba Detail
      * @OA\Get(
      *     security={{"bearerAuth":{}}},
-     *     path="/api/lombaDetail/get/{id_lomba}",
+     *     path="/api/v1/lombaDetail/get/{id_lomba}",
      *     tags={"Lomba Detail"},
      *     operationId="lombaDetail-get",
      *     summary="Get One Lomba Detail",
@@ -129,6 +140,17 @@ class LombaDetailController extends Controller
      *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
      *             }
      *         ),
      *     ),

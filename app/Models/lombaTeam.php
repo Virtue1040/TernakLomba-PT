@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="LombaTeam",
  *   type="object",
- *   required={"id_team", "lomba_id", "isApproved"},
+ *   required={"id_team", "lomba_id", "team_code", "isPrivate","isApproved"},
  * )
  * Class LombaTeam
  * @package Incase\Models
@@ -21,7 +21,8 @@ class lombaTeam extends Model
 
     protected $fillable = [
         'lomba_id',
-        'leader_user_id',
+        'team_code',
+        'isPrivate',
         'isApproved'
     ];
     
@@ -38,6 +39,18 @@ class lombaTeam extends Model
      * @var integer
     */
     private $lomba_id;
+
+    /**
+     * @OA\Property(title="team_code", type="string", readOnly=true)
+     * @var integer
+    */
+    private $team_code;
+
+    /**
+     * @OA\Property(title="isPrivate", type="boolean", readOnly=true)
+     * @var boolean
+    */
+    private $isPrivate;
 
     /**
      * @OA\Property(title="isApproved", type="boolean", readOnly=true)
