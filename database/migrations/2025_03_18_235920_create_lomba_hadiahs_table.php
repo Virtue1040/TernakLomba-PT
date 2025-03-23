@@ -15,10 +15,11 @@ return new class extends Migration
         Schema::create('lomba_hadiahs', function (Blueprint $table) {
             $table->bigInteger("id_hadiah", 1)->primary();
             $table->bigInteger("lomba_id");
-            $table->integer("id_typeHadiah");
+            $table->bigInteger("typeHadiah_id");
             $table->integer("quantity");
 
             $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");
+            $table->foreign("typeHadiah_id")->references("id_typeHadiah")->on("type_hadiahs")->onDelete("cascade");
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('type_hadiahs', function (Blueprint $table) {
             $table->bigInteger("id_typeHadiah", 1)->primary();
             $table->bigInteger("lomba_id")->nullable();
-            $table->string("name");
+            $table->string("name")->unique();
 
             $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");
             $table->timestamps();

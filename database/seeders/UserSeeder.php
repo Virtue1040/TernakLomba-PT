@@ -51,5 +51,11 @@ class UserSeeder extends Seeder
             $userx = User::find($user->id_user);
             $userx->assignRole([$users['id_role']]);
         }
+
+        // Create Development Admin Token
+        if (env("APP_ENV") == "local") {
+            $user = User::where('username', 'Admin')->first();
+            $user->createToken('Admin', ['*'], "dev");
+        }
     }
 }

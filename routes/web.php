@@ -11,9 +11,18 @@ Route::get('/explore', function () {
     return view('display.exploreLomba.index');
 });
 
+Route::get('/detail', function() {
+    return view('display.detailLomba.index');
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/detail', function () {
+    return view('display.detailLomba.index');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

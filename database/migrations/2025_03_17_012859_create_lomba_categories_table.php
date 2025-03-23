@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lomba_categories', function (Blueprint $table) {
             $table->bigInteger("id_lombaCategory", 1)->primary();
-            $table->string("name");
+            $table->string("name")->unique();
             $table->timestamps();
         });
     }

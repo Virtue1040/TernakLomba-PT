@@ -8,7 +8,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
+use Str;
 
+/**
+ * @OA\Schema(
+ *   schema="User",
+ *   type="object",
+ *   required={"id_user", "max_member", "email", "password"},
+ * )
+ * Class User
+ * @package Incase\Models
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -49,4 +59,62 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Override createToken.
+     *
+     * @param string $name
+     * @param array $abilities
+     * @return \Laravel\Sanctum\NewAccessToken
+     */
+    public function createToken(string $name, array $abilities = ['*'], ?string $textToken = null)
+    {
+        if (is_null($textToken)) {
+            $textToken = Str::random(40);
+        }
+
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken = $textToken),
+            'abilities' => $abilities,
+        ]);
+
+        return new \Laravel\Sanctum\NewAccessToken($token, $token->getKey().'|'.$plainTextToken);
+    }
+
+    /**
+     * @OA\Property(title="id_user", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $id_user;
+
+    /**
+     * @OA\Property(title="username", type="string", readOnly=true)
+     * @var string
+    */
+    private $username;
+
+    /**
+     * @OA\Property(title="email", type="string", format="email", readOnly=true)
+     * @var string
+    */
+    private $email;
+
+    /**
+     * @OA\Property(title="password", type="string", format="password", readOnly=true)
+     * @var string
+    */
+    private $password;
+
+    /**
+     * @OA\Property(title="created_at", type="timestamp", readOnly=true)
+     * @var string
+    */
+    private $created_at;
+
+    /**
+     * @OA\Property(title="updated_at", type="timestamp", readOnly=true)
+     * @var string
+    */
+    private $updated_at;
 }

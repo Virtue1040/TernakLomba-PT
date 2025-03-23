@@ -30,15 +30,16 @@ class AuthenticatedSessionController extends Controller
      *     @OA\Parameter(
      *         name="username",
      *         in="query",
-     *         description="The Username / Email",
+     *         description="Username / Email",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
-     *         description="The Password",
-     *         @OA\Schema(type="password")
+     *         description="Password",
+     *         required=true,
+     *         @OA\Schema(type="string", format="password")
      *     ),
      *     @OA\Response(
      *         response="200",
@@ -46,8 +47,11 @@ class AuthenticatedSessionController extends Controller
      *         @OA\JsonContent(
      *             example={
      *                 "success": true,
-     *                 "message": "Berhasil mengambil data Property",
-     *                 "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+     *                 "status_code": 200,
+     *                 "message": "Berhasil login",
+     *                 "data": {
+     *                     "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+     *                 }
      *             }
      *         ),
      *     ),

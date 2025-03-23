@@ -10,9 +10,138 @@ use App\Models\Lomba_detail;
 
 class LombaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
+        $this->middleware('permission:lomba-creates', ['only' => ['create', 'store']]);
+        $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:lomba-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         //
+    }
+
+    /**
+     * Get All Lomba
+     * @OA\Get(
+     *     security={{"bearerAuth":{}}},
+     *     path="/api/lomba",
+     *     tags={"Lomba"},
+     *     operationId="lomba-all",
+     *     summary="Get All Lomba",
+     *     description="Mengambil Semua data Lomba",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil mengambil data lomba",
+     *                 "data": {
+     *                      {
+     *                      "lomba": {
+     *                      "max_member": 1,
+     *                      "min_member": 1,
+     *                      "lombaCategory_id": 1,
+     *                      "start_date": "2025-03-20 23:01:22",
+     *                      "end_date": "2025-03-20 23:01:22",
+     *                      "updated_at": "2025-03-20T16:04:14.000000Z",
+     *                      "created_at": "2025-03-20T16:04:14.000000Z",
+     *                      "id_lomba": 2
+     *                      },
+     *                      "lomba_detail": {
+     *                      "lomba_id": 2,
+     *                      "title": "Gemastik",
+     *                      "description": "Lomba Adalah",
+     *                      "updated_at": "2025-03-20T16:04:14.000000Z",
+     *                      "created_at": "2025-03-20T16:04:14.000000Z"
+     *                      }
+     *                      }
+     *                 },
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 401,
+     *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     * )
+     */
+    public function all()
+    {
+        $lomba = Lomba::all();
+        return response()->json([
+            'success' => true,
+            'status_code' => 200,
+            'message' => "Berhasil mengambil data lomba",
+            'data' => $lomba
+        ]);
+    }
+
+    /**
+     * Get One Lomba
+     * @OA\Get(
+     *     security={{"bearerAuth":{}}},
+     *     path="/api/lomba/get/{id_lomba}",
+     *     tags={"Lomba"},
+     *     operationId="lomba-get",
+     *     summary="Get One Lomba",
+     *     description="Mengambil data Lomba",
+     *     @OA\Parameter(
+     *         name="id_lomba",
+     *         in="path",
+     *         description="Lomba ID",
+     *         example = 1,
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil mengambil data lomba",
+     *                 "data": {
+     *                      "max_member": 1,
+     *                      "min_member": 1,
+     *                      "lombaCategory_id": 1,
+     *                      "start_date": "2025-03-20 23:01:22",
+     *                      "end_date": "2025-03-20 23:01:22",
+     *                      "updated_at": "2025-03-20T16:04:14.000000Z",
+     *                      "created_at": "2025-03-20T16:04:14.000000Z",
+     *                      "id_lomba": 2
+     *                 },
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 401,
+     *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     * )
+    */
+    public function get(Lomba $lomba, $id_lomba)
+    {
+        
     }
 
     /**
@@ -123,7 +252,7 @@ class LombaController extends Controller
      *         description="Error: Unauthorized",
      *         @OA\JsonContent(
      *             example={
-     *                 "success": true,
+     *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
      *             }
@@ -142,20 +271,20 @@ class LombaController extends Controller
             "start_date" => ["required", "date_format:Y-m-d H:i:s"],
             "end_date" => ["required", "date_format:Y-m-d H:i:s"]
         ]);
-
         $max_member = $request->max_member;
         $min_member = $request->min_member;
         $title = $request->title;
         $description = $request->description;
         $lombaCategory_id = $request->lombaCategory_id;
-
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
 
         $lomba = Lomba::create([
-            "max_member" => $max_member ,
+            "max_member" => $max_member,
             "min_member" => $min_member,
             "lombaCategory_id" => $lombaCategory_id,
-            "start_date" => $request->start_date,
-            "end_date" => $request->end_date
+            "start_date" => $start_date,
+            "end_date" => $end_date
         ]);
 
         $lomba_detail = Lomba_detail::create([
@@ -299,7 +428,7 @@ class LombaController extends Controller
      *         description="Error: Unauthorized",
      *         @OA\JsonContent(
      *             example={
-     *                 "success": true,
+     *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
      *             }
@@ -307,9 +436,46 @@ class LombaController extends Controller
      *     ),
      * )
      */
-    public function update(UpdateLombaRequest $request, Lomba $lomba)
+    public function update(UpdateLombaRequest $request, Lomba $lomba, $id_lomba)
     {
-        //
+        $request->validate([
+            "max_member" => ["required", "integer", "min:1"],
+            "min_member" => ["required", "integer", "min:1"],
+            "title" => ["required", "string", "max:255"],
+            "description" => ["required", "string", "max:255"],
+            "lombaCategory_id" => ["required", "integer", "exists:lomba_categories,id_lombaCategory"],
+            "start_date" => ["required", "date_format:Y-m-d H:i:s"],
+            "end_date" => ["required", "date_format:Y-m-d H:i:s"]
+        ]);
+        $max_member = $request->max_member;
+        $min_member = $request->min_member;
+        $title = $request->title;
+        $description = $request->description;
+        $lombaCategory_id = $request->lombaCategory_id;
+
+        $lomba = $lomba::findOrFail($id_lomba);
+        $lomba->max_member = $max_member;
+        $lomba->min_member = $min_member;
+        $lomba->lombaCategory_id = $lombaCategory_id;
+        $lomba->start_date = $request->start_date;
+        $lomba->end_date = $request->end_date;
+
+        $lomba_detail = $lomba->lomba_detail;
+        $lomba_detail->title = $title;
+        $lomba_detail->description = $description;
+
+        $lomba->save();
+        $lomba_detail->save();
+
+        return response()->json([
+            "success" => true,
+            "status_code" => 200,
+            "message" => "Berhasil mengubah data lomba",
+            "data" => [
+                "lomba" => $lomba,
+                "lomba_detail" => $lomba_detail
+            ]
+        ], 200);
     }
 
     /**
@@ -336,7 +502,7 @@ class LombaController extends Controller
      *             example={
      *                 "success": true,
      *                 "status_code": 200,
-     *                 "message": "Berhasil mengubah data lomba",
+     *                 "message": "Berhasil menghapus data lomba",
      *             }
      *         ),
      *     ),
@@ -345,7 +511,7 @@ class LombaController extends Controller
      *         description="Error: Unauthorized",
      *         @OA\JsonContent(
      *             example={
-     *                 "success": true,
+     *                 "success": false,
      *                 "status_code": 401,
      *                 "message": "Unauthorized"
      *             }
@@ -353,8 +519,15 @@ class LombaController extends Controller
      *     ),
      * )
      */
-    public function destroy(Lomba $lomba)
+    public function destroy(Lomba $lomba, $id_lomba)
     {
-        //
+        $lombas = $lomba::findOrFail($id_lomba);
+        $lombas->delete();
+
+        return response()->json([
+            "success" => true,
+            "status_code" => 200,
+            "message" => "Berhasil menghapus data lomba",
+        ], 200);
     }
 }

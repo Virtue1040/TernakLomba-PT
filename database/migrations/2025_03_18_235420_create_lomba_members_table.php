@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('lomba_members', function (Blueprint $table) {
             $table->bigInteger("id_member", 1)->primary();
             $table->bigInteger("team_id");
+            $table->string("role");
+            $table->boolean("isLeader");
 
             $table->foreign("team_id")->references("id_team")->on("lomba_teams")->onDelete("cascade");
             $table->timestamps();

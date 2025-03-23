@@ -2,6 +2,15 @@
     "openapi": "3.0.0",
     "info": {
         "title": "TernakLomba API Documentation",
+        "description": "The **TernakLomba API** is a robust and scalable solution for managing competitive events, participants, scores, and results. \n *   It is designed to support a wide range of competitions, from small local events to large-scale tournaments. \n *  Key features include:\n *  - **Competition Management**: Create, update, and manage competitions with details such as name, description, start/end dates, and status.\n *  - **Participant Management**: Register and manage participants, including their details and competition assignments.\n *  - **Score Management**: Submit and manage scores for participants, with support for multiple judges and scoring criteria.\n *  - **Results and Leaderboards**: Automatically calculate and display competition results, including rankings and leaderboards.\n *  - **Judging Criteria**: Define custom judging criteria for competitions to ensure fair and transparent evaluations.\n *  - **Notifications**: Send real-time notifications to participants and judges about competition updates, scores, and results.\n *  This API is ideal for event organizers, educational institutions, and organizations hosting competitive events.",
+        "contact": {
+            "name": "the developer",
+            "email": "support@ternaklomba.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        },
         "version": "1.0"
     },
     "paths": {
@@ -17,7 +26,7 @@
                     {
                         "name": "username",
                         "in": "query",
-                        "description": "The Username / Email",
+                        "description": "Username / Email",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -26,9 +35,11 @@
                     {
                         "name": "password",
                         "in": "query",
-                        "description": "The Password",
+                        "description": "Password",
+                        "required": true,
                         "schema": {
-                            "type": "password"
+                            "type": "string",
+                            "format": "password"
                         }
                     }
                 ],
@@ -40,8 +51,11 @@
                                 "schema": {},
                                 "example": {
                                     "success": true,
-                                    "message": "Berhasil mengambil data Property",
-                                    "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+                                    "status_code": 200,
+                                    "message": "Berhasil login",
+                                    "data": {
+                                        "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+                                    }
                                 }
                             }
                         }
@@ -49,7 +63,803 @@
                 }
             }
         },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register to get Authentication Token",
+                "description": "Register user",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "user@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Password Confirmation",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "John"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Doe"
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "Gender",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female"
+                            ]
+                        },
+                        "example": "male"
+                    },
+                    {
+                        "name": "born_date",
+                        "in": "query",
+                        "description": "Born date",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2025-03-20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil register",
+                                    "data": {
+                                        "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/lombaAlbum": {
+            "get": {
+                "tags": [
+                    "Lomba Album"
+                ],
+                "summary": "Get All Lomba Album",
+                "description": "Mengambil Semua data Lomba Album",
+                "operationId": "lombaAlbum-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba album",
+                                    "data": [
+                                        {
+                                            "lomba_id": 1,
+                                            "title": "Cover",
+                                            "imagePath": "/src/a.png"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba Album"
+                ],
+                "summary": "Create Lomba Album",
+                "description": "Membuat Lomba Album",
+                "operationId": "lombaAlbum-store",
+                "parameters": [
+                    {
+                        "name": "lomba_id",
+                        "in": "query",
+                        "description": "Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title Album",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Cover"
+                    },
+                    {
+                        "name": "imagePath",
+                        "in": "query",
+                        "description": "Image Path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "/src/a.png"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data lomba hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "title": "Cover",
+                                        "imagePath": "/src/a.png"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaAlbum/get/{id_lombaAlbum}": {
+            "get": {
+                "tags": [
+                    "Lomba Album"
+                ],
+                "summary": "Get One Lomba Album",
+                "description": "Mengambil data Lomba Album",
+                "operationId": "lombaAlbum-get",
+                "parameters": [
+                    {
+                        "name": "id_lombaAlbum",
+                        "in": "path",
+                        "description": "Lomba Album ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba album",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "title": "Cover",
+                                        "imagePath": "/src/a.png"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaAlbum/{id_lombaAlbum}": {
+            "put": {
+                "tags": [
+                    "Lomba Album"
+                ],
+                "summary": "Update Lomba Album",
+                "description": "Mengubah data Lomba Album",
+                "operationId": "lombaAlbum-update",
+                "parameters": [
+                    {
+                        "name": "id_lombaAlbum",
+                        "in": "path",
+                        "description": "Lomba Album ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title Album",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Cover"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengubah data lomba hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "title": "Cover",
+                                        "imagePath": "/src/a.png"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lomba Album"
+                ],
+                "summary": "Delete Lomba Album",
+                "description": "Menghapus data Lomba Album",
+                "operationId": "lombaAlbum-delete",
+                "parameters": [
+                    {
+                        "name": "id_lombaAlbum",
+                        "in": "path",
+                        "description": "Lomba Album ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menghapus data lomba album"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaCategory": {
+            "get": {
+                "tags": [
+                    "Lomba Category"
+                ],
+                "summary": "Get All Lomba Category",
+                "description": "Mengambil Semua data Category Lomba",
+                "operationId": "lombaCategory-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data category lomba",
+                                    "data": [
+                                        {
+                                            "name": "University",
+                                            "updated_at": "2025-03-20T17:11:42.000000Z",
+                                            "created_at": "2025-03-20T17:11:42.000000Z",
+                                            "id_lombaCategory": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba Category"
+                ],
+                "summary": "Create Lomba Category",
+                "description": "Membuat Category Lomba",
+                "operationId": "lombaCategory-create",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Category Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "University"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data category lomba",
+                                    "data": {
+                                        "name": "University",
+                                        "updated_at": "2025-03-20T17:11:42.000000Z",
+                                        "created_at": "2025-03-20T17:11:42.000000Z",
+                                        "id_lombaCategory": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaCategory/get/{id_lombaCategory}": {
+            "get": {
+                "tags": [
+                    "Lomba Category"
+                ],
+                "summary": "Get One Lomba Category",
+                "description": "Mengambil data Lomba Category",
+                "operationId": "lombaCategory-get",
+                "parameters": [
+                    {
+                        "name": "id_lombaCategory",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba category",
+                                    "data": {
+                                        "name": "University",
+                                        "updated_at": "2025-03-20T17:11:42.000000Z",
+                                        "created_at": "2025-03-20T17:11:42.000000Z",
+                                        "id_lombaCategory": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaCategory/{id_lombaCategory}": {
+            "put": {
+                "tags": [
+                    "Lomba Category"
+                ],
+                "summary": "Update Lomba Category",
+                "description": "Mengubah data Category Lomba",
+                "operationId": "lombaCategory-update",
+                "parameters": [
+                    {
+                        "name": "id_lombaCategory",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Category Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "University"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengubah data category lomba",
+                                    "data": {
+                                        "name": "University",
+                                        "updated_at": "2025-03-20T17:11:42.000000Z",
+                                        "created_at": "2025-03-20T17:11:42.000000Z",
+                                        "id_lombaCategory": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lomba Category"
+                ],
+                "summary": "Delete Lomba Category",
+                "description": "Menghapus data Category Lomba",
+                "operationId": "lombaCategory-delete",
+                "parameters": [
+                    {
+                        "name": "id_lombaCategory",
+                        "in": "path",
+                        "description": "Category ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menghapus data category lomba"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/lomba": {
+            "get": {
+                "tags": [
+                    "Lomba"
+                ],
+                "summary": "Get All Lomba",
+                "description": "Mengambil Semua data Lomba",
+                "operationId": "lomba-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba",
+                                    "data": [
+                                        {
+                                            "lomba": {
+                                                "max_member": 1,
+                                                "min_member": 1,
+                                                "lombaCategory_id": 1,
+                                                "start_date": "2025-03-20 23:01:22",
+                                                "end_date": "2025-03-20 23:01:22",
+                                                "updated_at": "2025-03-20T16:04:14.000000Z",
+                                                "created_at": "2025-03-20T16:04:14.000000Z",
+                                                "id_lomba": 2
+                                            },
+                                            "lomba_detail": {
+                                                "lomba_id": 2,
+                                                "title": "Gemastik",
+                                                "description": "Lomba Adalah",
+                                                "updated_at": "2025-03-20T16:04:14.000000Z",
+                                                "created_at": "2025-03-20T16:04:14.000000Z"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Lomba"
@@ -170,7 +980,72 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lomba/get/{id_lomba}": {
+            "get": {
+                "tags": [
+                    "Lomba"
+                ],
+                "summary": "Get One Lomba",
+                "description": "Mengambil data Lomba",
+                "operationId": "lomba-get",
+                "parameters": [
+                    {
+                        "name": "id_lomba",
+                        "in": "path",
+                        "description": "Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
                                     "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba",
+                                    "data": {
+                                        "max_member": 1,
+                                        "min_member": 1,
+                                        "lombaCategory_id": 1,
+                                        "start_date": "2025-03-20 23:01:22",
+                                        "end_date": "2025-03-20 23:01:22",
+                                        "updated_at": "2025-03-20T16:04:14.000000Z",
+                                        "created_at": "2025-03-20T16:04:14.000000Z",
+                                        "id_lomba": 2
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
                                 }
@@ -316,7 +1191,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "success": true,
+                                    "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
                                 }
@@ -358,7 +1233,7 @@
                                 "example": {
                                     "success": true,
                                     "status_code": 200,
-                                    "message": "Berhasil mengubah data lomba"
+                                    "message": "Berhasil menghapus data lomba"
                                 }
                             }
                         }
@@ -369,7 +1244,1365 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaDetail": {
+            "get": {
+                "tags": [
+                    "Lomba Detail"
+                ],
+                "summary": "Get All Lomba Detail",
+                "description": "Mengambil Semua data Lomba Detail",
+                "operationId": "lombaDetail-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
                                     "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba detail",
+                                    "data": [
+                                        {
+                                            "lomba_id": 1,
+                                            "title": "Gemastik",
+                                            "description": "Lomba Adalah",
+                                            "created_at": "2025-03-20T17:31:27.000000Z",
+                                            "updated_at": "2025-03-20T17:31:27.000000Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaDetail/get/{id_lomba}": {
+            "get": {
+                "tags": [
+                    "Lomba Detail"
+                ],
+                "summary": "Get One Lomba Detail",
+                "description": "Mengambil data Lomba Detail",
+                "operationId": "lombaDetail-get",
+                "parameters": [
+                    {
+                        "name": "id_lomba",
+                        "in": "path",
+                        "description": "Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba detail",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "title": "Gemastik",
+                                        "description": "Lomba Adalah",
+                                        "created_at": "2025-03-20T17:31:27.000000Z",
+                                        "updated_at": "2025-03-20T17:31:27.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaHadiah": {
+            "get": {
+                "tags": [
+                    "Lomba Hadiah"
+                ],
+                "summary": "Get All Lomba Hadiah",
+                "description": "Mengambil Semua data Lomba Hadiah",
+                "operationId": "lombaHadiah-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba hadiah",
+                                    "data": [
+                                        {
+                                            "lomba_id": 1,
+                                            "typeHadiah_id": 1,
+                                            "quantity": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba Hadiah"
+                ],
+                "summary": "Create Lomba Hadiah",
+                "description": "Membuat Lomba Hadiah",
+                "operationId": "lombaHadiah-store",
+                "parameters": [
+                    {
+                        "name": "lomba_id",
+                        "in": "query",
+                        "description": "Lomba ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "typeHadiah_id",
+                        "in": "query",
+                        "description": "Type Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "Jumlah",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data lomba hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "typeHadiah_id": 1,
+                                        "quantity": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaHadiah/get/{id_hadiah}": {
+            "get": {
+                "tags": [
+                    "Lomba Hadiah"
+                ],
+                "summary": "Get One Lomba Hadiah",
+                "description": "Mengambil data Lomba Hadiah",
+                "operationId": "lombaHadiah-get",
+                "parameters": [
+                    {
+                        "name": "id_hadiah",
+                        "in": "path",
+                        "description": "Lomba Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "typeHadiah_id": 1,
+                                        "quantity": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaHadiah/{id_hadiah}": {
+            "put": {
+                "tags": [
+                    "Lomba Hadiah"
+                ],
+                "summary": "Update Lomba Hadiah",
+                "description": "Mengubah data Lomba Hadiah",
+                "operationId": "lombaHadiah-update",
+                "parameters": [
+                    {
+                        "name": "id_hadiah",
+                        "in": "path",
+                        "description": "Lomba Hadiah ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "typeHadiah_id",
+                        "in": "query",
+                        "description": "Type Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "Jumlah",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengubah data lomba hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "typeHadiah_id": 1,
+                                        "quantity": 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lomba Hadiah"
+                ],
+                "summary": "Delete Lomba Hadiah",
+                "description": "Menghapus data Lomba Hadiah",
+                "operationId": "lombaHadiah-delete",
+                "parameters": [
+                    {
+                        "name": "id_hadiah",
+                        "in": "path",
+                        "description": "Lomba Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menghapus data lomba hadiah"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaMember": {
+            "get": {
+                "tags": [
+                    "Lomba Member"
+                ],
+                "summary": "Get All Lomba Member",
+                "description": "Mengambil Semua data Lomba Member",
+                "operationId": "lombaMember-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba member",
+                                    "data": [
+                                        {
+                                            "id_member": 1,
+                                            "team_id": 1,
+                                            "role": "hacker",
+                                            "isLeader": false
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba Member"
+                ],
+                "summary": "Create Lomba Member",
+                "description": "Membuat Lomba Member",
+                "operationId": "lombaMember-store",
+                "parameters": [
+                    {
+                        "name": "team_id",
+                        "in": "query",
+                        "description": "Team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Role Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Hacker"
+                    },
+                    {
+                        "name": "isLeader",
+                        "in": "query",
+                        "description": "Apakah Leader",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "example": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data lomba member",
+                                    "data": {
+                                        "id_member": 1,
+                                        "team_id": 1,
+                                        "role": "hacker",
+                                        "isLeader": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaMember/get/{id_member}": {
+            "get": {
+                "tags": [
+                    "Lomba Member"
+                ],
+                "summary": "Get One Lomba Member",
+                "description": "Mengambil data Lomba Member",
+                "operationId": "lombaMember-get",
+                "parameters": [
+                    {
+                        "name": "id_member",
+                        "in": "path",
+                        "description": "Member ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba member",
+                                    "data": {
+                                        "id_member": 1,
+                                        "team_id": 1,
+                                        "role": "hacker",
+                                        "isLeader": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaMember/{id_member}": {
+            "put": {
+                "tags": [
+                    "Lomba Member"
+                ],
+                "summary": "Update Lomba Member",
+                "description": "Mengubah data Lomba Member",
+                "operationId": "lombaMember-update",
+                "parameters": [
+                    {
+                        "name": "id_member",
+                        "in": "path",
+                        "description": "Member ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Role Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Hacker"
+                    },
+                    {
+                        "name": "isLeader",
+                        "in": "query",
+                        "description": "Apakah Leader",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "example": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengubah data lomba member",
+                                    "data": {
+                                        "id_member": 1,
+                                        "team_id": 1,
+                                        "role": "hacker",
+                                        "isLeader": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lomba Member"
+                ],
+                "summary": "Menghapus Lomba Member",
+                "description": "Menghapus data Lomba Member",
+                "operationId": "lombaMember-delete",
+                "parameters": [
+                    {
+                        "name": "id_member",
+                        "in": "path",
+                        "description": "Member ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menghapus data lomba"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaTeam": {
+            "get": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Get All Lomba Team",
+                "description": "Mengambil Semua data Lomba Team",
+                "operationId": "lombaTeam-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba team",
+                                    "data": [
+                                        {
+                                            "id_team": 1,
+                                            "lomba_id": 1,
+                                            "isApproved": false
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Create Team Lomba",
+                "description": "Membuat Team Lomba",
+                "operationId": "lombaTeam-store",
+                "parameters": [
+                    {
+                        "name": "lomba_id",
+                        "in": "query",
+                        "description": "Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "leader_user_id",
+                        "in": "query",
+                        "description": "Leader User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data team lomba",
+                                    "data": {
+                                        "id_team": 1,
+                                        "lomba_id": 1,
+                                        "isApproved": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaTeam/get/{id_team}": {
+            "get": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Get One Lomba Team",
+                "description": "Mengambil data Lomba Team",
+                "operationId": "lombaTeam-get",
+                "parameters": [
+                    {
+                        "name": "id_team",
+                        "in": "path",
+                        "description": "Team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data lomba team",
+                                    "data": {
+                                        "id_team": 1,
+                                        "lomba_id": 1,
+                                        "isApproved": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/lombaTeam/{id_team}": {
+            "put": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Update Team Lomba",
+                "description": "Mengubah data Team Lomba",
+                "operationId": "lombaTeam-update",
+                "parameters": [
+                    {
+                        "name": "id_team",
+                        "in": "path",
+                        "description": "Team Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "isApproved",
+                        "in": "query",
+                        "description": "Apakah diApprove?",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "example": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data team lomba",
+                                    "data": {
+                                        "id_team": 1,
+                                        "lomba_id": 1,
+                                        "isApproved": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Menghapus Team Lomba",
+                "description": "Menghapus data Team Lomba",
+                "operationId": "lombaTeam-delete",
+                "parameters": [
+                    {
+                        "name": "id_team",
+                        "in": "path",
+                        "description": "Team Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data team lomba"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/typeHadiah": {
+            "get": {
+                "tags": [
+                    "Type Hadiah"
+                ],
+                "summary": "Get All Type Hadiah",
+                "description": "Mengambil Semua data Type Hadiah",
+                "operationId": "typeHadiah-all",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data type hadiah",
+                                    "data": [
+                                        {
+                                            "lomba_id": 1,
+                                            "name": "TV"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Type Hadiah"
+                ],
+                "summary": "Create Type Hadiah",
+                "description": "Membuat Type Hadiah",
+                "operationId": "typeHadiah-store",
+                "parameters": [
+                    {
+                        "name": "lomba_id",
+                        "in": "query",
+                        "description": "Lomba ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Hadiah Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "TV"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menambahkan data type hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "name": "TV"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/typeHadiah/get/{id_typeHadiah}": {
+            "get": {
+                "tags": [
+                    "Type Hadiah"
+                ],
+                "summary": "Get One Type Hadiah",
+                "description": "Mengambil data Type Hadiah",
+                "operationId": "typeHadiah-get",
+                "parameters": [
+                    {
+                        "name": "id_typeHadiah",
+                        "in": "path",
+                        "description": "Type Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil data type hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "name": "TV"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/typeHadiah/{id_typeHadiah}": {
+            "put": {
+                "tags": [
+                    "Type Hadiah"
+                ],
+                "summary": "Create Type Hadiah",
+                "description": "Membuat Type Hadiah",
+                "operationId": "typeHadiah-update",
+                "parameters": [
+                    {
+                        "name": "id_typeHadiah",
+                        "in": "path",
+                        "description": "Type Hadiah ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Hadiah Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "TV"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengubah data type hadiah",
+                                    "data": {
+                                        "lomba_id": 1,
+                                        "name": "TV"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Type Hadiah"
+                ],
+                "summary": "Delete Type Hadiah",
+                "description": "Menghapus data Type Hadiah",
+                "operationId": "typeHadiah-delete",
+                "parameters": [
+                    {
+                        "name": "id_typeHadiah",
+                        "in": "path",
+                        "description": "Type Hadiah ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil menghapus data type hadiah"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
                                     "status_code": 401,
                                     "message": "Unauthorized"
                                 }
@@ -386,6 +2619,557 @@
         }
     },
     "components": {
+        "schemas": {
+            "Lomba": {
+                "required": [
+                    "id_lomba",
+                    "max_member",
+                    "min_member",
+                    "lombaCategory_id",
+                    "start_date",
+                    "end_date"
+                ],
+                "properties": {
+                    "id_lomba": {
+                        "title": "id_lomba",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "max_member": {
+                        "title": "max_member",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "min_member": {
+                        "title": "min_member",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "lombaCategory_id": {
+                        "title": "lombaCategory_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "start_date": {
+                        "title": "start_date",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "end_date": {
+                        "title": "end_date",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaDetail": {
+                "required": [
+                    "lomba_id",
+                    "title",
+                    "description"
+                ],
+                "properties": {
+                    "lomba_id": {
+                        "title": "lomba_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "title": {
+                        "title": "title",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "description": {
+                        "title": "description",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "MahasiswaDetail": {
+                "required": [
+                    "user_id",
+                    "kampus",
+                    "jurusan"
+                ],
+                "properties": {
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "kampus": {
+                        "title": "kampus",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "jurusan": {
+                        "title": "jurusan",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "PenyelanggaraDetail": {
+                "required": [
+                    "user_id",
+                    "institue"
+                ],
+                "properties": {
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "institue": {
+                        "title": "institue",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "required": [
+                    "id_user",
+                    "max_member",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id_user": {
+                        "title": "id_user",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "username": {
+                        "title": "username",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "email": {
+                        "title": "email",
+                        "type": "string",
+                        "format": "email",
+                        "readOnly": true
+                    },
+                    "password": {
+                        "title": "password",
+                        "type": "string",
+                        "format": "password",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "UserDetail": {
+                "required": [
+                    "user_id",
+                    "first_name",
+                    "last_name",
+                    "bio",
+                    "born_date",
+                    "gender",
+                    "social_id",
+                    "social_type",
+                    "social_avatar",
+                    "avatarPath",
+                    "avatar_type"
+                ],
+                "properties": {
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "first_name": {
+                        "title": "first_name",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "title": "last_name",
+                        "type": "string"
+                    },
+                    "bio": {
+                        "title": "bio",
+                        "type": "string"
+                    },
+                    "born_date": {
+                        "title": "born_date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "gender": {
+                        "title": "gender",
+                        "type": "string"
+                    },
+                    "social_id": {
+                        "title": "social_id",
+                        "type": "string"
+                    },
+                    "social_type": {
+                        "title": "social_type",
+                        "type": "string"
+                    },
+                    "social_avatar": {
+                        "title": "social_avatar",
+                        "type": "string"
+                    },
+                    "avatarPath": {
+                        "title": "avatarPath",
+                        "type": "string"
+                    },
+                    "avatar_type": {
+                        "title": "avatar_type",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaAlbum": {
+                "required": [
+                    "id_lombaAlbum",
+                    "lomba_id",
+                    "title",
+                    "imagePath"
+                ],
+                "properties": {
+                    "id_lombaAlbum": {
+                        "title": "id_lombaAlbum",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "lomba_id": {
+                        "title": "lomba_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "title": {
+                        "title": "title",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "imagePath": {
+                        "title": "imagePath",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaCategory": {
+                "required": [
+                    "id_lombaCategory",
+                    "name"
+                ],
+                "properties": {
+                    "id_lombaCategory": {
+                        "title": "id_lombaCategory",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "title": "name",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaHadiah": {
+                "required": [
+                    "id_hadiah",
+                    "lomba_id",
+                    "typeHadiah_id",
+                    "quantity"
+                ],
+                "properties": {
+                    "id_hadiah": {
+                        "title": "id_hadiah",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "lomba_id": {
+                        "title": "lomba_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "typeHadiah_id": {
+                        "title": "typeHadiah_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaMember": {
+                "required": [
+                    "id_member",
+                    "team_id",
+                    "role",
+                    "isLeader"
+                ],
+                "properties": {
+                    "id_member": {
+                        "title": "id_member",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "team_id": {
+                        "title": "team_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "role": {
+                        "title": "role",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "isLeader": {
+                        "title": "isLeader",
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "LombaTeam": {
+                "required": [
+                    "id_team",
+                    "lomba_id",
+                    "isApproved"
+                ],
+                "properties": {
+                    "id_team": {
+                        "title": "id_team",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "lomba_id": {
+                        "title": "lomba_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "isApproved": {
+                        "title": "isApproved",
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "TypeHadiah": {
+                "required": [
+                    "id_typeHadiah",
+                    "lomba_id",
+                    "name"
+                ],
+                "properties": {
+                    "id_typeHadiah": {
+                        "title": "id_typeHadiah",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "lomba_id": {
+                        "title": "lomba_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "title": "name",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            },
+            "VerificationToken": {
+                "required": [
+                    "user_id",
+                    "token"
+                ],
+                "properties": {
+                    "id_verification": {
+                        "title": "id_verification",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "user_id": {
+                        "title": "user_id",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "token": {
+                        "title": "token",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "type": "timestamp",
+                        "readOnly": true
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
@@ -399,11 +3183,39 @@
     "tags": [
         {
             "name": "Authentication",
-            "description": "Authentication"
+            "description": "Authentication endpoints"
+        },
+        {
+            "name": "Lomba Album",
+            "description": "Lomba Album"
+        },
+        {
+            "name": "Lomba Category",
+            "description": "Lomba Category"
         },
         {
             "name": "Lomba",
             "description": "Lomba"
+        },
+        {
+            "name": "Lomba Detail",
+            "description": "Lomba Detail"
+        },
+        {
+            "name": "Lomba Hadiah",
+            "description": "Lomba Hadiah"
+        },
+        {
+            "name": "Lomba Member",
+            "description": "Lomba Member"
+        },
+        {
+            "name": "Lomba Team",
+            "description": "Lomba Team"
+        },
+        {
+            "name": "Type Hadiah",
+            "description": "Type Hadiah"
         }
     ]
 }
