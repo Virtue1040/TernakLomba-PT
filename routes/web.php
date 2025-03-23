@@ -8,8 +8,11 @@ Route::get('/', function () {
 });
 
 Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
+    if (! in_array($locale, config('app.available_locales'))) {
+        abort(400);
+    }
+ 
+    App::setLocale($locale);
     return redirect()->back();
 });
 

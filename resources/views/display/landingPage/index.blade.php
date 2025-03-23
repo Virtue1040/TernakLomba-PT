@@ -80,10 +80,8 @@
         </div>
 
         <div class="absolute top-1/2 left-1/2 w-full text-center -translate-x-1/2 -translate-y-1/2">
-            <h1 class="font-bold text-[54px] leading-[110%] tracking-[-0.03em] text-center text-white">Temukan & Ikuti
-                Lomba Terbaik Untuk <br> Menjadi Mahasiswa Berprestasi <br> Bersama Ternak Lomba</h1>
-            <p class="mt-4 text-lg max-w-[577px] mx-auto text-white">Platform pendidikan online terdepan yang membantu
-                siswa meraih kemenangan dalam berbagai kompetisi.</p>
+                <h1 class="font-bold text-[54px] leading-[110%] tracking-[-0.03em] text-center text-white">{!! __('landingPage.welcome') !!}</h1>
+                <p class="mt-4 text-lg max-w-[577px] mx-auto text-white">{!! __('landingPage.subWelcome') !!}</p>
             <a href="#"
                 class="mt-6 inline-block bg-[#ed8f23] text-white w-[131px] h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti
                 Kami!</a>
