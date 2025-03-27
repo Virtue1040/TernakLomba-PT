@@ -73,7 +73,7 @@
     </x-slot>
 
     <section class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] h-screen">
-        <x-navbar></x-navbar>
+        <x-navbar/>
 
         <div class="flex absolute right-0 bottom-0 left-0 justify-center">
             <img class="w-auto h-[600px]" src="images/lightning-lights.png" alt="">

@@ -1,21 +1,6 @@
 <x-layouts.default footer=false>
     <div class="p-4 mx-auto bg-white max-w-screen md:p-7">
-        <div class="flex items-center p-2 border-b md:p-4">
-            <a href="#" class="text-gray-800">
-                <i class="text-xl fas fa-chevron-left"></i>
-            </a>
-            <h1 class="ml-4 text-xl font-semibold">Detail Kompetisi</h1>
-            <div class="flex items-center ml-auto space-x-4">
-                <button class="text-gray-600">
-                    <i class="text-xl far fa-question-circle"></i>
-                </button>
-                <button class="relative text-gray-600">
-                    <i class="text-xl fas fa-bell"></i>
-                    <span
-                        class="flex absolute -top-1 -right-1 justify-center items-center w-4 h-4 text-xs text-white bg-red-500 rounded-full"></span>
-                </button>
-            </div>
-        </div>
+        <x-nav-2 title="Detail Kompetisi" ItemColor="text-black"/>
 
         <div class="relative">
             <div class="w-full h-[200px] md:h-[320px] flex items-center justify-center">

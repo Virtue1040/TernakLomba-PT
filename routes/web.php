@@ -1,10 +1,22 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('display.landingPage.index');
+})->name('landing');
+
+Route::middleware('auth:sanctum', 'web')->group(function () {
+    Route::get('/fill', function() {
+        return view('display.registData.index');    
+    })->name("fill");
+});
+
+Route::middleware('guests', 'web')->group(function () {
+    Route::get('/auth/login', [AuthenticatedSessionController::class, 'create'])->name("login");
+    Route::get('/auth/register', [RegisteredUserController::class, 'create'])->name("register");
 });
 
 Route::get('language/{locale}', function ($locale) {
@@ -24,17 +36,10 @@ Route::get('/detail', function() {
     return view('display.detailLomba.index');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/detail', function () {
-    return view('display.detailLomba.index');
+Route::get('/searchTeam', function() {
+    return view('display.Team.searchTeam');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/regist/data', function() {
+    return view('display.registData.index');
 });

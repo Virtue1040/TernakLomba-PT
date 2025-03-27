@@ -10,5 +10,9 @@
         <li><a href="#" class="">Mahasiswa</a></li>
         <li><a href="#" class="">Informasi</a></li>
     </ul>
-    <a href="#" class="bg-white px-4 py-2 rounded-full text-[#1543CE] font-semibold">Masuk Sekarang</a>
+    @guest
+        <a href="{{ route("login") }}" class="bg-white px-4 py-2 rounded-full text-[#1543CE] font-semibold">Masuk Sekarang</a>
+    @else
+        <a></a>
+    @endguest
 </nav>

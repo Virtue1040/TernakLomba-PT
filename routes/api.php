@@ -21,16 +21,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Middleware for unauthenticated
-Route::middleware('guest')->group(function () {
+Route::middleware('guests', 'web')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
-    Route::post('auth/register', [RegisteredUserController::class, 'store']);
+    Route::post('auth/register', [RegisteredUserController::class, 'store'])->name('auth-register');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create']);
 
-    Route::post('auth/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('auth/login', [AuthenticatedSessionController::class, 'store'])->name('auth-login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -43,6 +42,9 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+        Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 });
 
 // Middleware for sanctum authenticated route
@@ -64,9 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
 
     // Lomba Route 
     Route::get("v1/lomba", [LombaController::class, 'all'])->name("lomba-get");
@@ -120,8 +119,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("v1/lombaAlbum", [LombaAlbumController::class, 'store'])->name("lombaAlbum-store");
     Route::put("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'update'])->name("lombaAlbum-update");
     Route::delete("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'destroy'])->name("lombaAlbum-delete");
-});
+})->middleware("web");
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('web', 'auth:sanctum');

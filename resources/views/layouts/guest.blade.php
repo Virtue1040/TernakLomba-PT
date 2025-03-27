@@ -1,30 +1,22 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+<x-layouts.default footer=false>
+    @isset($script)
+        <x-slot name="script">
+            {{ $script }}
+        </x-slot>
+    @endisset
+    <section class="flex w-full h-screen">
+        <div class="bg-white p-[42px] pb-[47px] w-[50%] h-full flex justify-center items-center">
+            {{ $left_side }}
+        </div>
+        <div class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] w-[50%] flex flex-col justify-between h-full">
+            <div class="px-[95px] flex flex-col gap-5 w-full h-[230px] text-white">
+                <a class="text-[48px] font-bold mt-20 leading-[66.51px]">Kuasai Kompetisi, Perkuat Relasi dan evaluasi</a>
+                <a class="text-[24px]">Temukan lomba yang ingin kamu ikuti di Ternak Lomba, dan Temukan tim baru mu!</a>
             </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+            <div class="overflow-hidden relative w-full h-full">
+                <img class="absolute bottom-[-60px] w-full h-[586px]" src="{{ asset('images/unsplash_vector.png') }}">
+                <img class="absolute bottom-0 w-full h-full" src="{{ asset('images/unsplash_FPQlXQtjkqU.png') }}">
             </div>
         </div>
-    </body>
-</html>
+    </section>
+</x-layouts.default>
