@@ -16,10 +16,12 @@ return new class extends Migration
             $table->bigInteger("id_team", 1)->primary();
             $table->bigInteger("lomba_id");
             $table->string("team_code");
+            $table->bigInteger("created_by");
             $table->boolean("isPrivate")->default(0);
             $table->boolean("isApproved")->default(0);
 
             $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");
+            $table->foreign("created_by")->references("id_user")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

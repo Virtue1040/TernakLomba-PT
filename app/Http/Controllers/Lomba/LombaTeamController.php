@@ -11,6 +11,14 @@ use App\Models\User;
 
 class LombaTeamController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
+        $this->middleware('permission:lomba-creates', ['only' => ['create', 'store']]);
+        $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:lomba-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -330,12 +338,12 @@ class LombaTeamController extends Controller
     public function update(UpdatelombaTeamRequest $request, lombaTeam $lombaTeam, $id_team)
     {
         $request->validate([
-            "isApproved" => ["required", "boolean"]
+            "isPrivate" => ["required", "boolean"]
         ]);
-        $isApproved = $request->isApproved;
+        $isPrivate = $request->isPrivate;
 
         $team = $lombaTeam::findOrFail($id_team);
-        $team->isApproved = $isApproved;
+        $team->isPrivate = $isPrivate;
 
         return response()->json([
             "success" => true,

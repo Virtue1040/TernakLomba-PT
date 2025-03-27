@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('users_details', function (Blueprint $table) {
             $table->bigInteger("user_id")->primary();
-            $table->string("first_name");
-            $table->string("last_name");
+            $table->string("first_name")->nullable();
+            $table->string("last_name")->nullable();
             $table->string("bio");
-            $table->date("born_date");
-            $table->enum("gender", ["male", "female"])->default("male");
+            $table->date("born_date")->nullable();
+            $table->enum("gender", ["male", "female"])->default("male")->nullable();
             $table->string("social_id")->nullable();
             $table->string("social_type")->nullable();
             $table->string("social_avatar")->nullable();
