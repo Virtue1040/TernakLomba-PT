@@ -16,7 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        return view('display.auth.login');
     }
 
     /**
@@ -62,18 +62,22 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $user = Auth::user();
         
-        if ($request->header('Accept') === 'application/json') {
-            $token = $user->createToken('swagger_api')->plainTextToken;
+        $user->tokens()->where("name", 'authentication')->delete();
+        $token = $user->createToken('authentication')->plainTextToken;
+        $cookie = cookie(env("TOKEN_NAME", "auth_token"), $token, 60 * 24 * 7, '/', null, true, true, false, 'lax');
+        
+        if ($request->wantsJson()) {
+            session()->regenerate();
             return response()->json([
                 "success" => true,  
                 "status_code" => 200,
                 "message" => "Berhasil login",
                 "data" => [
                     "token" => $token
-                ]
+                ]   
             ], 200);
         } else {
-            return redirect()->intended(route('home', absolute: false));
+            return redirect()->back()->withCookie($cookie);
         }
     }
 
@@ -82,9 +86,9 @@ class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        session()->invalidate();
 
-        $request->session()->regenerateToken();
+        session()->regenerateToken();
 
         return redirect('/');
     }

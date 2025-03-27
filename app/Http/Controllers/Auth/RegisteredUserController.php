@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('display.auth.register');
     }
 
     /**
@@ -115,10 +115,6 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults(), "max:255"],
-            'first_name' => ["required", "string", "max:255"],
-            'last_name' => ["required", "string", "max:255"],
-            'gender' => ["required", "string", "max:255", "in:male,female"],
-            'born_date' => ["required", "date"],
         ]);
 
         $user = User::create([
@@ -129,11 +125,7 @@ class RegisteredUserController extends Controller
 
         $user_detail = Users_detail::create([
             'user_id' => $user->id_user,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
             'bio' => '',
-            'gender' => $request->gender,
-            'born_date' => $request->born_date
         ]);
 
         // Assign user to normal user role
@@ -141,8 +133,11 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        if ($request->header('Accept') === 'application/json') {
-            $token = $user->createToken('swagger_api')->plainTextToken;
+        // Create token
+        $token = $user->createToken('authentication')->plainTextToken;
+        $cookie = cookie(env("TOKEN_NAME", "auth_token"), $token, 60 * 24 * 7, '/', null, true, true, false, 'lax');
+
+        if ($request->wantsJson()) {
             return response()->json([
                 "success" => true,  
                 "status_code" => 200,
@@ -152,7 +147,7 @@ class RegisteredUserController extends Controller
                 ]
             ], 200);
         } else {
-            return redirect(route('dashboard', absolute: false));
+            return redirect()->route("fill")->withCookie($cookie);
         }
     }
 }

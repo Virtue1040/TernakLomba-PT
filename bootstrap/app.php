@@ -1,12 +1,16 @@
 <?php
 
 use App\Exceptions\CustomValidationException;
+use App\Http\Middleware\AttachAuthToken;
+use App\Http\Middleware\Guest;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -21,8 +25,23 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-            'localization' => \App\Http\Middleware\Localization::class
+            'localization' => \App\Http\Middleware\Localization::class,
+            'guests' => Guest::class,
         ]);
+        $middleware->statefulApi();
+        $middleware->use([
+            \Illuminate\Cookie\Middleware\EncryptCookies::class, // MUST COME FIRST
+            AttachAuthToken::class,
+        ]);
+        $middleware->group('web', [
+            \Illuminate\Session\Middleware\StartSession::class,
+            ShareErrorsFromSession::class
+        ]);
+        $middleware->group('api', [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ]);
+    
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Custom exception for Unauntherized not login yet
@@ -43,10 +62,6 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Custom exception for validation form
         $exceptions->render(function (ValidationException $e, Request $request) {
-            if (!$request->wantsJson()) {
-                return null;
-            }
-
             throw CustomValidationException::withMessages(
                 $e->validator->getMessageBag()->getMessages()
             );

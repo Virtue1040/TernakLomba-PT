@@ -9,8 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomValidationException extends ValidationException
 {
-    public function render($request): JsonResponse
+    public function render($request)
     {
+        if (!$request->wantsJson()) {
+            return redirect()->back()->withErrors($this->validator->errors());
+        }
+
         return new JsonResponse([
             'success' => false,
             'message' => 'Validation Error Occurs, Check Error',

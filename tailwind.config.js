@@ -19,6 +19,8 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                manrope: ['Manrope', 'sans-serif'],
+                cabinet: ['Cabinet', 'sans-serif']
             },
         },
     },
