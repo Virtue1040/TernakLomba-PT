@@ -13,7 +13,7 @@
             <a class="text-[24px] font-[700] text-white">{{ $order }}</a>
         </div>
         <div x-bind:class="`${stepMax === {{ $order }} ? 'w-0' : 'w-[196.8px]'} ${step > {{ $order }} ? '!bg-gradient-to-b !from-[#822bf2] !to-[#b378ff] !opacity-100' : ''}`"
-        class="w-[196.8px] right-0 
+        class=" right-0 
         @if ($active)
             bg-gradient-to-b from-[#822bf2] to-[#b378ff] 
         @else

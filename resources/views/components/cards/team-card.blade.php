@@ -1,10 +1,10 @@
 @props(['teamName', 'date', 'description', 'participants'])
 
-<div x-data="{ isModalOpen: false }" class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
+<div x-data="{ formOpen: false }" class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
     <div class="flex justify-between items-center">
-        <h3 class="text-lg font-semibold">{{ $teamName }}</h3>
+        <h3 class="text-sm sm:text-lg font-semibold">{{ $teamName }}</h3>
         <span
-            class="px-1 text-[12px] text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">{{ $date }}</span>
+            class="px-1 whitespace-nowrap text-[12px] text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">{{ $date }}</span>
     </div>
 
     <p class="text-sm text-gray-600">
@@ -23,15 +23,14 @@
             <span class="text-[12px]">{{ $participants }}</span>
         </div>
 
-        <button @click="isModalOpen = true"
-            class="px-4 py-2 text-sm text-white bg-black rounded-full transition-colors hover:bg-gray-800">
+        <button @click="formOpen = true"
+            class="px-2 py-1 whitespace-nowrap md:px-4 md:py-2 md:text-sm text-xs text-white bg-black rounded-full transition-colors hover:bg-gray-800">
             Request Join
         </button>
     </div>
 
-    {{-- form, --}}
-    <div x-show="isModalOpen" x-cloak class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
-        @click.self="isModalOpen = false">
+    <div x-show="formOpen" x-cloak class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
+        @click.self="formOpen = false">
         <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
             <h2 class="text-xl font-semibold">Request Join</h2>
 
@@ -46,7 +45,7 @@
                     <select name="role_position" id="rolePosition"
                         class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required>
-                        <option value="">Select the role needed</option>
+                        <option value="">Select the role need</option>
                         <option value="ui/ux">UI/UX Designer</option>
                         <option value="Front-End">Front End</option>
                         <option value="Back-End">Back End</option>
@@ -63,7 +62,7 @@
                 </div>
 
                 <div class="flex justify-end space-x-4">
-                    <button type="button" @click="isModalOpen = false"
+                    <button type="button" @click="formOpen = false"
                         class="px-4 py-2 text-red-500 rounded-full border border-red-500 hover:bg-red-50">
                         No, cancel
                     </button>

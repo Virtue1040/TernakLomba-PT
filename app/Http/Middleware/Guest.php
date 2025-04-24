@@ -16,7 +16,7 @@ class Guest
     public function handle(Request $request, Closure $next): Response
     {
         if (auth("sanctum")->check()) {
-            // return redirect()->route('landing');
+            return redirect()->route('profiling');
         }
         return $next($request);
     }

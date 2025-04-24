@@ -2,9 +2,9 @@
 <?php
     $class = "p-5 font-[16px] bg-white rounded-[15px] text-[18px]";
     if ($errors->has($name)) {
-        $class = "$class border-[2px] border-red-400";
+        $class = "$class border-[1px] border-red-400";
     } else {
-        $class = "$class border-[2px] border-[#C6C6C6]";
+        $class = "$class border-[1px] border-[#C6C6C6]";
     }
 ?>
 <div class="flex relative flex-col gap-[10px] w-full">

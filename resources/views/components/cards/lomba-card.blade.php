@@ -1,7 +1,7 @@
 @props(['title', 'university'])
 
 <div class="w-[303px] min-w-[303px] h-[271px] rounded-lg border border-[#E7E7E7] overflow-hidden">
-    <img src="images/4cnational.png" alt="4C National Competition"
+    <img src="{{ asset('images/4cnational.png') }}" alt="4C National Competition"
         class="w-[303px] min-w-[303px] h-[154px] object-cover">
     <div class="p-4">
         <h2 class="text-[16px] font-bold leading-tight">{{ $title }}</h2>

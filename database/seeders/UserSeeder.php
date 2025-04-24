@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'last_name' => $users['last_name'],
                 'bio' => $users['bio'],
                 'gender' => $users['gender'],
-                'born_date' => $users['born_date']
+                'birth_date' => $users['born_date']
             ]);
 
             // $streamChatService = new StreamChatService;

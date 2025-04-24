@@ -1,6 +1,6 @@
 @props(['icon', 'icon_pos' => 'right', 'placeholder' => 'placeholder here...'])
 <?php
-    $class = 'p-4 font-[16px] px-7 bg-white rounded-full border-none';
+    $class = 'p-4 font-[16px] px-7 bg-white rounded-full ';
     if ($icon_pos == 'right') {
         $class = "$class pr-16";
     } else {

@@ -35,6 +35,11 @@ class Users_detail extends Model
 
     protected $primaryKey = 'user_id';
 
+    // public function full_name()
+    // {
+    //     return trim("{$this->first_name} {$this->last_name}");
+    // }
+
     /**
      * @OA\Property(title="user_id", type="integer", format="int64", readOnly=true)
      * @var integer

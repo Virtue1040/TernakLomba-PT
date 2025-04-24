@@ -3,6 +3,8 @@
 use App\Exceptions\CustomValidationException;
 use App\Http\Middleware\AttachAuthToken;
 use App\Http\Middleware\Guest;
+use App\Http\Middleware\Profilled;
+use App\Http\Middleware\Unprofilled;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -27,6 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'localization' => \App\Http\Middleware\Localization::class,
             'guests' => Guest::class,
+            'profilled' => Profilled::class,
+            'unprofilled' => Unprofilled::class
         ]);
         $middleware->statefulApi();
         $middleware->use([
@@ -46,10 +50,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         // Custom exception for Unauntherized not login yet
         $exceptions->render(function (AuthenticationException $e, Request $request) {
-            $response["success"] = false;
-            $response['status_code'] = 401;
-            $response['message'] = 'Unauthorized';
-            return response()->json($response, 401);
+            if ($request->wantsJson()) {
+                $response["success"] = false;
+                $response['status_code'] = 401;
+                $response['message'] = 'Unauthorized';
+                return response()->json($response, 401);
+            }
+
+            return redirect()->guest(route('login'));
         });
 
         // Custom exception for UnauthorizedException (dont have permission)

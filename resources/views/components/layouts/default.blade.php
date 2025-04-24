@@ -14,6 +14,11 @@
         @endisset
 
         @vite(['resources/css/app.css'])
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
     </head>
 
     <body>

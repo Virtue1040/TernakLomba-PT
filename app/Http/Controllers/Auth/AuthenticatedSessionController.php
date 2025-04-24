@@ -77,7 +77,7 @@ class AuthenticatedSessionController extends Controller
                 ]   
             ], 200);
         } else {
-            return redirect()->back()->withCookie($cookie);
+            return redirect()->route("profiling")->withCookie($cookie);
         }
     }
 

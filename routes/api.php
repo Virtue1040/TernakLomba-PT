@@ -17,6 +17,7 @@ use App\Http\Controllers\Lomba\LombaHadiahController;
 use App\Http\Controllers\Lomba\LombaMemberController;
 use App\Http\Controllers\Lomba\LombaTeamController;
 use App\Http\Controllers\Lomba\TypeHadiahController;
+use App\Http\Controllers\UsersDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("v1/lombaCategory", [LombaCategoryController::class, 'store'])->name("lombaCategory-store");
     Route::put("v1/lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'update'])->name("lombaCategory-update");
     Route::delete("v1/lombaCategory/{id_categoryLomba}", [LombaCategoryController::class, 'destroy'])->name("lombaCategory-delete");
+
+    // Profiling Route
+    Route::post("v1/profiling", [UsersDetailController::class, 'profiling'])->name("usersDetail-store");
 
     // Lomba Detail Route
     Route::get("v1/lombaDetail", [LombaDetailController::class, 'all'])->name("lombaDetail-all");

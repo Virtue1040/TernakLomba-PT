@@ -147,7 +147,7 @@ class RegisteredUserController extends Controller
                 ]
             ], 200);
         } else {
-            return redirect()->route("fill")->withCookie($cookie);
+            return redirect()->route("profiling")->withCookie($cookie);
         }
     }
 }

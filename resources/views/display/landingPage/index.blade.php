@@ -80,75 +80,74 @@
         </div>
 
         <div class="absolute top-1/2 left-1/2 w-full text-center -translate-x-1/2 -translate-y-1/2">
-                <h1 class="font-bold text-[54px] leading-[110%] tracking-[-0.03em] text-center text-white">{!! __('landingPage.welcome') !!}</h1>
-                <p class="mt-4 text-lg max-w-[577px] mx-auto text-white">{!! __('landingPage.subWelcome') !!}</p>
-            <a href="#"
-                class="mt-6 inline-block bg-[#ed8f23] text-white w-[131px] h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti
-                Kami!</a>
+            <h1 class="font-bold leading-[110%] lg:leading-[110%] text-2xl sm:text-3xl md:text-4xl lg:text-[54px]  tracking-[-0.03em] text-center text-white">{!! __('landingPage.welcome') !!}</h1>
+            <p class="mt-2 sm:mt-3 md:mt-4 text-sm sm:text-base md:text-lg max-w-[300px] sm:max-w-[400px] md:max-w-[577px] mx-auto text-white">{!! __('landingPage.subWelcome') !!}</p>
+            <a href="#" class="mt-6 mr-1 inline-block bg-[#ed8f23] text-white w-[120px] sm:w-[131px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti Kami</a>
+            <a href="#" class="mt-6 inline-block bg-white text-[#ed8f23] w-[160px] sm:w-[180px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Daftarkan Lomba</a>
         </div>
 
-        <div class="flex absolute right-0 left-0 bottom-10 justify-center mt-10 space-x-12 text-white">
+        <div class="flex absolute right-0 left-0 bottom-10 justify-center mx-auto mt-10 gap-4 sm:gap-12 text-white">
             <div class="text-left">
-                <p class="font-bold text-[45.62px]">82,8%</p>
-                <p class="text-[13.31px]">Tingkat Kemenangan</p>
+                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">82,8%</p>
+                <p class="text-xs sm:text-sm md:text-[13.31px]">Tingkat Kemenangan</p>
             </div>
             <div class="text-left">
-                <p class="font-bold text-[45.62px]">05+</p>
-                <p class="text-[13.31px]">Kategori Kompetisi</p>
+                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">05+</p>
+                <p class="text-xs sm:text-sm md:text-[13.31px]">Kategori Kompetisi</p>
             </div>
             <div class="text-left">
-                <p class="font-bold text-[45.62px]">170+</p>
-                <p class="text-[13.31px]">Trofi Regional dan Internasional</p>
+                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">170+</p>
+                <p class="text-xs sm:text-sm md:text-[13.31px]">Trofi Regional dan Internasional</p>
             </div>
         </div>
 
-        <div class="absolute bottom-0 left-0">
-            <img class="h-[693px]" src="images/image-left.png" alt="">
+        <div class="absolute bottom-0 left-0 hidden sm:block">
+            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]" src="images/image-left.png" alt="">
         </div>
-        <div class="absolute right-0 bottom-0">
-            <img class="h-[693px]" src="images/image-right.png" alt="">
+        <div class="absolute bottom-0 right-0 hidden sm:block">
+            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]" src="images/image-right.png" alt="">
         </div>
     </section>
 
-    <section class="flex flex-col px-6 py-10 min-h-screen lg:px-10 lg:py-16">
+    <section id="tentang-kami"class="flex flex-col px-6 py-10 min-h-screen lg:px-10 lg:py-16">
         <h2 class="pb-10 font-semibold lg:pb-20">
             <span class="text-[#ED8F23] text-[30px] lg:text-[45px]">|</span>
             <span class="text-[#7C32DE] text-[36px] lg:text-[54px]">Tentang</span>
             <span class="text-black text-[36px] lg:text-[54px]">Kami</span>
         </h2>
 
-        <div class="flex flex-col gap-3 justify-center items-end lg:flex-row lg:gap-8">
-            <div
-                class="rounded-[16px] bg-[#ED8F23] h-[200px] lg:h-[300px] w-[100%] lg:w-[900px] relative p-3">
-                <img src="images/tentang-kami.png" alt="Tentang Kami"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[80%] lg:w-[587px] h-auto">
+        <div class="flex flex-col gap-1 justify-center items-end lg:flex-row lg:gap-8">
+            <div class="relative w-full lg:w-[650px] pt-20 sm:pt-24 lg:pt-28 mb-5 sm:mb-10 lg:mb-0 overflow-hidden">
+                <div class="rounded-[16px] bg-[#ED8F23] h-[230px] lg:h-[330px] w-full lg:w-[650px] relative overflow-visible">
+                    <img src="images/tentang-kami.png" alt="Tentang Kami"
+                        class="absolute bottom-0 left-0 right-0 mx-auto w-full lg:w-[650px] h-auto object-contain">
+                </div>
             </div>
 
-            <div
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-[24px] w-fit lg:w-[695px] h-[300px] lg:h-[421px] flex flex-col justify-between">
-                    <h2 class="text-[28px] lg:text-[44px] font-bold">Latar Belakang dan Tujuan</h2>
-                    <p class="mt-4 text-[16px] lg:text-[24px]">
-                        Ternak Lomba adalah startup di bidang pendidikan yang membantu para mahasiswa menyediakan ladang
-                        lomba untuk berkompetisi dan ruang untuk penyelenggara lomba untuk mendaftarkan lombanya pada
-                        database kami.
-                    </p>
-                </div>
+            <div class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-[24px] w-fit lg:w-[695px] h-[300px] lg:h-[421px] flex flex-col justify-between">
+                <h2 class="text-[28px] lg:text-[44px] font-bold">Latar Belakang dan Tujuan</h2>
+                <p class="mt-4 text-[16px] lg:text-[24px]">
+                    Ternak Lomba adalah startup di bidang pendidikan yang membantu para mahasiswa menyediakan ladang
+                    lomba untuk berkompetisi dan ruang untuk penyelenggara lomba untuk mendaftarkan lombanya pada
+                    database kami.
+                </p>
+            </div>
         </div>
     </section>
 
 
-    <section class="flex flex-col h-screen">
+    <section id="bidang-lomba" class="flex flex-col h-screen">
         <div class="py-4 text-center">
-            <h2 class="text-[54px] font-bold">
+            <h2 class="text-[36px] lg:text-[54px] font-bold">
                 <span class="text-black">Bidang</span>
                 <span class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-transparent bg-clip-text">Lomba</span>
             </h2>
-            <p class="max-w-[609px] mx-auto text-[#777E90] text-[20px] pt-4">
+            <p class="max-w-[609px] mx-5 lg:mx-auto text-[#777E90] text-[17px] lg:text-[20px] pt-4">
                 Semua lomba dari mulai lomba akademik sampai non-akademik bisa kamu pelajari disini
             </p>
         </div>
 
-        <div class="grid flex-grow grid-cols-4 grid-rows-2 gap-4 p-10 px-20">
+        <div class="grid flex-grow grid-cols-4 grid-rows-2 gap-4 p-0 px-0 lg:p-10">
             <div
                 class="rounded-[17.35px] bg-[#02B2C5] flex flex-col justify-start items-start h-full relative p-3 overflow-hidden">
                 <div class="z-10 text-white">
@@ -191,7 +190,7 @@
                 <div class="z-10 text-white">
                     <h3 class="text-[24px] font-bold leading-none">Hackathon <br> Competition</h3>
                 </div>
-                <img src="images/hackathon.png"
+                <img src="images/Hackathon.png"
                     class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
             </div>
 
@@ -220,8 +219,8 @@
         </div>
     </section>
 
-    <section class="py-10 h-screen">
-        <h1 class="text-[54px] font-bold text-center py-10"><span>Testimoni </span> <span
+    <section id="testimoni" class="py-10">
+        <h1 class="text-[36px] lg:text-[54px] font-bold text-center py-10"><span>Testimoni </span> <span
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-transparent bg-clip-text">Mahasiswa</span></h1>
 
         <div class="overflow-hidden w-full">
@@ -258,7 +257,7 @@
     </section>
 
     <section class="p-10">
-        <h2 class="text-[54px] font-semibold">Cari Lomba</h2>
+        <h2 class="text-[36px] lg:text-[54px] font-semibold">Cari Lomba</h2>
 
         <div class="flex overflow-x-auto items-center py-10 space-x-3">
             <button class="flex items-center gap-2 bg-[#F0F0F0] px-4 py-2 rounded-full text-[15.75px]">

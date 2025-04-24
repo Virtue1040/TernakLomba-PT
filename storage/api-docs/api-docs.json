@@ -3092,6 +3092,62 @@
                     }
                 ]
             }
+        },
+        "/api/v1/profiling": {
+            "post": {
+                "tags": [
+                    "Profiling"
+                ],
+                "summary": "Profiling User",
+                "description": "Menambah data profile User",
+                "operationId": "profiling-post",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil Profiling"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -3704,6 +3760,10 @@
         {
             "name": "Type Hadiah",
             "description": "Type Hadiah"
+        },
+        {
+            "name": "Profiling",
+            "description": "Profiling"
         }
     ]
 }
