@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Lomba\LombaController;
 use App\Http\Controllers\UsersDetailController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +24,15 @@ Route::middleware('auth:sanctum', 'profilled', 'web')->group(function () {
     Route::get('/dashboard/chat', function() {
         return view('display.dashboard.chat.index');
     })->name("dashboard-chat");
+
+
+    Route::get("/requestKompetisi", [LombaController::class, "create"])->name("request-kompetisi");
 });
 
 Route::middleware('guests', 'web')->group(function () {
     Route::get('/auth/login', [AuthenticatedSessionController::class, 'create'])->name("login");
     Route::get('/auth/register', [RegisteredUserController::class, 'create'])->name("register");
+    Route::get('/auth/forgot', [PasswordResetLinkController::class, 'create'])->name("forgot-password");
 });
 
 Route::get('language/{locale}', function ($locale) {
@@ -49,3 +55,7 @@ Route::get('/searchTeam', function() {
 Route::get('/profile', function() {
     return view('display.profile.index');
 });
+
+// Route::get('/test', function() {
+//     return view('display.dashboard.explore.index');
+// });

@@ -18,7 +18,7 @@ class UsersDetailController extends Controller
     public function index()
     {
         $listMinat = bidangMinat::all();
-        return view('display.registData.index', ['listMinat' => $listMinat]);  
+        return view('display.registData.profilling.index', ['listMinat' => $listMinat]);  
     }
 
     /**

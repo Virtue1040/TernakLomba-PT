@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 px-4 pb-4 mx-auto w-full max-w-6xl">
+    <div class="grid grid-cols-2 gap-4 px-4 pb-4 mx-auto w-full max-w-6xl md:grid-cols-3">
         <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
             description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
         <x-cards.team-card team-name="Sayonara Team" date="Des 2021"

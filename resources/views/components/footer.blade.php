@@ -33,7 +33,7 @@
             <h2 class="text-lg font-bold">Subscribe News</h2>
             <p class="mt-4 text-[#DDDDDD]">Email Address:</p>
             <div class="mt-2">
-                <x-finder class="w-[300px] h-[30px] lg:h-[50px] text-black" icon_pos="right">
+                <x-finder class="w-[300px] h-[30px] lg:h-[50px] text-black" :full=false icon_pos="right">
                     <x-slot name="icon">
                         <x-svg.send width="30px" height="30px" fill=000000/>
                     </x-slot>

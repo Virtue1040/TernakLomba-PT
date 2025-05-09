@@ -22,7 +22,7 @@
         h-[3px] absolute top-1/2 left-[57.8%] transform -translate-y-1/2 z-0"></div>
     </div>
 
-    <a x-bind:class="step >= {{ $order }} ? '!text-[#B378FF] !opacity-100' : ''"  class="font-manrope text-[24px] 
+    <a x-bind:class="step >= {{ $order }} ? '!text-[#B378FF] !opacity-100' : ''"  class="font-manrope text-[24px] text-center 
         @if ($active)
             text-[#B378FF]
         @else

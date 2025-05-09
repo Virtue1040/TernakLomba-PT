@@ -63,6 +63,31 @@
                 }
             }
         },
+        "/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout and revoke all token",
+                "description": "Logout token user",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil logout"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "tags": [
@@ -176,6 +201,235 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/v1/chat/generate-token": {
+            "post": {
+                "tags": [
+                    "Communication"
+                ],
+                "summary": "Generate your communication token",
+                "description": "Mengambil Communication Token",
+                "operationId": "com-generate-token",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Mengambil Communication Token",
+                                    "data": {
+                                        "token": "A01"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/chat/reset-channel": {
+            "post": {
+                "tags": [
+                    "Communication"
+                ],
+                "summary": "Reset all channel available",
+                "description": "Mereset semua channel",
+                "operationId": "com-resetChannel",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mereset channel"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/chat/send-message": {
+            "post": {
+                "tags": [
+                    "Communication"
+                ],
+                "summary": "Send Message to the channel",
+                "description": "Kirim pesan ke channel",
+                "operationId": "com-sendMessage",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengirim pesan",
+                                    "data": "test pesan"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/chat/get-channels": {
+            "post": {
+                "tags": [
+                    "Communication"
+                ],
+                "summary": "Get All Channel Affiliated",
+                "description": "Mengambil semua channel yang ada di User",
+                "operationId": "com-getChannel",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Mengambil semua channel yang ada di User",
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/lombaAlbum": {
@@ -3728,6 +3982,10 @@
         {
             "name": "Authentication",
             "description": "Authentication endpoints"
+        },
+        {
+            "name": "Communication",
+            "description": "Communication"
         },
         {
             "name": "Lomba Album",

@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\Lomba\LombaAlbumController;
 use App\Http\Controllers\Lomba\LombaCategoryController;
 use App\Http\Controllers\Lomba\LombaController;
@@ -32,9 +33,6 @@ Route::middleware('guests', 'web')->group(function () {
 
     Route::post('auth/login', [AuthenticatedSessionController::class, 'store'])->name('auth-login');
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->name('password.request');
-
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
 
@@ -43,13 +41,14 @@ Route::middleware('guests', 'web')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
-
-        Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
 });
 
+
 // Middleware for sanctum authenticated route
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum', 'web')->group(function () {
+    Route::get('auth/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -123,6 +122,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("v1/lombaAlbum", [LombaAlbumController::class, 'store'])->name("lombaAlbum-store");
     Route::put("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'update'])->name("lombaAlbum-update");
     Route::delete("v1/lombaAlbum/{id_lombaAlbum}", [LombaAlbumController::class, 'destroy'])->name("lombaAlbum-delete");
+
+    //Chat route
+    Route::post('v1/chat/generate-token', [CommunicationController::class, 'generateToken'])->name('chat.token');
+    Route::get('v1/chat/get-channels', [CommunicationController::class, 'getUserChannel'])->name('chat.getChannel');
+    Route::post('v1/chat/send-message', [CommunicationController::class, 'sendMessage'])->name('chat.sendMessage');
+    Route::post('v1/chat/reset-channel', [CommunicationController::class, 'resetChannel'])->name('chat.resetChannel');
 })->middleware("web");
 
 Route::get('/user', function (Request $request) {

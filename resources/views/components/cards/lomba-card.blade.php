@@ -1,6 +1,6 @@
 @props(['title', 'university'])
 
-<div class="w-[303px] min-w-[303px] h-[271px] rounded-lg border border-[#E7E7E7] overflow-hidden">
+<div data-aos="fade" data-aos-duration="1000" class="w-[303px] min-w-[303px] h-[271px] rounded-lg border border-[#E7E7E7] overflow-hidden">
     <img src="{{ asset('images/4cnational.png') }}" alt="4C National Competition"
         class="w-[303px] min-w-[303px] h-[154px] object-cover">
     <div class="p-4">

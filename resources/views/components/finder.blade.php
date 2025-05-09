@@ -1,4 +1,4 @@
-@props(['icon', 'icon_pos' => 'right', 'placeholder' => 'placeholder here...'])
+@props(['icon', 'icon_pos' => 'right', 'placeholder' => 'placeholder here...', 'full' => true])
 <?php
     $class = 'p-4 font-[16px] px-7 bg-white rounded-full ';
     if ($icon_pos == 'right') {
@@ -8,7 +8,13 @@
     }
 ?>
 
-<div class="flex relative w-fit">
+<div class="flex relative 
+    @if ($full)
+        w-full
+    @else
+        w-fit
+    @endif
+">
     <input {{ $attributes->merge(['class' => $class]) }} type="text" placeholder="{{ $placeholder }}">
     <div
         class="absolute flex justify-center items-center

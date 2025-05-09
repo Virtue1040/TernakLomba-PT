@@ -1,5 +1,5 @@
 <x-layouts.navigation>
-    <section class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] h-[310px]">
+    <section class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] h-fit">
         <div class="flex flex-col gap-8 p-6 px-4 w-full">
             <div class="flex justify-between items-center">
                 <h1 class="font-semibold text-[48px] text-left leading-[110%] tracking-[-0.03em] text-white">
@@ -37,9 +37,11 @@
                     </svg>
                 </button>
             </div>
-            <div class="flex gap-3 mt-[100px]">
-                <x-finder class="w-[500px]" icon_pos="left" />
-                <x-filter class="w-[112px]" />
+            <div class="flex sm:flex-row flex-col gap-3 mt-[100px]">
+                <div class="w-full md:w-full lg:w-[500px] h-auto">
+                    <x-finder class="w-full" icon_pos="left" placeholder="Cari Lomba" />
+                </div>
+                <x-filter class="w-full md:w-auto lg:w-[112px] h-auto md:h-[50px]" />
             </div>
         </div>
     </section>
@@ -59,28 +61,28 @@
                     </button>
                 </div>
                 <div class="flex gap-4 w-full h-[52px] items-center" name="filter">
-                    <x-filter class="w-[105px] !bg-[#F0F0F0] h-[44px]" />
+                    {{-- <x-filter class="w-[105px] !bg-[#F0F0F0] h-[44px]" /> --}}
                     <div class="w-[1px] h-[50%] bg-[#F0F0F0]">
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex overflow-x-auto gap-2">
                         <div
-                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full">
+                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                             All
                         </div>
                         <div
-                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full">
+                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                             Finance
                         </div>
                         <div
-                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full">
+                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                             Business
                         </div>
                         <div
-                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full">
+                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                             Design
                         </div>
                         <div
-                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full">
+                            class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                             AI & Machine Learning
                         </div>
                     </div>
@@ -89,6 +91,23 @@
             <div x-show="menu === 'kompetisi'" class="flex overflow-x-auto flex-row gap-4 w-full">
                 <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
                 <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+            </div>
+            <div x-show="menu === 'orang'" class="flex overflow-x-auto flex-row gap-4 py-1 w-full">
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
+                <x-cards.orang-card />
             </div>
         </div>
     </section>

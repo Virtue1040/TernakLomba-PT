@@ -1,42 +1,39 @@
 @props(['title','university','participants'])
 
-<div class="w-[367px] h-[194px] rounded-[24px] border flex flex-col justify-between p-4">
-    <div class="flex justify-start items-start">
-        <div class="flex space-x-2">
-            <span class="px-3 py-1 bg-[#B378FF1A] text-[#822BF2] rounded-full text-[12px]">
-                UI/UX Design
-            </span>
-            <span class="px-3 py-1 bg-[#1548D10D] text-[#1548D1] rounded-full text-[12px]">
-                Sudah Daftar
-            </span>
-        </div>
-
+<div class="w-full max-w-[367px] min-h-[194px] rounded-[24px] border flex flex-col justify-between p-3 md:p-4">
+    <div class="flex overflow-x-auto justify-start items-start">
+        <span class="px-2 md:px-3 py-1 bg-[#B378FF1A] text-[#822BF2] rounded-full text-xs whitespace-nowrap">
+            UI/UX Design
+        </span>
+        <span class="px-2 md:px-3 py-1 bg-[#1548D10D] text-[#1548D1] rounded-full text-xs whitespace-nowrap">
+            Sudah Daftar
+        </span>
     </div>
-    <div>
-        <h2 class="text-[20px] font-bold">{{ $title }}</h2>
-        <p class="text-[12px] text-gray-600">{{ $university }}</p>
+    
+    <div class="my-2">
+        <h2 class="text-lg font-bold md:text-xl line-clamp-2">{{ $title }}</h2>
+        <p class="text-xs text-gray-600">{{ $university }}</p>
     </div>
-    <div class="flex justify-between items-center">
+    
+    <div class="flex flex-col gap-3 justify-between items-start sm:flex-row sm:items-center sm:gap-0">
         <div class="flex gap-2">
-            <button class="bg-black text-white text-[14px] px-4 py-2 rounded-full">
+            <button class="px-3 py-1.5 text-xs text-white bg-black rounded-full md:text-sm md:px-4 md:py-2">
                 Lihat Detail
             </button>
 
-            <button>
-                <svg width="46" height="44" viewBox="0 0 46 44" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+            <button class="flex justify-center items-center">
+                <svg width="40" height="38" viewBox="0 0 46 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
                     <rect x="1" y="1" width="44" height="42" rx="21" stroke="#822BF2" />
                     <path
                         d="M13 18.9937C13 15.6835 15.6765 13 19.0007 13H26.9993C30.3134 13 33 15.6948 33 18.9937V31H19.0007C15.6866 31 13 28.3052 13 25.0063V18.9937ZM31 29V18.9937C31 16.7954 29.2049 15 26.9993 15H19.0007C16.7846 15 15 16.7846 15 18.9937V25.0063C15 27.2046 16.7951 29 19.0007 29H31ZM25 21H27V23H25V21ZM19 21H21V23H19V21Z"
                         fill="#822BF2" />
                 </svg>
-
             </button>
         </div>
+        
         <div class="flex items-center gap-1 px-2 py-1 bg-[#6B6CF70D] rounded-full">
             <div>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4">
                     <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M8.00005 0.833252C6.25115 0.833252 4.83338 2.25102 4.83338 3.99992C4.83338 5.74882 6.25115 7.16659 8.00005 7.16659C9.74895 7.16659 11.1667 5.74882 11.1667 3.99992C11.1667 2.25102 9.74895 0.833252 8.00005 0.833252ZM5.83338 3.99992C5.83338 2.8033 6.80343 1.83325 8.00005 1.83325C9.19666 1.83325 10.1667 2.8033 10.1667 3.99992C10.1667 5.19654 9.19666 6.16659 8.00005 6.16659C6.80343 6.16659 5.83338 5.19654 5.83338 3.99992Z"
                         fill="#6B6CF7" />
@@ -45,7 +42,7 @@
                         fill="#6B6CF7" />
                 </svg>
             </div>
-            <p class="text-[#6B6CF7]">{{ $participants }}</p>
+            <p class="text-[#6B6CF7] text-xs">{{ $participants }}</p>
         </div>
     </div>
 </div>

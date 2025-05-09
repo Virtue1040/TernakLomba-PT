@@ -1,49 +1,45 @@
 <x-layouts.default footer=false>
-    <div class="px-4 mx-auto w-full">
+    <div class="w-full mx-auto px-4">
         <div class="p-4">
-            <a href="dashboard" class="flex gap-2 items-center text-gray-800">
+            <a href="dashboard" class="flex items-center gap-2 text-gray-800">
                 <svg width="17" height="17" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M10.4376 14.6665H26.6663V17.3332H10.4376L17.5895 24.4851L15.7039 26.3707L5.33301 15.9999L15.7039 5.62891L17.5895 7.51452L10.4376 14.6665Z"
-                        fill="black" />
-                </svg>
+                <path d="M10.4376 14.6665H26.6663V17.3332H10.4376L17.5895 24.4851L15.7039 26.3707L5.33301 15.9999L15.7039 5.62891L17.5895 7.51452L10.4376 14.6665Z" fill="black"/>
+                </svg>  
                 <span class="font-medium">Profil Saya</span>
             </a>
         </div>
-
-        <div class="pb-7 rounded-b-lg shadow-lg">
+        
+        <div class="shadow-lg pb-7 rounded-b-lg">
             <div class="relative">
                 <div class="w-full h-56 bg-[#822bf2] rounded-t-lg overflow-hidden"><x-svg.bg-profile /></div>
-
+                
                 <div class="absolute left-8 -bottom-16">
-                    <div class="overflow-hidden w-32 h-32 bg-white rounded-full border-4 border-white">
-                        <img src="{{ asset('images/4cnational.png') }}" class="object-cover w-full h-full">
+                    <div class="rounded-full w-32 h-32 border-4 border-white overflow-hidden bg-white">
+                        <img src="{{ asset('images/4cnational.png') }}" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
-
+            
             <div class="flex justify-end mt-4 mr-4">
-                <button
-                    class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
+                <button class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
                     <x-svg.edit-icon height="20" width="20" class="mr-2" />
                     Edit Profile
                 </button>
-                <button
-                    class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
+                <button class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
                     Undang ke Compspace
                 </button>
             </div>
 
-            <div class="px-8 mt-8">
+            <div class="mt-8 px-8">
                 <h1 class="text-2xl font-bold text-gray-800">Taylor Smith</h1>
                 <p class="text-gray-600">Bandung | Telkom University</p>
             </div>
 
             <div class="grid grid-cols-3 gap-4 px-8 mt-6">
                 <div
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">20 Lomba</h3>
+                        <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
                         <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -68,11 +64,11 @@
                         </svg>
                     </div>
                 </div>
-
+            
                 <div
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">50%</h3>
+                        <h3 class="text-[26.35px] font-semibold">50%</h3>
                         <p class="text-[9.88px]">Tingkat Kemenangan</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -116,11 +112,11 @@
                         </svg>
                     </div>
                 </div>
-
+            
                 <div
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">4 Kemenangan</h3>
+                        <h3 class="text-[26.35px] font-semibold">4 Kemenangan</h3>
                         <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -149,90 +145,79 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 mt-4 mb-8 md:grid-cols-5">
-            <div class="space-y-6 md:col-span-3">
-                <div class="p-6 bg-white rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mt-4 mb-8">
+            <div class="md:col-span-3 space-y-6">
+                <div class="bg-white rounded-lg shadow-lg p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Tentang</h2>
                         <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
+                            <x-svg.edit-icon height="20" width="20"/>
                         </button>
                     </div>
-                    <p class="text-sm text-gray-600">
-                        UI/UX Designer with strong experience in designing user interfaces for 3 years. Proficient in
-                        Figma and Framer, with expertize in SaaS & Company Profile. Successfully handled 50+ abroad
-                        projects, including numerous landing pages, dashboards, full-app websites and mobile.
+                    <p class="text-gray-600 text-sm">
+                        UI/UX Designer with strong experience in designing user interfaces for 3 years. Proficient in Figma and Framer, with expertize in SaaS & Company Profile. Successfully handled 50+ abroad projects, including numerous landing pages, dashboards, full-app websites and mobile.
                     </p>
                 </div>
 
-                <div class="p-6 bg-white rounded-lg shadow-lg">
+                <div class="bg-white rounded-lg shadow-lg p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Minat Kompetisi</h2>
                         <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
+                            <x-svg.edit-icon height="20" width="20"/>
                         </button>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">UI/UX
-                            Competition</span>
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business
-                            Plan Competition</span>
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business
-                            Case</span>
+                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">UI/UX Competition</span>
+                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business Plan Competition</span>
+                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business Case</span>
                     </div>
                 </div>
 
-                <div x-data="{ menu: 'lombaDiikuti' }" class="p-6 bg-white rounded-lg shadow-lg">
+                <div x-data="{ menu: 'lombaDiikuti' }" class="bg-white rounded-lg shadow-lg p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Aktifitas dan Kegiatan</h2>
                     </div>
-
-                    <div class="flex gap-2 mb-6">
+                    
+                    <div class="flex mb-6 gap-2">
                         <button @click="menu = 'lombaDiikuti'"
-                            class="text-black text-[13px] sm:text-[15px] border border-[#E7E7E7] px-3 py-1 sm:py-2 rounded-full font-medium"
-                            x-bind:class="menu === 'lombaDiikuti' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' :
-                                'bg-white'">
+                            class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full font-medium"
+                            x-bind:class="menu === 'lombaDiikuti' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
                             Lomba yang sedang diikuti
-                        </button>
+                        </button>                       
                         <button @click="menu = 'lombaSelesai'"
-                            class="text-black text-[13px] sm:text-[15px] border border-[#E7E7E7] px-3 py-1 sm:py-2 rounded-full font-medium"
-                            x-bind:class="menu === 'lombaSelesai' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' :
-                                'bg-white'">
+                            class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full font-medium"
+                            x-bind:class="menu === 'lombaSelesai' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
                             Lomba yang telah selesai
-                        </button>
+                        </button>                                              
                     </div>
-
+                    
                     <div x-show="menu === 'lombaDiikuti'" class="flex overflow-x-auto flex-row gap-4">
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                        <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                        <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
                     </div>
 
                     <div x-show="menu === 'lombaSelesai'" class="flex overflow-x-auto flex-row gap-4">
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                        <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                        <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                        <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
                     </div>
                 </div>
             </div>
 
             <div class="md:col-span-2">
-                <div class="p-6 bg-white rounded-lg shadow-lg h-fit">
+                <div class="bg-white rounded-lg shadow-lg p-6 h-fit">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Prestasi</h2>
                         <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
+                            <x-svg.edit-icon height="20" width="20"/>
                         </button>
                     </div>
-
+                    
                     <div class="space-y-4">
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
+                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1" tingkat="Nasional" />
+                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1" tingkat="Nasional" />
+                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1" tingkat="Nasional" />
+                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1" tingkat="Nasional" />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <x-layouts.navigation>
-    <div class="p-8">
+    <div class="p-8 w-full">
         <div class="mb-8">
             <div class="flex justify-between items-center">
                 <h1 class="text-[36px] font-semibold">Dashboard</h1>
@@ -9,36 +9,7 @@
                     </button>
         
                     <button>
-        
-                        <svg width="65" height="66" viewBox="0 0 65 66" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_d_354_2009)">
-                                <path
-                                    d="M35.2924 45.006C35.0578 45.4103 34.7212 45.7459 34.3162 45.9792C33.9112 46.2125 33.452 46.3353 32.9846 46.3353C32.5172 46.3353 32.058 46.2125 31.653 45.9792C31.2479 45.7459 30.9113 45.4103 30.6768 45.006M40.9884 27.6643C40.9884 25.5415 40.1452 23.5057 38.6442 22.0047C37.1431 20.5037 35.1073 19.6604 32.9846 19.6604C30.8618 19.6604 28.826 20.5037 27.325 22.0047C25.824 23.5057 24.9807 25.5415 24.9807 27.6643C24.9807 37.0021 20.9788 39.6701 20.9788 39.6701H44.9904C44.9904 39.6701 40.9884 37.0021 40.9884 27.6643Z"
-                                    stroke="#8E8E8E" stroke-width="2.66796" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <circle cx="39.3877" cy="23.3955" r="6.4031" fill="#822BF2" stroke="white"
-                                    stroke-width="3.20155" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_d_354_2009" x="-2.08703" y="-0.543393" width="70.1431"
-                                    height="70.1431" filterUnits="userSpaceOnUse"
-                                    color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix"
-                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dy="1.52801" />
-                                    <feGaussianBlur stdDeviation="1.52801" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix"
-                                        values="0 0 0 0 0.905208 0 0 0 0 0.913917 0 0 0 0 0.916667 0 0 0 0.25 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix"
-                                        result="effect1_dropShadow_354_2009" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_354_2009"
-                                        result="shape" />
-                                </filter>
-                            </defs>
-                        </svg>
+                        <x-svg.notif width=64 height=64/>
                     </button>
         
                 </div>
@@ -47,11 +18,11 @@
             <p class="text-[14px] text-gray-500">Temukan universitas ideal Anda di sini..</p>
         </div>
         
-        <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-3 gap-6">
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
+                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">20 Lomba</h3>
                     <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -78,9 +49,9 @@
             </div>
         
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">50%</h3>
+                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">50%</h3>
                     <p class="text-[9.88px]">Tingkat Kemenangan</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -126,9 +97,9 @@
             </div>
         
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">4 Kemenangan</h3>
+                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">4 Kemenangan</h3>
                     <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -157,13 +128,45 @@
         
         </div>
         
-        <div>
-            <h2 class="mb-4 text-xl font-bold">Perlombaan yang sedang diikuti</h2>
-            <div class="grid grid-cols-3 gap-6 mb-8">
-        
+        <div x-data="{ menu: 'kompetisi' }">
+            <div class="flex overflow-x-auto items-center my-7 space-x-3">
+                <button @click="menu = 'kompetisi'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'kompetisi' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                Compspace saya
+                </button>
+                <button @click="menu = 'lombaInProgress'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'lombaInProgress' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                    Lomba yang sedang diikuti
+                </button>
+                <button @click="menu = 'lombaFinish'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'lombaFinish' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                    Lomba yang telah selesai
+                </button>
+            </div>
+            <div x-show="menu === 'kompetisi'" class="grid grid-cols-2 gap-6 mb-8 md:grid-cols-3">
                 <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
                     participants="2/4" />
-        
+                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                    participants="2/4" />
+                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                    participants="2/4" />
+                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                    participants="2/4" />
+                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                    participants="2/4" />
+            </div>
+            <div x-show="menu === 'lombaInProgress'" class="flex overflow-x-auto gap-6 mb-8">
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+            </div>
+            
+            <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
             </div>
         </div>
     </div>

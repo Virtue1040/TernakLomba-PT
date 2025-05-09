@@ -18,7 +18,7 @@ class Unprofilled
         $user = auth('sanctum')->user();
         $user_detail = $user->user_detail;
         if ($user_detail->first_name != null) {
-            return redirect()->route("dashboard-chat");
+            return redirect()->route("dashboard-index");
         }
         return $next($request);
     }

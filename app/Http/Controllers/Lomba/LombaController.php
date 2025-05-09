@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lomba;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Lomba\StoreLombaRequest;
 use App\Http\Requests\Lomba\UpdateLombaRequest;
+use App\Models\bidangMinat;
 use App\Models\Lomba;
 use App\Models\Lomba_detail;
 
@@ -13,7 +14,7 @@ class LombaController extends Controller
     function __construct()
     {
         $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
-        $this->middleware('permission:lomba-creates', ['only' => ['create', 'store']]);
+        $this->middleware('permission:lomba-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:lomba-delete', ['only' => ['destroy']]);
     }
@@ -171,7 +172,8 @@ class LombaController extends Controller
      */
     public function create()
     {
-        //
+        $listMinat = bidangMinat::all();
+        return view("display.registData.lomba.index", ['listMinat' => $listMinat]);
     }
 
     /**

@@ -81,15 +81,47 @@ class AuthenticatedSessionController extends Controller
         }
     }
 
-    
-    public function destroy(Request $request): RedirectResponse
+    /**
+     * Logout User Token
+     * @OA\Get(
+     *     path="/api/auth/logout",
+     *     tags={"Authentication"},
+     *     operationId="logout",
+     *     summary="Logout and revoke all token",
+     *     description="Logout token user",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil logout",
+     *             }
+     *         ),
+     *     ),
+     * )
+     */
+    public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+ 
+        if (auth("sanctum")->check()) {
+            auth("sanctum")->user()->tokens()->where("name", 'authentication')->delete();
+        }
 
         session()->invalidate();
 
         session()->regenerateToken();
 
-        return redirect('/');
+        if ($request->wantsJson()) {
+            session()->regenerate();
+            return response()->json([
+                "success" => true,  
+                "status_code" => 200,
+                "message" => "Berhasil logout", 
+            ], 200);
+        } else {
+            return redirect('/');
+        }
     }
 }

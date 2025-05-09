@@ -2,7 +2,7 @@
 
 <div x-data="{ formOpen: false }" class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
     <div class="flex justify-between items-center">
-        <h3 class="text-sm sm:text-lg font-semibold">{{ $teamName }}</h3>
+        <h3 class="text-sm font-semibold sm:text-lg">{{ $teamName }}</h3>
         <span
             class="px-1 whitespace-nowrap text-[12px] text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">{{ $date }}</span>
     </div>
@@ -24,15 +24,16 @@
         </div>
 
         <button @click="formOpen = true"
-            class="px-2 py-1 whitespace-nowrap md:px-4 md:py-2 md:text-sm text-xs text-white bg-black rounded-full transition-colors hover:bg-gray-800">
+            class="px-2 py-1 text-xs text-white whitespace-nowrap bg-black rounded-full transition-colors md:px-4 md:py-2 md:text-sm hover:bg-gray-800">
             Request Join
         </button>
     </div>
 
-    <div x-show="formOpen" x-cloak class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
+    <div x-show="formOpen" x-cloak
+        class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
         @click.self="formOpen = false">
         <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
-            <h2 class="text-xl font-semibold">Request Join</h2>
+            <h2 class="text-xl font-semibold">Join Compsace</h2>
 
             <form action="" method="POST">
                 @csrf
@@ -40,7 +41,7 @@
 
                 <div class="mb-4">
                     <label class="block mb-2 text-sm font-bold text-gray-700" for="rolePosition">
-                        Role Position
+                        Role Saya
                     </label>
                     <select name="role_position" id="rolePosition"
                         class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -54,7 +55,7 @@
 
                 <div class="mb-4">
                     <label class="block mb-2 text-sm font-bold text-gray-700" for="message">
-                        Add your message
+                        Note(Opsional)
                     </label>
                     <textarea name="message" id="message"
                         class="px-3 py-2 w-full h-24 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -63,11 +64,12 @@
 
                 <div class="flex justify-end space-x-4">
                     <button type="button" @click="formOpen = false"
-                        class="px-4 py-2 text-red-500 rounded-full border border-red-500 hover:bg-red-50">
-                        No, cancel
+                        class="px-5 py-2 text-black rounded-md border border-gray-500">
+                        Batal
                     </button>
-                    <button type="submit" class="px-4 py-2 text-white bg-black rounded-full hover:bg-gray-800">
-                        Request
+                    <button type="submit"
+                        class="px-4 py-2 text-white bg-gradient-to-b from-[#822bf2] to-[#b378ff] rounded-md">
+                        Selanjutnya
                     </button>
                 </div>
             </form>

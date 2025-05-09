@@ -2,7 +2,8 @@
     <x-slot name="script">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+        <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+        <link href="https://unpkg.com/splitting/dist/splitting.css" rel="stylesheet" />
         <script>
             $(document).ready(function() {
                 var swiper = new Swiper(".swiper", {
@@ -70,161 +71,162 @@
                 }
             });
         </script>
+        <script>
+            window.addEventListener('load', () => {
+                const screenHeight = window.innerHeight;
+                document.getElementById('hero').style.minHeight = screenHeight + 'px';
+            });
+        </script>
     </x-slot>
 
-    <section class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] h-screen">
-        <x-navbar/>
+    <style>
+        .fade-text .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.2s forwards;
+        }
+
+        /* Apply different delays using Splitting's --char-index variable */
+        .fade-text .char {
+            animation-delay: calc((var(--char-index) * 0.02s) + 500ms);
+        }
+
+        /* Optional: Vary animation duration or direction */
+        .fade-text .char:nth-child(odd) {
+            animation-name: fadeLeft;
+        }
+
+        .fade-text .char:nth-child(even) {
+            animation-name: fadeRight;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Initial transform to set direction */
+        .fade-text .char:nth-child(odd) {
+            transform: translateX(-20px);
+        }
+
+        .fade-text .char:nth-child(even) {
+            transform: translateX(20px);
+        }
+    </style>
+
+    <section id="hero" class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] min-h-screen">
+        <x-navbar />
 
         <div class="flex absolute right-0 bottom-0 left-0 justify-center">
             <img class="w-auto h-[600px]" src="images/lightning-lights.png" alt="">
         </div>
 
+
         <div class="absolute top-1/2 left-1/2 w-full text-center -translate-x-1/2 -translate-y-1/2">
-            <h1 class="font-bold leading-[110%] lg:leading-[110%] text-2xl sm:text-3xl md:text-4xl lg:text-[54px]  tracking-[-0.03em] text-center text-white">{!! __('landingPage.welcome') !!}</h1>
-            <p class="mt-2 sm:mt-3 md:mt-4 text-sm sm:text-base md:text-lg max-w-[300px] sm:max-w-[400px] md:max-w-[577px] mx-auto text-white">{!! __('landingPage.subWelcome') !!}</p>
-            <a href="#" class="mt-6 mr-1 inline-block bg-[#ed8f23] text-white w-[120px] sm:w-[131px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti Kami</a>
-            <a href="#" class="mt-6 inline-block bg-white text-[#ed8f23] w-[160px] sm:w-[180px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Daftarkan Lomba</a>
+            <h1 data-splitting data-aos="zoom-in" data-aos-delay="500"
+                class="splitting fade-text font-bold leading-[110%] lg:leading-[110%] text-2xl sm:text-3xl md:text-4xl lg:text-[54px]  tracking-[-0.03em] text-center text-white">
+                {!! __('landingPage.welcome') !!}</h1>
+            <p
+                class="mt-2 sm:mt-3 md:mt-4 text-sm sm:text-base md:text-lg max-w-[300px] sm:max-w-[400px] md:max-w-[577px] mx-auto text-white">
+                {!! __('landingPage.subWelcome') !!}</p>
+            <a href="#"
+                class="mt-6 mr-1 inline-block bg-[#ed8f23] text-white w-[120px] sm:w-[131px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti
+                Kami</a>
+            <a href="#"
+                class="mt-6 inline-block bg-white text-[#ed8f23] w-[160px] sm:w-[180px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Daftarkan
+                Lomba</a>
         </div>
 
-        <div class="flex absolute right-0 left-0 bottom-10 justify-center mx-auto mt-10 gap-4 sm:gap-12 text-white">
-            <div class="text-left">
-                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">82,8%</p>
-                <p class="text-xs sm:text-sm md:text-[13.31px]">Tingkat Kemenangan</p>
-            </div>
-            <div class="text-left">
-                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">05+</p>
-                <p class="text-xs sm:text-sm md:text-[13.31px]">Kategori Kompetisi</p>
-            </div>
-            <div class="text-left">
-                <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">170+</p>
-                <p class="text-xs sm:text-sm md:text-[13.31px]">Trofi Regional dan Internasional</p>
+        <div data-aos="zoom-in" data-aos-delay="500" data-aos-anchor=".splitting" class="absolute inset-x-0 bottom-10 flex justify-center text-white">
+            <div data-aos="slide-up" data-aos-delay="500" data-aos-anchor=".splitting"
+                class="flex w-full max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl px-6 justify-center gap-6 md:gap-12">
+
+                <div class="text-left">
+                    <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">82,8%</p>
+                    <p class="text-xs sm:text-sm md:text-[13.31px]">Tingkat Kemenangan</p>
+                </div>
+
+                <div class="text-left">
+                    <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">05+</p>
+                    <p class="text-xs sm:text-sm md:text-[13.31px]">Kategori Kompetisi</p>
+                </div>
+
+                <div class="text-left">
+                    <p class="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[45.62px]">170+</p>
+                    <p class="text-xs sm:text-sm md:text-[13.31px]">Trofi Regional dan Internasional</p>
+                </div>
+
             </div>
         </div>
 
-        <div class="absolute bottom-0 left-0 hidden sm:block">
-            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]" src="images/image-left.png" alt="">
+        <div class="hidden absolute bottom-0 left-0 md:block">
+            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]"
+                src="images/image-left.png" alt="">
         </div>
-        <div class="absolute bottom-0 right-0 hidden sm:block">
-            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]" src="images/image-right.png" alt="">
+        <div class="hidden absolute right-0 bottom-0 md:block">
+            <img class="h-auto max-h-[150px] sm:max-h-[470px] md:max-h-[550px] lg:max-h-[693px]"
+                src="images/image-right.png" alt="">
         </div>
     </section>
 
-    <section id="tentang-kami"class="flex flex-col px-6 py-10 min-h-screen lg:px-10 lg:py-16">
+    <section id="tentang-kami" class="flex flex-col px-6 py-10 min-h-screen lg:px-10 lg:py-16">
         <h2 class="pb-10 font-semibold lg:pb-20">
             <span class="text-[#ED8F23] text-[30px] lg:text-[45px]">|</span>
             <span class="text-[#7C32DE] text-[36px] lg:text-[54px]">Tentang</span>
             <span class="text-black text-[36px] lg:text-[54px]">Kami</span>
         </h2>
 
-        <div class="flex flex-col gap-1 justify-center items-end lg:flex-row lg:gap-8">
-            <div class="relative w-full lg:w-[650px] pt-20 sm:pt-24 lg:pt-28 mb-5 sm:mb-10 lg:mb-0 overflow-hidden">
-                <div class="rounded-[16px] bg-[#ED8F23] h-[230px] lg:h-[330px] w-full lg:w-[650px] relative overflow-visible">
+        <div class="flex flex-col gap-8 justify-center items-center lg:flex-row lg:items-stretch">
+            <div data-aos="fade" data-aos-duration="1000" class="w-full max-w-[650px] mb-0 lg:w-1/2 relative h-fit">
+                <div
+                    class="bg-[#ED8F23] rounded-[16px] h-[230px] sm:h-[280px] lg:h-[330px] w-full relative mt-16 sm:mt-32 lg:mt-24">
                     <img src="images/tentang-kami.png" alt="Tentang Kami"
-                        class="absolute bottom-0 left-0 right-0 mx-auto w-full lg:w-[650px] h-auto object-contain">
+                        class="absolute bottom-0 left-0 right-0 mx-auto w-full h-auto object-contain max-h-none max-w-[100%]">
                 </div>
             </div>
 
-            <div class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-[24px] w-fit lg:w-[695px] h-[300px] lg:h-[421px] flex flex-col justify-between">
-                <h2 class="text-[28px] lg:text-[44px] font-bold">Latar Belakang dan Tujuan</h2>
-                <p class="mt-4 text-[16px] lg:text-[24px]">
-                    Ternak Lomba adalah startup di bidang pendidikan yang membantu para mahasiswa menyediakan ladang
-                    lomba untuk berkompetisi dan ruang untuk penyelenggara lomba untuk mendaftarkan lombanya pada
-                    database kami.
-                </p>
+            <div data-aos="fade" data-aos-duration="1000" class="w-full max-w-[650px] lg:w-1/2">
+                <div
+                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 sm:p-8 lg:p-10 rounded-[24px] h-full flex flex-col justify-center">
+                    <h2 class="text-[28px] sm:text-[36px] md:text-[40px] lg:text-[44px] font-bold">Latar Belakang dan
+                        Tujuan</h2>
+                    <p class="mt-4 text-[16px] sm:text-[20px] lg:text-[24px]">
+                        Ternak Lomba adalah startup di bidang pendidikan yang membantu para mahasiswa menyediakan ladang
+                        lomba untuk berkompetisi dan ruang untuk penyelenggara lomba untuk mendaftarkan lombanya pada
+                        database kami.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
 
-    <section id="bidang-lomba" class="flex flex-col h-screen">
-        <div class="py-4 text-center">
-            <h2 class="text-[36px] lg:text-[54px] font-bold">
-                <span class="text-black">Bidang</span>
-                <span class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-transparent bg-clip-text">Lomba</span>
-            </h2>
-            <p class="max-w-[609px] mx-5 lg:mx-auto text-[#777E90] text-[17px] lg:text-[20px] pt-4">
-                Semua lomba dari mulai lomba akademik sampai non-akademik bisa kamu pelajari disini
-            </p>
-        </div>
-
-        <div class="grid flex-grow grid-cols-4 grid-rows-2 gap-4 p-0 px-0 lg:p-10">
-            <div
-                class="rounded-[17.35px] bg-[#02B2C5] flex flex-col justify-start items-start h-full relative p-3 overflow-hidden">
-                <div class="z-10 text-white">
-                    <h3 class="text-[24px] font-bold leading-none">Business Plan <br> Competition</h3>
-                </div>
-
-                <img src="images/business.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-[#D8FCC1] col-start-1 row-start-2 flex flex-col justify-between h-full relative overflow-hidden p-4">
-                <div class="z-10 text-black">
-                    <h3 class="text-[24px] font-bold leading-none">Stock Market <br> Competition</h3>
-                </div>
-                <img src="images/stock-market.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-[#FF694B] col-start-2 row-start-1 flex flex-col justify-between h-full relative overflow-hidden p-4">
-                <div class="z-10 text-white">
-                    <h3 class="text-[24px] font-bold leading-none">Business Case <br> Competition</h3>
-                </div>
-                <img src="images/business-case.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-[#FFF1BF] col-start-2 row-start-2 flex flex-col justify-between h-full relative overflow-hidden p-4">
-                <div class="z-10 text-black">
-                    <h3 class="text-[24px] font-bold leading-none">Debate <br> Competition</h3>
-                </div>
-                <img src="images/debate.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-[#8D51FF] col-start-3 row-start-1 flex flex-col justify-between h-full relative overflow-hidden p-4">
-                <div class="z-10 text-white">
-                    <h3 class="text-[24px] font-bold leading-none">Hackathon <br> Competition</h3>
-                </div>
-                <img src="images/Hackathon.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-gradient-to-b from-[#1548D1] to-[#1E9AFA] col-start-3 row-start-2 flex flex-col justify-between h-full relative overflow-hidden p-4">
-                <div class="z-10 text-white">
-                    <h3 class="text-[24px] font-bold leading-none">UI/UX Design <br> Competition </h3>
-                </div>
-                <img src="images/UIUX.png"
-                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-auto h-[165px]">
-            </div>
-
-            <div
-                class="rounded-[17.35px] bg-gradient-to-t from-[#3ACC00] to-[#498432] row-span-2 col-start-4 row-start-1 flex flex-col justify-between h-full relative overflow-hidden p-6">
-                <div class="z-10 space-y-2 text-white">
-                    <p
-                        class="bg-white bg-opacity-15 backdrop-blur-md w-[111px] h-[38px] rounded-full flex items-center justify-center text-white text-[16px]">
-                        Stay tuned</p>
-                    <h3 class="text-[30px] font-bold leading-tight">Masih ada 10 <br> Kompetisi yang akan <br> datang!
-                    </h3>
-                </div>
-                <img src="images/juara2.png"
-                    class="absolute bottom-0 left-1/2 w-full h-auto transform -translate-x-1/2">
-            </div>
-
-        </div>
-    </section>
+    <x-sections.bidangLomba-section />
 
     <section id="testimoni" class="py-10">
         <h1 class="text-[36px] lg:text-[54px] font-bold text-center py-10"><span>Testimoni </span> <span
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-transparent bg-clip-text">Mahasiswa</span></h1>
 
         <div class="overflow-hidden w-full">
-            <div class="w-full swiper">
+            <div data-aos="fade" data-aos-duration="1000" class="w-full swiper">
                 <div class="swiper-wrapper">
                     <x-cards.testimoni-card
                         description="Mulai belajar di komunitas yang suportif tapi juga kompetitif..."
@@ -272,12 +274,15 @@
         </div>
 
         <div class="flex overflow-x-auto flex-row gap-4">
-            <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
-            <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+            <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+            <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
         </div>
 
         <div class="flex justify-center py-10">
             <button class="text-[16px] border border-[#E7E7E7] px-4 py-2 rounded-full">Explore Lebih banyak</button>
         </div>
     </section>
+    <script>
+        Splitting()
+    </script>
 </x-layouts.default>
