@@ -26,7 +26,7 @@ class AuthenticatedSessionController extends Controller
      *     tags={"Authentication"},
      *     operationId="login",
      *     summary="Login to get Authentication Token",
-     *     description="Mengambil Token User",
+     *     description="Login Token User",
      *     @OA\Parameter(
      *         name="username",
      *         in="query",
@@ -62,23 +62,69 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $user = Auth::user();
         
-        $user->tokens()->where("name", 'authentication')->delete();
+        // $user->tokens()->where("name", 'authentication')->delete();
         $token = $user->createToken('authentication')->plainTextToken;
         $cookie = cookie(env("TOKEN_NAME", "auth_token"), $token, 60 * 24 * 7, '/', null, true, true, false, 'lax');
         
-        if ($request->wantsJson()) {
-            session()->regenerate();
-            return response()->json([
-                "success" => true,  
-                "status_code" => 200,
-                "message" => "Berhasil login",
-                "data" => [
-                    "token" => $token
-                ]   
-            ], 200);
-        } else {
-            return redirect()->route("profiling")->withCookie($cookie);
+        return redirect()->route("profiling")->withCookie($cookie);
+    }
+
+    /**
+     * Get User Token (only token)
+     * @OA\Post(
+     *     path="/api/auth/fetch",
+     *     tags={"Authentication"},
+     *     operationId="fetch",
+     *     summary="Fetch only get Authentication Token",
+     *     description="Mengambil Token User",
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="query",
+     *         description="Username / Email",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Password",
+     *         required=true,
+     *         @OA\Schema(type="string", format="password")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil mengambil token",
+     *                 "data": {
+     *                     "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+     *                 }
+     *             }
+     *         ),
+     *     ),
+     * )
+     */
+    public function fetch(LoginRequest $request)
+    {
+        $request->authenticate();
+        $user = Auth::user();
+   
+        $token = $user->tokens()->where("name", 'authentication')->first()->plainTextToken;
+        if ($token == null) {
+            $token = $user->createToken('authentication')->plainTextToken;
         }
+       
+        return response()->json([
+            "success" => true,  
+            "status_code" => 200,
+            "message" => "Berhasil mengambil token",
+            "data" => [
+                "token" => $token
+            ]   
+        ], 200);
     }
 
     /**

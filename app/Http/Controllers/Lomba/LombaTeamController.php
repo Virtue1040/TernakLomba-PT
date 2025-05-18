@@ -6,17 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Lomba\StorelombaTeamRequest;
 use App\Http\Requests\Lomba\UpdatelombaTeamRequest;
 use App\Models\Lomba;
+use App\Models\lombaMember;
 use App\Models\lombaTeam;
 use App\Models\User;
+use App\Services\StreamChatService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LombaTeamController extends Controller
 {
-    function __construct()
+    protected StreamChatService $streamChatService;
+
+    function __construct(StreamChatService $streamChatService)
     {
-        $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
-        $this->middleware('permission:lomba-creates', ['only' => ['create', 'store']]);
-        $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:lomba-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:team-read', ['only' => ['index', 'show']]);
+        $this->middleware('permission:team-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:team-join', ['only' => ['join']]);
+        $this->middleware('permission:team-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:team-delete', ['only' => ['destroy']]);
+
+        $this->streamChatService = $streamChatService;
     }
 
     /**
@@ -88,6 +97,112 @@ class LombaTeamController extends Controller
             'status_code' => 200,
             'message' => "Berhasil mengambil data lomba member",
             'data' => $lomba
+        ]);
+    }
+
+    /**
+     * Join Lomba Team
+     * @OA\Post(
+     *     security={{"bearerAuth":{}}},
+     *     path="/api/v1/lombaTeam/{team_code}",
+     *     tags={"Lomba Team"},
+     *     operationId="lombaTeam-join",
+     *     summary="Join Lomba Team",
+     *     description="Bergabung dengan tim lomba yang sudah ada",
+     *     @OA\Parameter(
+     *         name="team_code",
+     *         in="path",
+     *         description="Team Code",
+     *         example = "1939",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil bergabung ke team lomba",
+     *                 "data": {
+     *                      {
+     *                          "team_id": 1,
+     *                          "user_id": 1,
+     *                          "role": "",
+     *                          "isLeader": false,
+     *                      }
+     *                 },
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Error: Team tidak ditemukan",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 400,
+     *                 "message": "Team tidak ditemukan"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 401,
+     *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
+     * )
+     */
+    public function join(Request $request, $team_code)
+    {
+        $team = lombaTeam::where("team_code", $team_code)->first();
+
+        if ($team === null) {
+            return response()->json([
+                "success" => false,
+                "status_code" => 400,
+                "message" => "Team tidak ditemukan",
+            ], 400);
+        }
+
+        $channel = $this->streamChatService->client->Channel(
+            "team",
+            "Compspace-" . $team->lomba_id . "-" . $team->id_team,
+            [
+                "compspace_name" => $team->team_name
+            ]);
+        $channel->addMembers([strval(Auth::user()->id_user)]);
+
+        $member = lombaMember::create([
+            'team_id' => $team->id_team,
+            'user_id' => Auth::user()->id_user,
+            'role' => '',
+            'isLeader' => 0
+        ]);
+
+        return response()->json([
+            "success" => true,
+            "status_code" => 200,
+            "message" => "Berhasil bergabung ke team lomba",
+            "data" => $member
         ]);
     }
 
@@ -181,12 +296,12 @@ class LombaTeamController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
-     *         name="leader_user_id",
+     *         name="team_name",
      *         in="query",
-     *         description="Leader User ID",
-     *         example = 1,
+     *         description="Nama Team",
+     *         example = "Team Kocak Abis",
      *         required=true,
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(type="string")
      *     ),
      *     @OA\Response(
      *         response="200",
@@ -200,8 +315,11 @@ class LombaTeamController extends Controller
      *                          "id_team": 1,
      *                          "lomba_id": 1,
      *                          "team_code": "0019",
+     *                          "team_name": "Team Kocak Abis",
      *                          "isPrivate": false,
-     *                          "isApproved": false
+     *                          "isApproved": false,
+     *                          "updated_at": "2025-05-12T03:00:22.000000Z",
+     *                          "created_at": "2025-05-12T03:00:22.000000Z",
      *                  }
      *             }
      *         ),
@@ -233,15 +351,34 @@ class LombaTeamController extends Controller
     public function store(StorelombaTeamRequest $request)
     {
         $request->validate([
-            'lomba_id' => ["required", "integer", "exists:".Lomba::class],
+            'lomba_id' => ["required", "integer", "exists:".Lomba::class.",id_lomba"],
         ]);
         $lomba_id = $request->lomba_id;
+        $team_name = $request->team_name;
 
         $team = lombaTeam::create([
             'lomba_id' => $lomba_id,
             'team_code' => rand(1000, 9999),
+            'team_name' => $team_name,
+            'created_by' => Auth::user()->id_user,
             'isPrivate' => false,
-            'isApproved' => false
+            'isApproved' => true
+        ]);
+
+        $channel = $this->streamChatService->client->Channel(
+            "team",
+            "Compspace-" . $lomba_id . "-" . $team->id_team,
+            [
+                "compspace_name" => $team_name
+            ]);
+            $channel->create(strval(Auth::user()->id_user));
+            $channel->addMembers([strval(Auth::user()->id_user)]);
+
+        $member = lombaMember::create([
+            'team_id' => $team->id_team,
+            'user_id' => Auth::user()->id_user,
+            'role' => '',
+            'isLeader' => 1
         ]);
 
         return response()->json([

@@ -15,10 +15,13 @@ return new class extends Migration
         Schema::create('lomba_members', function (Blueprint $table) {
             $table->bigInteger("id_member", 1)->primary();
             $table->bigInteger("team_id");
-            $table->string("role");
-            $table->boolean("isLeader");
+            $table->bigInteger("user_id");
+            $table->string("role")->default('');
+            $table->boolean("isLeader")->default(0);
 
+            $table->unique(["team_id", "user_id"]);
             $table->foreign("team_id")->references("id_team")->on("lomba_teams")->onDelete("cascade");
+            $table->foreign("user_id")->references("id_user")->on("users")->onDelete("cascade");
             $table->timestamps();
         });
     }

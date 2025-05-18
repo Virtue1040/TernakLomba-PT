@@ -11,6 +11,26 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
         <title>{{ env("APP_NAME") }}</title>
         @isset($script)
+            <script>
+                (function($) {
+                    $.fn.onEnter = function(func) {
+                        this.bind('keypress', function(e) {
+                            if (e.keyCode == 13) func.apply(this, [e]);
+                        });
+                        return this;
+                    };
+                    $.fn.onPause = function(func, delay = 2000) {
+                        let timer;
+                        this.on('input', function() {
+                            clearTimeout(timer); 
+                            timer = setTimeout(() => {
+                                func.apply(this); 
+                            }, delay);
+                        });
+                        return this;
+                    };
+                })(jQuery);
+            </script>
             {{ $script }}
         @endisset
 
@@ -22,7 +42,7 @@
         </style>
     </head>
 
-    <body>
+    <body >
         @isset($slot)
             {{ $slot }}
         @endisset

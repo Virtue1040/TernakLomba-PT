@@ -20,7 +20,7 @@
                     "Authentication"
                 ],
                 "summary": "Login to get Authentication Token",
-                "description": "Mengambil Token User",
+                "description": "Login Token User",
                 "operationId": "login",
                 "parameters": [
                     {
@@ -53,6 +53,55 @@
                                     "success": true,
                                     "status_code": 200,
                                     "message": "Berhasil login",
+                                    "data": {
+                                        "token": "1-adsBASDMzxckopasdkpwqkiqwje"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/fetch": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Fetch only get Authentication Token",
+                "description": "Mengambil Token User",
+                "operationId": "fetch",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Username / Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "password"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengambil token",
                                     "data": {
                                         "token": "1-adsBASDMzxckopasdkpwqkiqwje"
                                     }
@@ -376,7 +425,7 @@
             }
         },
         "/api/v1/chat/get-channels": {
-            "post": {
+            "get": {
                 "tags": [
                     "Communication"
                 ],
@@ -1192,8 +1241,9 @@
                                                 "max_member": 1,
                                                 "min_member": 1,
                                                 "lombaCategory_id": 1,
-                                                "start_date": "2025-03-20 23:01:22",
-                                                "end_date": "2025-03-20 23:01:22",
+                                                "start_date": "2025-03-20",
+                                                "end_date": "2025-03-20",
+                                                "decide_date": "2025-03-20",
                                                 "updated_at": "2025-03-20T16:04:14.000000Z",
                                                 "created_at": "2025-03-20T16:04:14.000000Z",
                                                 "id_lomba": 2
@@ -1293,6 +1343,16 @@
                         "example": "Lomba Adalah"
                     },
                     {
+                        "name": "roleList",
+                        "in": "query",
+                        "description": "List Role (dipisah dengan ',')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Leader,Hacker"
+                    },
+                    {
                         "name": "lombaCategory_id",
                         "in": "query",
                         "description": "Category ID",
@@ -1311,7 +1371,7 @@
                             "type": "string",
                             "format": "date"
                         },
-                        "example": "2025-03-20 23:01:22"
+                        "example": "2025-03-20"
                     },
                     {
                         "name": "end_date",
@@ -1322,7 +1382,18 @@
                             "type": "string",
                             "format": "date"
                         },
-                        "example": "2025-03-20 23:01:22"
+                        "example": "2025-03-20"
+                    },
+                    {
+                        "name": "decide_date",
+                        "in": "query",
+                        "description": "Decide Date",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "example": "2025-03-21"
                     }
                 ],
                 "responses": {
@@ -1340,8 +1411,9 @@
                                             "max_member": 1,
                                             "min_member": 1,
                                             "lombaCategory_id": 1,
-                                            "start_date": "2025-03-20 23:01:22",
-                                            "end_date": "2025-03-20 23:01:22",
+                                            "start_date": "2025-03-20",
+                                            "end_date": "2025-03-20",
+                                            "decide_date": "2025-03-21",
                                             "updated_at": "2025-03-20T16:04:14.000000Z",
                                             "created_at": "2025-03-20T16:04:14.000000Z",
                                             "id_lomba": 2
@@ -1426,8 +1498,9 @@
                                         "max_member": 1,
                                         "min_member": 1,
                                         "lombaCategory_id": 1,
-                                        "start_date": "2025-03-20 23:01:22",
-                                        "end_date": "2025-03-20 23:01:22",
+                                        "start_date": "2025-03-20",
+                                        "end_date": "2025-03-20",
+                                        "decide_date": "2025-03-20",
                                         "updated_at": "2025-03-20T16:04:14.000000Z",
                                         "created_at": "2025-03-20T16:04:14.000000Z",
                                         "id_lomba": 2
@@ -1591,6 +1664,72 @@
                                             "created_at": "2025-03-20T16:04:14.000000Z"
                                         }
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Lomba"
+                ],
+                "summary": "Approve Lomba",
+                "description": "Approve data Lomba",
+                "operationId": "lomba-approve",
+                "parameters": [
+                    {
+                        "name": "id_lomba",
+                        "in": "path",
+                        "description": "Lomba ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengapprove lomba"
                                 }
                             }
                         }
@@ -2694,14 +2833,14 @@
                         "example": 1
                     },
                     {
-                        "name": "leader_user_id",
+                        "name": "team_name",
                         "in": "query",
-                        "description": "Leader User ID",
+                        "description": "Nama Team",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         },
-                        "example": 1
+                        "example": "Team Kocak Abis"
                     }
                 ],
                 "responses": {
@@ -2718,9 +2857,101 @@
                                         "id_team": 1,
                                         "lomba_id": 1,
                                         "team_code": "0019",
+                                        "team_name": "Team Kocak Abis",
                                         "isPrivate": false,
-                                        "isApproved": false
+                                        "isApproved": false,
+                                        "updated_at": "2025-05-12T03:00:22.000000Z",
+                                        "created_at": "2025-05-12T03:00:22.000000Z"
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/lombaTeam/{team_code}": {
+            "post": {
+                "tags": [
+                    "Lomba Team"
+                ],
+                "summary": "Join Lomba Team",
+                "description": "Bergabung dengan tim lomba yang sudah ada",
+                "operationId": "lombaTeam-join",
+                "parameters": [
+                    {
+                        "name": "team_code",
+                        "in": "path",
+                        "description": "Team Code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1939"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil bergabung ke team lomba",
+                                    "data": [
+                                        {
+                                            "team_id": 1,
+                                            "user_id": 1,
+                                            "role": "",
+                                            "isLeader": false
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error: Team tidak ditemukan",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 400,
+                                    "message": "Team tidak ditemukan"
                                 }
                             }
                         }
@@ -3347,6 +3578,74 @@
                 ]
             }
         },
+        "/api/v1/profile/": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Profile",
+                "description": "Mengubah data Profile user",
+                "operationId": "profile-update",
+                "parameters": [
+                    {
+                        "name": "bio",
+                        "in": "query",
+                        "description": "Tentang user",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Hi, i'm new here"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil mengupdate data user"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/profiling": {
             "post": {
                 "tags": [
@@ -3402,6 +3701,68 @@
                     }
                 ]
             }
+        },
+        "/api/v1/winner": {
+            "post": {
+                "tags": [
+                    "Winner"
+                ],
+                "summary": "Set the winner of lomba",
+                "description": "Pilih pemenang dari lomba",
+                "operationId": "winner-store",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "status_code": 200,
+                                    "message": "Berhasil memilih pemenang lomba",
+                                    "data": {
+                                        "user_id": 1,
+                                        "hadiah_id": 1,
+                                        "user_alias": null,
+                                        "juara": "Juara 1"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 401,
+                                    "message": "Unauthorized"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Error: Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": false,
+                                    "status_code": 403,
+                                    "message": "Forbidden - You do not have permission"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -3411,9 +3772,12 @@
                     "id_lomba",
                     "max_member",
                     "min_member",
+                    "roleList",
                     "lombaCategory_id",
                     "start_date",
-                    "end_date"
+                    "end_date",
+                    "decide_date",
+                    "isApproved"
                 ],
                 "properties": {
                     "id_lomba": {
@@ -3428,6 +3792,12 @@
                         "format": "int64",
                         "readOnly": true
                     },
+                    "roleList": {
+                        "title": "roleList",
+                        "type": "string",
+                        "format": "string",
+                        "readOnly": true
+                    },
                     "min_member": {
                         "title": "min_member",
                         "type": "integer",
@@ -3440,14 +3810,33 @@
                         "format": "int64",
                         "readOnly": true
                     },
+                    "created_by": {
+                        "title": "created_by",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
                     "start_date": {
                         "title": "start_date",
-                        "type": "timestamp",
+                        "type": "string",
+                        "format": "date",
                         "readOnly": true
                     },
                     "end_date": {
                         "title": "end_date",
-                        "type": "timestamp",
+                        "type": "string",
+                        "format": "date",
+                        "readOnly": true
+                    },
+                    "decide_date": {
+                        "title": "decide_date",
+                        "type": "string",
+                        "format": "date",
+                        "readOnly": true
+                    },
+                    "isApproved": {
+                        "title": "decide_date",
+                        "type": "boolean",
                         "readOnly": true
                     },
                     "created_at": {
@@ -3850,6 +4239,8 @@
                     "id_team",
                     "lomba_id",
                     "team_code",
+                    "team_name",
+                    "created_by",
                     "isPrivate",
                     "isApproved"
                 ],
@@ -3869,6 +4260,17 @@
                     "team_code": {
                         "title": "team_code",
                         "type": "string",
+                        "readOnly": true
+                    },
+                    "team_name": {
+                        "title": "team_name",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_by": {
+                        "title": "created_by",
+                        "type": "integer",
+                        "format": "int64",
                         "readOnly": true
                     },
                     "isPrivate": {
@@ -4020,8 +4422,16 @@
             "description": "Type Hadiah"
         },
         {
+            "name": "Profile",
+            "description": "Profile"
+        },
+        {
             "name": "Profiling",
             "description": "Profiling"
+        },
+        {
+            "name": "Winner",
+            "description": "Winner"
         }
     ]
 }

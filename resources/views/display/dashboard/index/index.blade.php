@@ -3,26 +3,41 @@
         <div class="mb-8">
             <div class="flex justify-between items-center">
                 <h1 class="text-[36px] font-semibold">Dashboard</h1>
-                <div class="flex items-center space-x-4">
+                <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
                     <button>
-                        <x-svg.chat2 width=44 height=44/>
+                        <x-svg.chat2 width=44 height=44 />
                     </button>
-        
-                    <button>
-                        <x-svg.notif width=64 height=64/>
+
+                    <button @click="showPopup = !showPopup">
+                        <x-svg.notif width=64 height=64 />
                     </button>
-        
+
+                    <div 
+                    x-show="showPopup" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95" @click.away="showPopup = false"
+                        class="absolute top-16 left-[-200px] md:left-[-300px] w-[320px] md:w-[400px] bg-white rounded-lg shadow-lg overflow-hidden z-50">
+                        <!-- N 1 -->
+                        <x-notif1 />
+
+                        <!-- N 2 -->
+                        <x-notif2 />
+
+                    </div>
                 </div>
             </div>
             <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo Tyler, Selamat Datang!</p>
             <p class="text-[14px] text-gray-500">Temukan universitas ideal Anda di sini..</p>
         </div>
-        
-        <div class="grid grid-cols-3 gap-6">
+
+        <div class="flex flex-col gap-6 md:grid md:grid-cols-3">
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">20 Lomba</h3>
+                    <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
                     <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -47,11 +62,11 @@
                     </svg>
                 </div>
             </div>
-        
+
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">50%</h3>
+                    <h3 class="text-[26.35px] font-semibold">50%</h3>
                     <p class="text-[9.88px]">Tingkat Kemenangan</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -95,11 +110,11 @@
                     </svg>
                 </div>
             </div>
-        
+
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="sm:text-[26.35px] text-[15px] font-semibold">4 Kemenangan</h3>
+                    <h3 class="text-[26.35px] font-semibold">4 Kemenangan</h3>
                     <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -125,15 +140,15 @@
                     </svg>
                 </div>
             </div>
-        
+
         </div>
-        
+
         <div x-data="{ menu: 'kompetisi' }">
             <div class="flex overflow-x-auto items-center my-7 space-x-3">
                 <button @click="menu = 'kompetisi'"
                     class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
                     x-bind:class="menu === 'kompetisi' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
-                Compspace saya
+                    Compspace saya
                 </button>
                 <button @click="menu = 'lombaInProgress'"
                     class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
@@ -146,27 +161,38 @@
                     Lomba yang telah selesai
                 </button>
             </div>
-            <div x-show="menu === 'kompetisi'" class="grid grid-cols-2 gap-6 mb-8 md:grid-cols-3">
-                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                    participants="2/4" />
-                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                    participants="2/4" />
-                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                    participants="2/4" />
-                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                    participants="2/4" />
-                <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                    participants="2/4" />
-            </div>
-            <div x-show="menu === 'lombaInProgress'" class="flex overflow-x-auto gap-6 mb-8">
-                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
-                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
-                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
-            </div>
-            
-            <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
-                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
-                <x-cards.lomba-card title="4C National Competition" university="Stanford University"/>
+            <div class="grid grid-cols-1 w-full">
+                <div x-show="menu === 'kompetisi'" class="grid grid-cols-2 gap-6 mb-8 md:grid-cols-3">
+                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                        participants="2/4" />
+                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                        participants="2/4" />
+                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                        participants="2/4" />
+                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                        participants="2/4" />
+                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
+                        participants="2/4" />
+                </div>
+                <div x-show="menu === 'lombaInProgress'" class="flex overflow-x-auto gap-6 mb-8">
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="belum" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="berlangsung"/>
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                </div>
+
+                <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                </div>
             </div>
         </div>
     </div>

@@ -1,63 +1,44 @@
 <x-layouts.navigation>
-    <div class="p-8">
+    <div class="p-8 w-full max-w-screen">
         <div class="mb-8">
             <div class="flex justify-between items-center">
                 <h1 class="text-[36px] font-semibold">Dashboard</h1>
-                <div class="flex items-center space-x-4">
+                <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
                     <button>
-                        <svg width="44" height="42" viewBox="0 0 44 42" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 17.9937C12 14.6835 14.6765 12 18.0007 12H25.9993C29.3134 12 32 14.6948 32 17.9937V30H18.0007C14.6866 30 12 27.3052 12 24.0063V17.9937ZM30 28V17.9937C30 15.7954 28.2049 14 25.9993 14H18.0007C15.7846 14 14 15.7846 14 17.9937V24.0063C14 26.2046 15.7951 28 18.0007 28H30ZM24 20H26V22H24V20ZM18 20H20V22H18V20Z"
-                                fill="#9C9494" />
-                        </svg>
+                        <x-svg.chat2 width=44 height=44 />
                     </button>
-        
-                    <button>
-        
-                        <svg width="65" height="66" viewBox="0 0 65 66" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_d_354_2009)">
-                                <path
-                                    d="M35.2924 45.006C35.0578 45.4103 34.7212 45.7459 34.3162 45.9792C33.9112 46.2125 33.452 46.3353 32.9846 46.3353C32.5172 46.3353 32.058 46.2125 31.653 45.9792C31.2479 45.7459 30.9113 45.4103 30.6768 45.006M40.9884 27.6643C40.9884 25.5415 40.1452 23.5057 38.6442 22.0047C37.1431 20.5037 35.1073 19.6604 32.9846 19.6604C30.8618 19.6604 28.826 20.5037 27.325 22.0047C25.824 23.5057 24.9807 25.5415 24.9807 27.6643C24.9807 37.0021 20.9788 39.6701 20.9788 39.6701H44.9904C44.9904 39.6701 40.9884 37.0021 40.9884 27.6643Z"
-                                    stroke="#8E8E8E" stroke-width="2.66796" stroke-linecap="round"
-                                    stroke-linejoin="round" />p-8
-                                <circle cx="39.3877" cy="23.3955" r="6.4031" fill="#822BF2" stroke="white"
-                                    stroke-width="3.20155" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_d_354_2009" x="-2.08703" y="-0.543393" width="70.1431"
-                                    height="70.1431" filterUnits="userSpaceOnUse"
-                                    color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix"
-                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dy="1.52801" />
-                                    <feGaussianBlur stdDeviation="1.52801" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix"
-                                        values="0 0 0 0 0.905208 0 0 0 0 0.913917 0 0 0 0 0.916667 0 0 0 0.25 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix"
-                                        result="effect1_dropShadow_354_2009" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_354_2009"
-                                        result="shape" />
-                                </filter>
-                            </defs>
-                        </svg>
+
+                    <button @click="showPopup = !showPopup">
+                        <x-svg.notif width=64 height=64 />
                     </button>
-        
+
+                    <div 
+                    x-show="showPopup" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100 transform scale-100"
+                        x-transition:leave-end="opacity-0 transform scale-95" @click.away="showPopup = false"
+                        class="absolute top-16 left-[-200px] md:left-[-300px] w-[320px] md:w-[400px] bg-white rounded-lg shadow-lg overflow-hidden z-50">
+                        <!-- N 1 -->
+                        <x-notif1 />
+
+                        <!-- N 2 -->
+                        <x-notif2 />
+
+                    </div>
                 </div>
             </div>
             <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo Tyler, Selamat Datang!</p>
             <p class="text-[14px] text-gray-500">Temukan universitas ideal Anda di sini..</p>
         </div>
-        
-        <div class="grid grid-cols-3 gap-6">
+
+        <div class="flex flex-col gap-6 md:grid md:grid-cols-3">
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
                     <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
-                    <p class="text-[9.88px]">Lomba yang telah diikuti</p>
+                    <p class="text-[9.88px]">Belum Disetujui</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
                     <svg width="122" height="147" viewBox="0 0 122 147" fill="none"
@@ -81,12 +62,12 @@
                     </svg>
                 </div>
             </div>
-        
+
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">50%</h3>
-                    <p class="text-[9.88px]">Tingkat Kemenangan</p>
+                    <h3 class="text-[26.35px] font-semibold">5 Lomba</h3>
+                    <p class="text-[9.88px]">Sedang Berjalan</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
                     <svg width="118" height="136" viewBox="0 0 118 136" fill="none"
@@ -129,12 +110,12 @@
                     </svg>
                 </div>
             </div>
-        
+
             <div
-                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-6 rounded-xl h-[111px] relative overflow-hidden">
+                class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">4 Kemenangan</h3>
-                    <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
+                    <h3 class="text-[26.35px] font-semibold">30 Compspace</h3>
+                    <p class="text-[9.88px]">Total Compspace seluruh lomba</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
                     <svg width="113" height="148" viewBox="0 0 113 148" fill="none"
@@ -159,16 +140,51 @@
                     </svg>
                 </div>
             </div>
-        
+
         </div>
-        
-        <div>
-            <h2 class="my-8 text-xl font-bold">Tim yang mengikuti Kompetisi</h2>
-            <div class="grid grid-cols-3 gap-6 mb-8">
-        
-                <x-cards.tim-card title="4C National Competitions" university="Stanford University" participants="2/4" />
-        
+
+        <div x-data="{ menu: 'belumSetuju' }">
+            <div class="flex overflow-x-auto items-center my-7 space-x-3">
+                <button @click="menu = 'belumSetuju'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'belumSetuju' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                    Belum Disetujui
+                </button>
+                <button @click="menu = 'lombaberjalan'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'lombaberjalan' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                    Sedang Berjalan
+                </button>
+                <button @click="menu = 'lombaFinish'"
+                    class="text-black text-[15px] border border-[#E7E7E7] px-3 py-2 rounded-full flex-shrink-0"
+                    x-bind:class="menu === 'lombaFinish' ? 'bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white' : 'bg-white'">
+                    Telah Selesai
+                </button>
             </div>
+            <div class="grid grid-cols-1 w-full">
+                <div x-show="menu === 'belumSetuju'" class="flex overflow-x-auto gap-6 mb-8">
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum" />
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
+                </div>
+                <div x-show="menu === 'lombaberjalan'" class="flex overflow-x-auto gap-6 mb-8">
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung" />
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
+                </div>
+                <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai" />
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
+                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
+                </div>
+            </div>
+                
         </div>
     </div>
 </x-layouts.navigation>

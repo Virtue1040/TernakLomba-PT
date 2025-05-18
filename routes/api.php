@@ -18,6 +18,7 @@ use App\Http\Controllers\Lomba\LombaHadiahController;
 use App\Http\Controllers\Lomba\LombaMemberController;
 use App\Http\Controllers\Lomba\LombaTeamController;
 use App\Http\Controllers\Lomba\TypeHadiahController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,8 @@ Route::middleware('guests', 'web')->group(function () {
 
     Route::get('login', [AuthenticatedSessionController::class, 'create']);
 
-    Route::post('auth/login', [AuthenticatedSessionController::class, 'store'])->name('auth-login');
+    Route::post('auth/login', [AuthenticatedSessionController::class, 'store'])->name('auth-login')->withoutMiddleware('guests');
+    Route::post('auth/fetch', [AuthenticatedSessionController::class, 'fetch'])->name('auth-fetch')->withoutMiddleware('guests');
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
@@ -67,8 +69,12 @@ Route::middleware('auth:sanctum', 'web')->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
+    // Profile Route
+    Route::put("v1/profile", [ProfileController::class, "update"])->name("profile.update");
+
     // Lomba Route 
     Route::get("v1/lomba", [LombaController::class, 'all'])->name("lomba-get");
+    Route::post("v1/lomba/{id_lomba}", [LombaController::class, 'approve'])->name("lomba-approve");
     Route::get("v1/lombaCategory/{id_lomba}", [LombaController::class, 'get'])->name("lomba-get");
     Route::post("v1/lomba", [LombaController::class, 'store'])->name("lomba-store");
     Route::put("v1/lomba/{id_lomba}", [LombaController::class, 'update'])->name("lomba-update");
@@ -97,6 +103,7 @@ Route::middleware('auth:sanctum', 'web')->group(function () {
 
     // Lomba Team Route
     Route::get("v1/lombaTeam", [LombaTeamController::class, 'all'])->name("lombaTeam-all");
+    Route::post("v1/lombaTeam/{team_code}", [LombaTeamController::class, 'join'])->name("lombaTeam-join");
     Route::get("v1/lombaTeam/{id_team}", [LombaTeamController::class, 'get'])->name("lombaTeam-get");
     Route::post("v1/lombaTeam", [LombaTeamController::class, 'store'])->name("lombaTeam-store");
     Route::put("v1/lombaTeam/{id_team}", [LombaTeamController::class, 'update'])->name("lombaTeam-update");

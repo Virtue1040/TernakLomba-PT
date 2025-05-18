@@ -150,12 +150,12 @@
             <a href="#"
                 class="mt-6 mr-1 inline-block bg-[#ed8f23] text-white w-[120px] sm:w-[131px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Ikuti
                 Kami</a>
-            <a href="#"
+            <a href="{{ route('request-kompetisi') }}"
                 class="mt-6 inline-block bg-white text-[#ed8f23] w-[160px] sm:w-[180px] h-[40px] sm:h-[44px] text-center leading-[44px] rounded-full font-semibold">Daftarkan
                 Lomba</a>
         </div>
 
-        <div data-aos="zoom-in" data-aos-delay="500" data-aos-anchor=".splitting" class="absolute inset-x-0 bottom-10 flex justify-center text-white">
+        <div data-aos="zoom-in" data-aos-delay="500" data-aos-anchor=".splitting" class="flex absolute inset-x-0 bottom-10 justify-center text-white">
             <div data-aos="slide-up" data-aos-delay="500" data-aos-anchor=".splitting"
                 class="flex w-full max-w-[90%] sm:max-w-xl md:max-w-2xl lg:max-w-4xl px-6 justify-center gap-6 md:gap-12">
 

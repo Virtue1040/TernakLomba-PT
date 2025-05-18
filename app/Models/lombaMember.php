@@ -21,6 +21,7 @@ class lombaMember extends Model
 
     protected $fillable = [
         'team_id',
+        'user_id',
         'role',
         'isLeader'
     ];

@@ -27,10 +27,16 @@ class RoleSeeder extends Seeder
             'name' => 'lomba-read'
         ], [
             'name' => 'lomba-create'
+        ],[
+            'name' => 'lomba-request'
+        ],[
+            'name' => 'lomba-approve'
         ], [
             'name' => 'lomba-edit'
         ], [
             'name' => 'lomba-delete'
+        ], [
+            'name' => 'lomba-setwinner'
         ],
 
         // Team Permission
@@ -39,6 +45,8 @@ class RoleSeeder extends Seeder
         ], [
             'name' => 'team-decline'
         ], [
+            'name' => 'team-join',
+        ],[
             'name' => 'team-read'
         ], [
             'name' => 'team-create'
@@ -121,6 +129,8 @@ class RoleSeeder extends Seeder
 
         // Lomba Permission
         $lomba_read = Permission::findByName('lomba-read');
+        $lomba_request = Permission::findByName('lomba-request');
+        $lomba_approve = Permission::findByName('lomba-approve');
         $lomba_create = Permission::findByName('lomba-create');
         $lomba_edit = Permission::findByName('lomba-edit');
         $lomba_delete = Permission::findByName('lomba-delete');
@@ -168,7 +178,7 @@ class RoleSeeder extends Seeder
         $Admin->syncPermissions(Permission::all());
 
         // Sync Permission to Penyelenggara
-        $Penyelenggara->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, 
+        $Penyelenggara->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request, $lomba_approve,
         $team_approve, $team_decline, $team_read, $team_create, $team_edit, $team_delete,
         $member_read, $member_create, $member_edit, $member_delete,
         $typeHadiah_read, $typeHadiah_create, $typeHadiah_edit, $typeHadiah_delete,
@@ -176,8 +186,11 @@ class RoleSeeder extends Seeder
         $lombaHadiah_read, $lombaHadiah_create, $lombaHadiah_edit, $lombaHadiah_delete);
 
         // Sync Permission to User
-        $User->syncPermissions($lomba_read, 
-        $team_read, $team_create, $team_edit, $team_delete,
-        $member_read, $member_edit, $member_delete, $member_join);
+        $User->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request, $lomba_approve,
+        $team_approve, $team_decline, $team_read, $team_create, $team_edit, $team_delete,
+        $member_read, $member_create, $member_edit, $member_delete,
+        $typeHadiah_read, $typeHadiah_create, $typeHadiah_edit, $typeHadiah_delete,
+        $lombaAlbum_read, $lombaAlbum_create, $lombaAlbum_edit, $lombaAlbum_delete,
+        $lombaHadiah_read, $lombaHadiah_create, $lombaHadiah_edit, $lombaHadiah_delete);
     }
 }

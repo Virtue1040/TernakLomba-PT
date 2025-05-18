@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Lomba\LombaController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersDetailController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,21 +14,28 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum', 'profilled', 'web')->group(function () {
     Route::get('/profiling', [UsersDetailController::class, "index"])->name("profiling")->withoutMiddleware('profilled')->middleware("unprofilled");
+   
+    Route::get('/profile/{id_user?}',[ProfileController::class, "index"])->name("profile");
+
+    // Dashboard Route
     Route::get('/dashboard', function() {
         return view('display.dashboard.index.index');
     })->name("dashboard-index");
-    
     Route::get('/dashboard/explore', function() {
         return view('display.dashboard.explore.index');
     })->name("dashboard-explore");
-    
     Route::get('/dashboard/chat', function() {
         return view('display.dashboard.chat.index');
     })->name("dashboard-chat");
+    Route::get('admin/dashboard', function() {
+        return view('display.dashboard.admin-dashboard.index');
+    })->name("dashboard-admin");
 
-
-    Route::get("/requestKompetisi", [LombaController::class, "create"])->name("request-kompetisi");
+    // Test Route
+    Route::get('/profiling-test', [UsersDetailController::class, "index"])->name("profiling-test")->withoutMiddleware('profilled');
 });
+
+Route::get("/requestKompetisi", [LombaController::class, "create"])->name("request-kompetisi");
 
 Route::middleware('guests', 'web')->group(function () {
     Route::get('/auth/login', [AuthenticatedSessionController::class, 'create'])->name("login");
@@ -52,10 +60,6 @@ Route::get('/searchTeam', function() {
     return view('display.Team.searchTeam');
 });
 
-Route::get('/profile', function() {
-    return view('display.profile.index');
+Route::get('/test', function() {
+    return view('display.dashboard.admin-dashboard.index');
 });
-
-// Route::get('/test', function() {
-//     return view('display.dashboard.explore.index');
-// });

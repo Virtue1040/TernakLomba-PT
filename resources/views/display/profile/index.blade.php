@@ -1,7 +1,53 @@
+<?php
+    $isLocal = $user->id_user === $profile->id_user;
+?>
 <x-layouts.default footer=false>
-    <div class="px-4 mx-auto w-full">
+    <x-slot name="script">
+        <script>
+            function openEdit(editName) {
+                let div = $("#" + editName)
+                div.find("p").addClass("hidden")
+                div.find("div[name='editor']").removeClass("hidden")
+
+                let getEditor = div.find(`[name='${editName}']`)
+                getEditor.focus()
+                getEditor.val(div.find("p").html().trim())
+            }
+
+            function closeEdit(editName) {
+                let div = $("#" + editName)
+                div.find("p").removeClass("hidden")
+                div.find("div[name='editor']").addClass("hidden")
+            }
+
+            function saveBio() {
+                let div = $("#bio")
+                let getEditor = div.find(`[name='bio']`)
+
+                div.find("p").html(getEditor.val())
+
+                $.ajax({
+                        url: "{{ route('profile.update') }}",
+                        method: "POST",
+                        data: {
+                            _method: 'PUT',
+                            bio: getEditor.val(),
+                        },
+                        success: function (response) {
+      
+                        },
+                        error: function(exception) {
+                            console.log(exception)
+                        }
+                })
+
+                closeEdit("bio")
+    
+        </script>
+    </x-slot>
+    <div class="px-4 mx-auto w-full lg:max-w-[1200px]">
         <div class="p-4">
-            <a href="dashboard" class="flex gap-2 items-center text-gray-800">
+            <a href="{{ route("dashboard-index") }}" class="flex gap-2 items-center text-gray-800">
                 <svg width="17" height="17" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M10.4376 14.6665H26.6663V17.3332H10.4376L17.5895 24.4851L15.7039 26.3707L5.33301 15.9999L15.7039 5.62891L17.5895 7.51452L10.4376 14.6665Z"
@@ -23,27 +69,30 @@
             </div>
 
             <div class="flex justify-end mt-4 mr-4">
-                <button
-                    class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
-                    <x-svg.edit-icon height="20" width="20" class="mr-2" />
-                    Edit Profile
-                </button>
-                <button
-                    class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
-                    Undang ke Compspace
-                </button>
+                @if ($isLocal)
+                    <button
+                        class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
+                        <x-svg.edit-icon height="20" width="20" class="mr-2" />
+                        Edit Profile
+                    </button>
+                @else
+                    <button
+                        class="flex items-center bg-white rounded-lg py-2 px-4 text-[#822BF2] font-medium text-sm border border-[#822BF2] gap-1">
+                        Undang ke Compspace
+                    </button>
+                @endif
             </div>
 
             <div class="px-8 mt-8">
-                <h1 class="text-2xl font-bold text-gray-800">Taylor Smith</h1>
-                <p class="text-gray-600">Bandung | Telkom University</p>
+                <h1 class="text-2xl font-bold text-gray-800">{{ $profile->user_detail->first_name }} {{ $profile->user_detail->last_name }}</h1>
+                <p class="text-gray-600">{{ $profile->get_associated !== null ? $profile->get_associated->kampus : "" }}</p>
             </div>
 
-            <div class="grid grid-cols-3 gap-4 px-8 mt-6">
+            <div class="grid grid-cols-1 gap-4 px-8 mt-6 lg:grid-cols-3">
                 <div
                     class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">20 Lomba</h3>
+                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">{{ $profile->get_ikut_lomba->count() }} Lomba</h3>
                         <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -151,34 +200,47 @@
 
         <div class="grid grid-cols-1 gap-6 mt-4 mb-8 md:grid-cols-5">
             <div class="space-y-6 md:col-span-3">
-                <div class="p-6 bg-white rounded-lg shadow-lg">
+                <div class="p-6 bg-white rounded-lg shadow-lg" id="bio">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Tentang</h2>
-                        <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
-                        </button>
+                        @if ($isLocal) 
+                            <button onclick="openEdit('bio')" class="text-purple-600">
+                                <x-svg.edit-icon height="20" width="20" />
+                            </button>
+                        @endif
                     </div>
                     <p class="text-sm text-gray-600">
-                        UI/UX Designer with strong experience in designing user interfaces for 3 years. Proficient in
+                        {{ $profile->user_detail->bio }}
+                        {{-- UI/UX Designer with strong experience in designing user interfaces for 3 years. Proficient in
                         Figma and Framer, with expertize in SaaS & Company Profile. Successfully handled 50+ abroad
-                        projects, including numerous landing pages, dashboards, full-app websites and mobile.
+                        projects, including numerous landing pages, dashboards, full-app websites and mobile. --}}
                     </p>
+                    <div name="editor" class="flex hidden flex-col gap-3 w-full">
+                        <x-textarea name="bio" label="" class="!text-[15px]" placeholder="Tentang Saya"/>
+                        <div class="flex gap-2 justify-end">
+                            <button onclick="closeEdit('bio')" class="bg-[#DB1F2D] text-white text-[10px] md:text-[15px] rounded-lg py-1 px-2">
+                                <span>Batal</span>
+                            </button>
+                            <button onclick="saveBio()" class="bg-[#822BF2] text-white text-[10px] md:text-[15px] rounded-lg py-1 px-2">
+                                <span>Simpan</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="p-6 bg-white rounded-lg shadow-lg">
+                <div class="p-6 bg-white rounded-lg shadow-lg" id="minat">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Minat Kompetisi</h2>
-                        <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
-                        </button>
+                        @if ($isLocal) 
+                            <button class="text-purple-600">
+                                <x-svg.edit-icon height="20" width="20" />
+                            </button>
+                        @endif
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">UI/UX
-                            Competition</span>
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business
-                            Plan Competition</span>
-                        <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">Business
-                            Case</span>
+                        @foreach ($profile->get_minat as $minat)    
+                            <span class="px-4 py-2 rounded-full text-sm border border-[#822bf2] text-purple-600">{{ $minat->bidang->name }}</span>
+                        @endforeach
                     </div>
                 </div>
 
@@ -219,20 +281,31 @@
                 <div class="p-6 bg-white rounded-lg shadow-lg h-fit">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-bold text-gray-800">Prestasi</h2>
-                        <button class="text-purple-600">
-                            <x-svg.edit-icon height="20" width="20" />
-                        </button>
+                        @if ($isLocal) 
+                            <button class="text-purple-600">
+                                <x-svg.edit-icon height="20" width="20" />
+                            </button>
+                        @endif
                     </div>
 
                     <div class="space-y-4">
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
-                        <x-cards.prestasi-card title="4C National Competition" case="Business Case" juara="Juara 1"
-                            tingkat="Nasional" />
+                        @foreach ($profile->get_prestasi as $prestasi)
+                            <x-cards.prestasi-card title="{{ $prestasi->title }}" case="{{ $prestasi->get_minat_text() }}" juara="{{ $prestasi->juara }}"
+                            tingkat="{{ $prestasi->tingkatan }}" />
+                        @endforeach
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="bg-[#822BF2] text-white text-[15px] md:text-[20px] rounded-lg py-3">
+                                <span>+ Tambah Prestasi</span>
+                            </button>
+                            @if ($isLocal) 
+                                <button class="text-[#822BF2] border border-[#822BF2] text-[15px] md:text-[17px] rounded-lg py-3 flex justify-center items-center">
+                                    <x-svg.edit-icon height="20" width="20" />
+                                    <span class="ml-1">Edit Prestasi</span>
+                                </button>
+                            @endif
+                            
+                        </div>
                     </div>
                 </div>
             </div>

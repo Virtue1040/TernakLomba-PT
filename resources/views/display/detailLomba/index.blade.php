@@ -27,6 +27,15 @@
                 class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
                 Cari Tim & Compspace
             </button>
+
+            <button class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
+                Setuju Kompetisi
+            </button>
+            <button
+                class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
+                Tolak Pengajuan
+            </button>
+
             <div x-show="formOpen" x-cloak
                 class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
                 @click.self="formOpen = false">

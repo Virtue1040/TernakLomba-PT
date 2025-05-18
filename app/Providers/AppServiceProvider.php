@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\StreamChatService;
 use Blade;
 use Illuminate\Support\ServiceProvider;
 use View;
@@ -30,7 +31,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $view->with('user', auth('sanctum')->user());
+            if (auth('sanctum')->check()) {
+                $view->with('user', auth('sanctum')->user());
+                $view->with('streamToken', app(StreamChatService::class)->createToken(auth('sanctum')->user()->id_user));
+            }
         });
 
         view()->composer('partials.language_switcher', function ($view) {

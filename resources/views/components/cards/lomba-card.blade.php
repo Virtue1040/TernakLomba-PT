@@ -1,8 +1,16 @@
-@props(['title', 'university'])
+@props(['title', 'university','progres' => "selesai"])
 
-<div data-aos="fade" data-aos-duration="1000" class="w-[303px] min-w-[303px] h-[271px] rounded-lg border border-[#E7E7E7] overflow-hidden">
+<div data-aos="fade" data-aos-duration="1000" class="w-[303px] relative min-w-[303px] h-[271px] rounded-lg border border-[#E7E7E7] overflow-hidden">
     <img src="{{ asset('images/4cnational.png') }}" alt="4C National Competition"
         class="w-[303px] min-w-[303px] h-[154px] object-cover">
+    @if($progres == "berlangsung")
+        <p class="absolute top-2 left-2 bg-white px-2 py-1 font-bold rounded-lg text-[#822BF2] text-[12px]">Sedang berlangsung</p>
+    @elseif($progres == "belum")
+        <p class="absolute top-2 left-2 bg-white px-2 py-1 font-bold rounded-lg text-[#1548D1] text-[12px]">Belum dimulai</p>
+    @else
+        <p class="absolute top-2 left-2 bg-white px-2 py-1 font-bold rounded-lg text-[#02886B] text-[12px]">Telah selesai</p>
+    @endif
+
     <div class="p-4">
         <h2 class="text-[16px] font-bold leading-tight">{{ $title }}</h2>
         <p class="text-gray-500 text-[12px]">{{ $university }}</p>

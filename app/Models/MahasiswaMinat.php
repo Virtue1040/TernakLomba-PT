@@ -16,4 +16,8 @@ class MahasiswaMinat extends Model
     ];
 
     protected $primaryKey = "id_mahasiswa_minat";
+
+    public function bidang() {
+        return $this->belongsTo(bidangMinat::class, "bidang_id", "id_bidang");
+    }
 }

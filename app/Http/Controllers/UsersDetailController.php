@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUsers_detailRequest;
 use App\Http\Requests\UpdateUsers_detailRequest;
 use App\Models\bidangMinat;
+use App\Models\history_prestasi;
+use App\Models\history_prestasi_minat;
 use App\Models\Mahasiswa_detail;
 use App\Models\MahasiswaMinat;
 use App\Models\Users_detail;
@@ -73,12 +75,15 @@ class UsersDetailController extends Controller
             'birth_place' => ['required', 'string', 'max:255'],
             'kampus' => ['required', 'string', 'max:255'],
             'jurusan' => ['required', 'string', 'max:255'],
-            'bidang' => ['required'],
+            'bidang' => ['required', "array"],
+            'history' => ['required', "array"],
             'full_name' => ['required', 'string', 'max:255'],
         ]);
+
         $full_name = $request->full_name;
-        $first_name = explode(' ', $full_name)[0];
-        $last_name =  explode(' ', $full_name)[1];
+        $explode = explode(' ', $full_name);
+        $first_name = $explode[0];
+        $last_name =  count($explode) > 1 ? $explode[1] : "";
         $gender = $request->gender;
         $birth_date = $request->birth_date;
         $telp = $request->telp;
@@ -86,6 +91,7 @@ class UsersDetailController extends Controller
         $kampus = $request->kampus;
         $jurusan = $request->jurusan;
         $bidang = $request->bidang;
+        $history = $request->history;
         
         $user = $request->user();
 
@@ -99,21 +105,47 @@ class UsersDetailController extends Controller
         $users_detail->birth_place = $birth_place;
         $users_detail->save();
 
-        //Update to mahasiswa_detail
-        $mahasiswa_detail = Mahasiswa_detail::create([
-            "user_id" => $user->id_user,
-            "kampus" => $kampus,
-            "jurusan" => $jurusan
-        ]);
+        //Insert to mahasiswa_detail
+        if (!Mahasiswa_detail::find($user->id_user)) {
+            $mahasiswa_detail = Mahasiswa_detail::create([
+                "user_id" => $user->id_user,
+                "kampus" => $kampus,
+                "jurusan" => $jurusan
+            ]);   
+        }
 
         //Insert to mahasiswa_minat
         foreach ($bidang as $key => $value) {
-            $bidangMinat = bidangMinat::find($value);
+            $bidangMinat = bidangMinat::where("name", $value)->first();
             if ($bidangMinat) {
                 MahasiswaMinat::create([
                     "user_id" => $user->id_user,
-                    "bidang_id" => $value
+                    "bidang_id" => $bidangMinat->id_bidang
                 ]);
+            }
+        }
+
+        //Insert to history_prestasi
+        foreach ($history as $key => $value) {
+            if ($value["nama_lomba"] == "" || $value["juara"] == "" || $value["tingkatan"] == "") {
+                continue;
+            }
+
+            $history_prestasi = history_prestasi::create([
+                "user_id" => $user->id_user,
+                "title" => $value["nama_lomba"],
+                "juara" => $value["juara"],
+                "tingkatan" => $value["tingkatan"]
+            ]);
+
+            foreach ($value["bidang"] as $key => $value) {
+                $bidangMinat = bidangMinat::where("name", $value)->first();
+                if ($bidangMinat) {
+                    $history_minat = history_prestasi_minat::create([
+                        "prestasi_id" => $history_prestasi->id_prestasi,
+                        "bidang_id" => $bidangMinat->id_bidang
+                    ]);
+                }
             }
         }
 

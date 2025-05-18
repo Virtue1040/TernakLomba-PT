@@ -9,19 +9,22 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="LombaTeam",
  *   type="object",
- *   required={"id_team", "lomba_id", "team_code", "isPrivate","isApproved"},
+ *   required={"id_team", "lomba_id", "team_code","team_name", "created_by", "isPrivate","isApproved"},
  * )
  * Class LombaTeam
  * @package Incase\Models
  */
 class lombaTeam extends Model
 {
+
     /** @use HasFactory<\Database\Factories\LombaTeamFactory> */
     use HasFactory;
 
     protected $fillable = [
         'lomba_id',
         'team_code',
+        'team_name',
+        'created_by',
         'isPrivate',
         'isApproved'
     ];
@@ -45,6 +48,18 @@ class lombaTeam extends Model
      * @var integer
     */
     private $team_code;
+
+    /**
+     * @OA\Property(title="team_name", type="string", readOnly=true)
+     * @var integer
+    */
+    private $team_name;
+
+    /**
+     * @OA\Property(title="created_by", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $created_by;
 
     /**
      * @OA\Property(title="isPrivate", type="boolean", readOnly=true)

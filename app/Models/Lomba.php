@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="Lomba",
  *   type="object",
- *   required={"id_lomba", "max_member", "min_member", "lombaCategory_id", "start_date", "end_date"},
+ *   required={"id_lomba", "max_member", "min_member", "roleList", "lombaCategory_id", "start_date", "end_date", "decide_date", "isApproved"},
  * )
  * Class Lomba
  * @package Incase\Models
@@ -22,9 +22,13 @@ class Lomba extends Model
     protected $fillable = [
         'max_member',
         'min_member',
+        'roleList',
         'lombaCategory_id',
+        'created_by',
         'start_date',
-        'end_date'
+        'end_date',
+        'decide_date',
+        'isApproved'
     ];
 
     protected $primaryKey = "id_lomba";
@@ -52,6 +56,12 @@ class Lomba extends Model
     private $max_member;
 
     /**
+     * @OA\Property(title="roleList", type="string", format="string", readOnly=true)
+     * @var integer
+    */
+    private $roleList;
+
+    /**
      * @OA\Property(title="min_member", type="integer", format="int64", readOnly=true)
      * @var integer
     */
@@ -64,16 +74,34 @@ class Lomba extends Model
     private $lombaCategory_id;
 
     /**
-     * @OA\Property(title="start_date", type="timestamp", readOnly=true)
+     * @OA\Property(title="created_by", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $created_by;
+
+    /**
+     * @OA\Property(title="start_date", type="date", readOnly=true)
      * @var string
     */
     private $start_date;
     
     /**
-     * @OA\Property(title="end_date", type="timestamp", readOnly=true)
+     * @OA\Property(title="end_date", type="date", readOnly=true)
      * @var string
     */
     private $end_date;
+
+    /**
+     * @OA\Property(title="decide_date", type="date", readOnly=true)
+     * @var string
+    */
+    private $decide_date;
+
+    /**
+     * @OA\Property(title="decide_date", type="boolean", readOnly=true)
+     * @var string
+    */
+    private $isApproved;
 
     /**
      * @OA\Property(title="created_at", type="timestamp", readOnly=true)

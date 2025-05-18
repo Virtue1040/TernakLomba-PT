@@ -1,5 +1,5 @@
 <footer class="bg-gradient-to-b from-[#822BF2] to-[#B378FF] text-white py-10">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-5 sm:px-20">
         <div class="flex flex-col lg:justify-center h-full">
             <h2 class="text-lg font-bold">Address</h2>
             <p>Jago Lomba</p>

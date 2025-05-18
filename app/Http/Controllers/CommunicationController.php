@@ -241,7 +241,7 @@ class CommunicationController extends Controller
 
     /**
      * Get All Channel Affiliated
-     * @OA\Post(
+     * @OA\Get(
      *     security={{"bearerAuth":{}}},
      *     path="/api/v1/chat/get-channels",
      *     tags={"Communication"},
@@ -288,9 +288,7 @@ class CommunicationController extends Controller
      */
     public function getUserChannel(Request $request)
     {
-        $request->validate(['id' => 'required|string']);
-
-        $channels = $this->streamChatService->getUserChannels($request->id);
+        $channels = $this->streamChatService->getUserChannels(strval(Auth::user()->id_user));
         return response()->json([
             'success' => true,
             'status_code' => 200,

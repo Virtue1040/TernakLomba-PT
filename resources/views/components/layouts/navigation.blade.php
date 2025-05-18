@@ -1,13 +1,43 @@
-<x-layouts.default ault footer=false>
+<x-layouts.default footer=false>
     @isset($script)
         <x-slot name="script">
+            <script type=module>
+                import { StreamChat } from 'https://cdn.jsdelivr.net/npm/stream-chat'
+
+                //GETSTREAM API AUTHORIZATION
+                const apiKey = "{{ env('STREAM_API_KEY') }}"
+                const userId = "{{ $user->id_user }}"
+                const userToken = "{{ $streamToken ?? '' }}"
+                const client = new StreamChat(apiKey)
+                // async function refreshUnread() {
+                //     const unreadCounts = await client.getUnreadCount()
+                //     if (unreadCounts['total_unread_count'] > 0) {
+                //         $("#chatNotification").css('display', 'flex')
+                //     } else {
+                //         $("#chatNotification").css('display', 'none')
+                //     }
+                //     $("#chatNotification").html(unreadCounts['total_unread_count'])
+                // }
+                async function connectUser() {
+                    await client.connectUser({
+                            id: userId,
+                            name: "{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}",
+                        },
+                        userToken)
+                    // refreshUnread()
+                    // setInterval(() => {
+                    //     refreshUnread()
+                    // }, 5000)
+                }
+                connectUser()
+            </script>
             {{ $script }}
         </x-slot>
     @endisset
-    <div x-data="{ menu: 'dashboard' }" class="flex w-auto min-h-screen">
+    <div x-data="{ menu: 'dashboard' }" class="flex w-full min-h-screen h-fit">
         <div class="lg:flex border-r bg-white p-8 hidden flex-col w-[294px] ">
             <div
-                class="text-[31.48px] bg-gradient-to-b from-[#822BF2] to-[#B378FF] bg-clip-text text-transparent font-semibold mb-12">
+                class="text-[31.48px] bg-gradient-to-b from-[#822BF2] to-[#B378FF] bg-clip-text text-transparent font-semibold mb-12 text-nowrap">
                 Ternak Lomba
             </div>
 
@@ -30,7 +60,7 @@
                 </x-navigation-button>
             </nav>
 
-            <div class="flex items-center mt-auto mb-6">
+            <div onclick="window.location.href = '{{ route('profile') }}'" class="flex items-center p-1 mt-auto mb-5 rounded-xl cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
                 <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-10 h-10 rounded-full">
                 <div>
                     <div class="font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}
@@ -50,52 +80,52 @@
                 <p>Logout</p>
             </button>
         </div>
-
-
-        <div class="overflow-hidden flex-1 max-w-full">
-            {{ $slot }}
-        </div>
-
-        <div x-data="{ isProfileOpen: false }" class="lg:hidden">
-            <div class="fixed right-0 bottom-0 left-0 z-50 bg-white border-t shadow-lg">
-                <div class="flex justify-around items-center px-2 py-3">
-                    <a href="{{ route('dashboard-index') }}"
-                        class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-index') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
-                        <x-svg.dashboard :active="request()->routeIs('dashboard-index')" class="w-6 h-6" />
-                        <span class="mt-1 text-xs">Dashboard</span>
-                    </a>
-
-                    <a href="{{ route('dashboard-explore') }}"
-                        class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-explore') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
-                        <x-svg.explore :active="request()->routeIs('dashboard-explore')" class="w-6 h-6" />
-                        <span class="mt-1 text-xs">Explore</span>
-                    </a>
-
-                    <a href="{{ route('dashboard-chat') }}"
-                        class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-chat') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
-                        <x-svg.chat :active="request()->routeIs('dashboard-chat')" class="w-6 h-6" />
-                        <span class="mt-1 text-xs">Chat</span>
-                    </a>
-
-                    <button @click="isProfileOpen = !isProfileOpen" class="flex flex-col justify-center items-center"
-                        :class="isProfileOpen ? 'text-[#822BF2]' : 'text-[#757575]'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <span class="mt-1 text-xs">Profile</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="fixed top-0 right-0 left-0 z-50 px-4 py-3 bg-white border-b shadow-sm">
-                <div class="flex justify-start items-center">
-                    <div
-                        class="text-xl bg-gradient-to-b from-[#822BF2] to-[#B378FF] bg-clip-text text-transparent font-semibold">
-                        Ternak Lomba
+        
+        <div x-data="{ isProfileOpen: false }" class="w-full h-screen">
+            <div class="flex flex-col h-full">
+                <div class="px-4 py-3 bg-white border-b shadow-sm lg:hidden">
+                    <div class="flex justify-start items-center">
+                        <div
+                            class="text-xl bg-gradient-to-b from-[#822BF2] to-[#B378FF] bg-clip-text text-transparent font-semibold">
+                            Ternak Lomba
+                        </div>
                     </div>
                 </div>
+                <div class="overflow-auto flex-1 max-w-full">
+                    {{ $slot }}
+                </div>
+                <div class="bg-white border-t shadow-lg lg:hidden">
+                    <div class="flex justify-around items-center px-2 py-3">
+                        <a href="{{ route('dashboard-index') }}"
+                        class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-index') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
+                        <x-svg.dashboard :active="request()->routeIs('dashboard-index')" class="w-6 h-6" />
+                            <span class="mt-1 text-xs">Dashboard</span>
+                        </a>
+    
+                        <a href="{{ route('dashboard-explore') }}"
+                            class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-explore') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
+                            <x-svg.explore :active="request()->routeIs('dashboard-explore')" class="w-6 h-6" />
+                            <span class="mt-1 text-xs">Explore</span>
+                        </a>
+    
+                        <a href="{{ route('dashboard-chat') }}"
+                            class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-chat') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
+                            <x-svg.chat :active="request()->routeIs('dashboard-chat')" class="w-6 h-6" />
+                            <span class="mt-1 text-xs">Chat</span>
+                        </a>
+    
+                        <button @click="isProfileOpen = !isProfileOpen" class="flex flex-col justify-center items-center"
+                            :class="isProfileOpen ? 'text-[#822BF2]' : 'text-[#757575]'">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span class="mt-1 text-xs">Profile</span>
+                        </button>
+                    </div>
+                </div>
+    
             </div>
 
             <div x-show="isProfileOpen" @click.away="isProfileOpen = false"
@@ -106,11 +136,10 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-95">
-                <div class="flex items-center pb-3 mb-4 border-b">
+                <div class="flex items-center p-1 pb-3 mb-4 rounded-xl border-b cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
                     <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-8 h-8 rounded-full">
                     <div>
-                        <div class="text-sm font-semibold">{{ $user->user_detail->first_name }}
-                            {{ $user->user_detail->last_name }}</div>
+                        <div class="text-sm font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}</div>
                         <div class="text-xs text-gray-500">
                             {{ $user->getRoleNames()[0] == 'User' ? 'Students' : $user->getRoleNames()[0] }}</div>
                     </div>
@@ -139,14 +168,14 @@
 
             <style>
                 body {
-                    padding-bottom: 60px;
-                    padding-top: 56px;
+                    padding-bottom: 60px
+                    padding-top: 56px
                 }
 
                 @media (min-width: 640px) {
                     body {
-                        padding-bottom: 0;
-                        padding-top: 0;
+                        padding-bottom: 0
+                        padding-top: 0
                     }
                 }
             </style>

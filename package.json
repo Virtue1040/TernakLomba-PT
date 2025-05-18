@@ -20,7 +20,7 @@
         "aos": "^2.3.4",
         "flowbite": "^2.5.2",
         "mix": "^0.0.1",
-        "stream-chat": "^8.46.0",
+        "stream-chat": "^8.60.0",
         "sweetalert2": "^11.14.5"
     }
 }

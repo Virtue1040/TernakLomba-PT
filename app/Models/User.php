@@ -63,9 +63,25 @@ class User extends Authenticatable
     public function user_detail() {
         return $this->hasOne(Users_detail::class, 'user_id', 'id_user');
     }
+
+    public function get_prestasi() {
+        return $this->hasMany(history_prestasi::class, 'user_id', 'id_user');
+    }
     
     public function get_associated() {
         return $this->hasOne(Mahasiswa_detail::class, 'user_id', 'id_user') ?? $this->hasOne(Penyelenggara_detail::class, 'user_id', 'id_user');
+    }
+
+    public function get_ikut_lomba() {
+        return $this->hasManyThrough(lombaTeam::class, lombaMember::class, 'user_id', 'id_team', 'id_user', 'team_id');
+    }
+
+    public function get_minat() {
+        return $this->hasMany(MahasiswaMinat::class, 'user_id', 'id_user');
+    }
+
+    public function get_minat_text() {
+        return $this->get_minat()->get()->map(fn ($minat) => $minat->bidang->name)->implode(', ');
     }
 
     /**

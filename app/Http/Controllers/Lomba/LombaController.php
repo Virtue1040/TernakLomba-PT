@@ -8,13 +8,15 @@ use App\Http\Requests\Lomba\UpdateLombaRequest;
 use App\Models\bidangMinat;
 use App\Models\Lomba;
 use App\Models\Lomba_detail;
+use Auth;
 
 class LombaController extends Controller
 {
     function __construct()
     {
         $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
-        $this->middleware('permission:lomba-create', ['only' => ['create', 'store']]);
+        // $this->middleware('permission:lomba-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:lomba-approve', ['only' => ['approver', 'approve']]);
         $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:lomba-delete', ['only' => ['destroy']]);
     }
@@ -47,8 +49,9 @@ class LombaController extends Controller
      *                      "max_member": 1,
      *                      "min_member": 1,
      *                      "lombaCategory_id": 1,
-     *                      "start_date": "2025-03-20 23:01:22",
-     *                      "end_date": "2025-03-20 23:01:22",
+     *                      "start_date": "2025-03-20",
+     *                      "end_date": "2025-03-20",
+     *                      "decide_date": "2025-03-20",
      *                      "updated_at": "2025-03-20T16:04:14.000000Z",
      *                      "created_at": "2025-03-20T16:04:14.000000Z",
      *                      "id_lomba": 2
@@ -129,8 +132,9 @@ class LombaController extends Controller
      *                      "max_member": 1,
      *                      "min_member": 1,
      *                      "lombaCategory_id": 1,
-     *                      "start_date": "2025-03-20 23:01:22",
-     *                      "end_date": "2025-03-20 23:01:22",
+     *                      "start_date": "2025-03-20",
+     *                      "end_date": "2025-03-20",
+     *                      "decide_date": "2025-03-20",
      *                      "updated_at": "2025-03-20T16:04:14.000000Z",
      *                      "created_at": "2025-03-20T16:04:14.000000Z",
      *                      "id_lomba": 2
@@ -218,6 +222,14 @@ class LombaController extends Controller
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
+     *         name="roleList",
+     *         in="query",
+     *         description="List Role (dipisah dengan ',')",
+     *         example="Leader,Hacker",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
      *         name="lombaCategory_id",
      *         in="query",
      *         description="Category ID",
@@ -229,7 +241,7 @@ class LombaController extends Controller
      *         name="start_date",
      *         in="query",
      *         description="Start Date",
-     *         example = "2025-03-20 23:01:22",
+     *         example = "2025-03-20",
      *         required=true,
      *         @OA\Schema(type="string", format="date")
      *     ),
@@ -237,7 +249,15 @@ class LombaController extends Controller
      *         name="end_date",
      *         in="query",
      *         description="End Date",
-     *         example = "2025-03-20 23:01:22",
+     *         example = "2025-03-20",
+     *         required=true,
+     *         @OA\Schema(type="string", format="date")
+     *     ),
+     *     @OA\Parameter(
+     *         name="decide_date",
+     *         in="query",
+     *         description="Decide Date",
+     *         example = "2025-03-21",
      *         required=true,
      *         @OA\Schema(type="string", format="date")
      *     ),
@@ -254,8 +274,9 @@ class LombaController extends Controller
      *                      "max_member": 1,
      *                      "min_member": 1,
      *                      "lombaCategory_id": 1,
-     *                      "start_date": "2025-03-20 23:01:22",
-     *                      "end_date": "2025-03-20 23:01:22",
+     *                      "start_date": "2025-03-20",
+     *                      "end_date": "2025-03-20",
+     *                      "decide_date": "2025-03-21",
      *                      "updated_at": "2025-03-20T16:04:14.000000Z",
      *                      "created_at": "2025-03-20T16:04:14.000000Z",
      *                      "id_lomba": 2
@@ -302,24 +323,31 @@ class LombaController extends Controller
             "min_member" => ["required", "integer", "min:1"],
             "title" => ["required", "string", "max:255"],
             "description" => ["required", "string", "max:255"],
+            "roleList" => ["required"],
             "lombaCategory_id" => ["required", "integer", "exists:lomba_categories,id_lombaCategory"],
-            "start_date" => ["required", "date_format:Y-m-d H:i:s"],
-            "end_date" => ["required", "date_format:Y-m-d H:i:s"]
+            "start_date" => ["required", "date_format:Y-m-d"],
+            "end_date" => ["required", "date_format:Y-m-d"],
+            "decide_date" => ["required", "date_format:Y-m-d"]
         ]);
         $max_member = $request->max_member;
         $min_member = $request->min_member;
         $title = $request->title;
         $description = $request->description;
         $lombaCategory_id = $request->lombaCategory_id;
+        $roleList = explode(',', $request->input('roleList', ''));
         $start_date = $request->start_date;
         $end_date = $request->end_date;
+        $decide_date = $request->decide_date;
 
         $lomba = Lomba::create([
             "max_member" => $max_member,
             "min_member" => $min_member,
             "lombaCategory_id" => $lombaCategory_id,
+            "roleList" => $request->roleList,
+            "created_by" => Auth::user()->id_user,
             "start_date" => $start_date,
-            "end_date" => $end_date
+            "end_date" => $end_date,
+            "decide_date" => $decide_date
         ]);
 
         $lomba_detail = Lomba_detail::create([
@@ -339,6 +367,8 @@ class LombaController extends Controller
         ], 200);
     }
 
+    
+
     /**
      * Display the specified resource.
      */
@@ -354,6 +384,7 @@ class LombaController extends Controller
     {
         //
     }
+    
 
     /**
      * Update Lomba
@@ -521,6 +552,79 @@ class LombaController extends Controller
                 "lomba" => $lomba,
                 "lomba_detail" => $lomba_detail
             ]
+        ], 200);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function approver(Lomba $lomba)
+    {
+        //
+    }
+
+    /**
+     * Approve Lomba
+     * @OA\Post(
+     *     security={{"bearerAuth":{}}},
+     *     path="/api/v1/lomba/{id_lomba}",
+     *     tags={"Lomba"},
+     *     operationId="lomba-approve",
+     *     summary="Approve Lomba",
+     *     description="Approve data Lomba",
+     *     @OA\Parameter(
+     *         name="id_lomba",
+     *         in="path",
+     *         description="Lomba ID",
+     *         example = 1,
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Ok",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": true,
+     *                 "status_code": 200,
+     *                 "message": "Berhasil mengapprove lomba",
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Error: Unauthorized",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 401,
+     *                 "message": "Unauthorized"
+     *             }
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Error: Forbidden",
+     *         @OA\JsonContent(
+     *             example={
+     *                 "success": false,
+     *                 "status_code": 403,
+     *                 "message": "Forbidden - You do not have permission"
+     *             }
+     *         ),
+     *     ),
+     * )
+     */
+    public function approve(UpdateLombaRequest $request, Lomba $lomba, $id_lomba)
+    {
+        $lomba = $lomba::findOrFail($id_lomba);
+        $lomba->isApproved = true;
+        $lomba->save();
+
+        return response()->json([
+            "success" => true,
+            "status_code" => 200,
+            "message" => "Berhasil mengapprove lomba",
         ], 200);
     }
 
