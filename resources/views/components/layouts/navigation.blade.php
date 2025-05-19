@@ -60,25 +60,27 @@
                 </x-navigation-button>
             </nav>
 
-            <div onclick="window.location.href = '{{ route('profile') }}'" class="flex items-center p-1 mt-auto mb-5 rounded-xl cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
-                <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-10 h-10 rounded-full">
-                <div>
-                    <div class="font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}
+            <div class="flex flex-col p-[14px] border-[1px] border-[#E9E9E9] rounded-[10px] mt-auto ">
+                <div onclick="window.location.href = '{{ route('profile') }}'" class="flex items-center p-1 mb-5 rounded-xl cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
+                    <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-10 h-10 rounded-full">
+                    <div>
+                        <div class="font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            {{ $user->getRoleNames()[0] == 'User' ? 'Students' : $user->getRoleNames()[0] }}</div>
                     </div>
-                    <div class="text-sm text-gray-500">
-                        {{ $user->getRoleNames()[0] == 'User' ? 'Students' : $user->getRoleNames()[0] }}</div>
                 </div>
+    
+                <button onclick="window.location.href = '{{ route('logout') }}'" class="flex items-center justify-start bg-[#FEBB0E] p-3 gap-1 rounded-[10px]">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.3333 14.1667L17.5 10M17.5 10L13.3333 5.83333M17.5 10H7.5M7.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86502 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86502C2.5 4.3998 2.5 5.09987 2.5 6.5V13.5C2.5 14.9001 2.5 15.6002 2.77248 16.135C3.01217 16.6054 3.39462 16.9878 3.86502 17.2275C4.3998 17.5 5.09987 17.5 6.5 17.5H7.5"
+                            stroke="#141111" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p>Logout</p>
+                </button>
             </div>
-
-            <button onclick="window.location.href = '{{ route('logout') }}'" class="flex items-center justify-start bg-[#FEBB0E] p-3 gap-1 rounded-[10px]">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M13.3333 14.1667L17.5 10M17.5 10L13.3333 5.83333M17.5 10H7.5M7.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86502 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86502C2.5 4.3998 2.5 5.09987 2.5 6.5V13.5C2.5 14.9001 2.5 15.6002 2.77248 16.135C3.01217 16.6054 3.39462 16.9878 3.86502 17.2275C4.3998 17.5 5.09987 17.5 6.5 17.5H7.5"
-                        stroke="#141111" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                <p>Logout</p>
-            </button>
         </div>
         
         <div x-data="{ isProfileOpen: false }" class="w-full h-screen">

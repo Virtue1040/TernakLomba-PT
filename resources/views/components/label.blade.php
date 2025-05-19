@@ -1,0 +1,2 @@
+@props(['name', 'label' => 'holder', 'required' => false, 'tip', "size" => 15])
+<label for="{{ "input_" . $name }}" class="font-[700] font-cabinet sm:text-[15px] md:text-[18px] lg:text-[20px]">{{ $label }}@if($required) <span class="text-red-400">*</span>@endif</label>

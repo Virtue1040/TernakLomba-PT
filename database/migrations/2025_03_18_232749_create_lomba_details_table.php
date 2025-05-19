@@ -16,6 +16,10 @@ return new class extends Migration
             $table->bigInteger("lomba_id", 1)->primary();
             $table->string("title");
             $table->string("description");
+            $table->string('penyelenggara_name');
+            $table->string("pic_name");
+            $table->string("pic_tel", 50);
+            $table->string("pic_email");
 
             $table->foreign("lomba_id")->references("id_lomba")->on("lombas")->onDelete("cascade");
             $table->timestamps();

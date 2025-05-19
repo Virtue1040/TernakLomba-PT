@@ -76,7 +76,7 @@ Route::middleware('auth:sanctum', 'web')->group(function () {
     Route::get("v1/lomba", [LombaController::class, 'all'])->name("lomba-get");
     Route::post("v1/lomba/{id_lomba}", [LombaController::class, 'approve'])->name("lomba-approve");
     Route::get("v1/lombaCategory/{id_lomba}", [LombaController::class, 'get'])->name("lomba-get");
-    Route::post("v1/lomba", [LombaController::class, 'store'])->name("lomba-store");
+    Route::post("v1/lomba", [LombaController::class, 'store'])->name("lomba-store")->withoutMiddleware("auth:sanctum");
     Route::put("v1/lomba/{id_lomba}", [LombaController::class, 'update'])->name("lomba-update");
     Route::delete("v1/lomba/{id_lomba}", [LombaController::class, 'destroy'])->name("lomba-delete");
 

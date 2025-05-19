@@ -71,7 +71,7 @@ class UsersDetailController extends Controller
         $request->validate([
             'gender' => ['required', 'string', 'max:255', 'in:male,female'],
             'birth_date' => ['required', 'date'],
-            'telp' => ['required', 'string', 'max:255'],
+            'telp' => ['required', 'string', 'max:50'],
             'birth_place' => ['required', 'string', 'max:255'],
             'kampus' => ['required', 'string', 'max:255'],
             'jurusan' => ['required', 'string', 'max:255'],

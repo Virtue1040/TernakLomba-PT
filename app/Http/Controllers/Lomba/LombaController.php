@@ -8,7 +8,8 @@ use App\Http\Requests\Lomba\UpdateLombaRequest;
 use App\Models\bidangMinat;
 use App\Models\Lomba;
 use App\Models\Lomba_detail;
-use Auth;
+use App\Models\lombaCategory;
+use File;
 
 class LombaController extends Controller
 {
@@ -165,11 +166,8 @@ class LombaController extends Controller
      *         ),
      *     ),
      * )
-    */
-    public function get(Lomba $lomba, $id_lomba)
-    {
-        
-    }
+     */
+    public function get(Lomba $lomba, $id_lomba) {}
 
     /**
      * Show the form for creating a new resource.
@@ -177,7 +175,8 @@ class LombaController extends Controller
     public function create()
     {
         $listMinat = bidangMinat::all();
-        return view("display.registData.lomba.index", ['listMinat' => $listMinat]);
+        $listCategory = lombaCategory::all();
+        return view("display.registData.lomba.index", ['listMinat' => $listMinat, 'listCategory' => $listCategory]);
     }
 
     /**
@@ -206,6 +205,25 @@ class LombaController extends Controller
      *         @OA\Schema(type="integer")
      *     ),
      *     @OA\Parameter(
+     *         name="cost_PerTeam",
+     *         in="query",
+     *         description="Pembagian biaya per anggota",
+     *         example = 10000,
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     * @OA\Parameter(
+     *     name="competitionLevel",
+     *     in="query",
+     *     description="Tingkatan level lomba",
+     *     required=true,
+     *     @OA\Schema(
+     *         type="string",
+     *         enum={"Internasional", "Nasional", "Regional"},
+     *         example="Internasional"
+     *     )
+     * ),
+     *     @OA\Parameter(
      *         name="title",
      *         in="query",
      *         description="Title Lomba",
@@ -218,6 +236,54 @@ class LombaController extends Controller
      *         in="query",
      *         description="Description Lomba",
      *         example = "Lomba Adalah",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="total_hadiah",
+     *         in="query",
+     *         description="Total Hadiah Lomba",
+     *         example = 100000,
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="total_juara",
+     *         in="query",
+     *         description="Total Juara Lomba",
+     *         example = 1,
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="penyelenggara_name",
+     *         in="query",
+     *         description="Nama Penyelenggara Lomba",
+     *         example = "Udin Santoso",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pic_name",
+     *         in="query",
+     *         description="Nama PIC",
+     *         example = "Udin",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pic_tel",
+     *         in="query",
+     *         description="No Whatsapp PIC",
+     *         example = "089123812383",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="pic_email",
+     *         in="query",
+     *         description="Email PIC",
+     *         example = "pic@gmail.com",
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
@@ -261,6 +327,33 @@ class LombaController extends Controller
      *         required=true,
      *         @OA\Schema(type="string", format="date")
      *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={},
+     *             @OA\Property(
+     *                 property="poster_kompetisi",
+     *                 description="Poster Kompetisi (Image File max 5MB)",
+     *                 type="string",
+     *                 format="binary"
+     *             ),
+     *             @OA\Property(
+     *                 property="guide_book",
+     *                 description="Guide Book (PDF File max 2MB)",
+     *                 type="string",
+     *                 format="binary"
+     *             ),
+     *             @OA\Property(
+     *                 property="preview_foto_kompetisi",
+     *                 description="Preview Foto Kompetisi (Image File max 5MB)",
+     *                 type="string",
+     *                 format="binary"
+     *             )
+     *           )
+     *         )
+     *     ), 
      *     @OA\Response(
      *         response="200",
      *         description="Ok",
@@ -273,6 +366,7 @@ class LombaController extends Controller
      *                      "lomba": {
      *                      "max_member": 1,
      *                      "min_member": 1,
+     *                      "total_juara": 1,
      *                      "lombaCategory_id": 1,
      *                      "start_date": "2025-03-20",
      *                      "end_date": "2025-03-20",
@@ -285,6 +379,10 @@ class LombaController extends Controller
      *                      "lomba_id": 2,
      *                      "title": "Gemastik",
      *                      "description": "Lomba Adalah",
+     *                      "penyelenggara_name": "Udin Santoso",
+     *                      "pic_name": "Udin",
+     *                      "pic_tel": "089123812383",
+     *                      "pic_email": "pic@gmail.com",
      *                      "updated_at": "2025-03-20T16:04:14.000000Z",
      *                      "created_at": "2025-03-20T16:04:14.000000Z"
      *                      }
@@ -323,11 +421,20 @@ class LombaController extends Controller
             "min_member" => ["required", "integer", "min:1"],
             "title" => ["required", "string", "max:255"],
             "description" => ["required", "string", "max:255"],
-            "roleList" => ["required"],
+            "roleList" => ["string", "max:255"],
             "lombaCategory_id" => ["required", "integer", "exists:lomba_categories,id_lombaCategory"],
             "start_date" => ["required", "date_format:Y-m-d"],
             "end_date" => ["required", "date_format:Y-m-d"],
-            "decide_date" => ["required", "date_format:Y-m-d"]
+            "decide_date" => ["required", "date_format:Y-m-d"],
+            "total_hadiah" => ["required", "integer", "min:1"],
+            "total_juara" => ["required", "integer", "min:1"],
+            "penyelenggara_name" => ["required", "string", "max:255"],
+            "pic_name" => ["required", "string", "max:255", "regex:/^[a-zA-Z\s]*$/"],
+            "pic_tel" => ["required", "string", "max:50"],
+            "pic_email" => ["required", "email", "max:255"],
+            "poster_kompetisi" => ["image", "max:5120"],
+            "guide_book" => ["mimes:pdf", "max:2048"],
+            "preview_foto_kompetisi" => ["image", "max:5120"],
         ]);
         $max_member = $request->max_member;
         $min_member = $request->min_member;
@@ -338,22 +445,58 @@ class LombaController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $decide_date = $request->decide_date;
+        $total_hadiah = $request->total_hadiah;
+        $total_juara = $request->total_juara;
+        $penyelenggara_name = $request->penyelenggara_name;
+        $pic_name = $request->pic_name;
+        $pic_tel = $request->pic_tel;
+        $pic_email = $request->pic_email;
+        $poster_kompetisi = $request->poster_kompetisi;
+        $guide_book = $request->guide_book;
+        $preview_foto_kompetisi = $request->preview_foto_kompetisi;
+
+        $user = auth("sanctum")->user();
 
         $lomba = Lomba::create([
             "max_member" => $max_member,
             "min_member" => $min_member,
+            "total_juara" => $total_juara,
             "lombaCategory_id" => $lombaCategory_id,
-            "roleList" => $request->roleList,
-            "created_by" => Auth::user()->id_user,
+            "roleList" => $request->input('roleList', ''),
+            "created_by" => $user !== null ? $user->id_user : 1,
             "start_date" => $start_date,
             "end_date" => $end_date,
-            "decide_date" => $decide_date
+            "decide_date" => $decide_date,
         ]);
 
+        $id_lomba = $lomba->id_lomba;
+
+        $path = public_path() . "/documents/lomba/". $id_lomba;
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+
+        if ($poster_kompetisi) {
+            $poster_kompetisi->move($path, "poster_kompetisi.png");
+        }
+
+        if ($guide_book) {
+            $guide_book->move($path, "guide_book.pdf");
+        }
+
+        if ($preview_foto_kompetisi) {
+            $preview_foto_kompetisi->move($path, "preview_foto_kompetisi.png");
+        }
+        
         $lomba_detail = Lomba_detail::create([
             "lomba_id" => $lomba->id_lomba,
             "title" => $title,
-            "description" => $description
+            "description" => $description,
+            "penyelenggara_name" => $penyelenggara_name,
+            "pic_name" => $pic_name,
+            "pic_tel" => $pic_tel,
+            "pic_email" => $pic_email
         ]);
 
         return response()->json([
@@ -367,7 +510,7 @@ class LombaController extends Controller
         ], 200);
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -384,7 +527,7 @@ class LombaController extends Controller
     {
         //
     }
-    
+
 
     /**
      * Update Lomba

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="LombaDetail",
  *   type="object",
- *   required={"lomba_id", "title", "description"},
+ *   required={"lomba_id", "title", "description", "penyelenggara_name", "pic_name", "pic_tel", "pic_email"},
  * )
  * Class LombaDetail
  * @package Incase\Models
@@ -23,6 +23,10 @@ class Lomba_detail extends Model
         'lomba_id',
         'title',
         'description',
+        'penyelenggara_name',
+        'pic_name',
+        'pic_tel',
+        'pic_email',
     ];
 
     protected $primaryKey = "lomba_id";
@@ -44,6 +48,30 @@ class Lomba_detail extends Model
      * @var string
     */
     private $description;
+
+    /**
+     * @OA\Property(title="penyelenggara_name", type="string", readOnly=true)
+     * @var string
+    */
+    private $penyelenggara_name;
+
+    /**
+     * @OA\Property(title="pic_name", type="string", readOnly=true)
+     * @var string
+    */
+    private $pic_name;
+
+    /**
+     * @OA\Property(title="pic_tel", type="string", readOnly=true)
+     * @var string
+    */
+    private $pic_tel;
+
+    /**
+     * @OA\Property(title="pic_email", type="string", readOnly=true)
+     * @var string
+    */
+    private $pic_email;
 
     /**
      * @OA\Property(title="created_at", type="timestamp", readOnly=true)

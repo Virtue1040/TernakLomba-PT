@@ -1323,6 +1323,31 @@
                         "example": 1
                     },
                     {
+                        "name": "cost_PerTeam",
+                        "in": "query",
+                        "description": "Pembagian biaya per anggota",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 10000
+                    },
+                    {
+                        "name": "competitionLevel",
+                        "in": "query",
+                        "description": "Tingkatan level lomba",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Internasional",
+                                "Nasional",
+                                "Regional"
+                            ],
+                            "example": "Internasional"
+                        }
+                    },
+                    {
                         "name": "title",
                         "in": "query",
                         "description": "Title Lomba",
@@ -1341,6 +1366,66 @@
                             "type": "string"
                         },
                         "example": "Lomba Adalah"
+                    },
+                    {
+                        "name": "total_hadiah",
+                        "in": "query",
+                        "description": "Total Hadiah Lomba",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 100000
+                    },
+                    {
+                        "name": "total_juara",
+                        "in": "query",
+                        "description": "Total Juara Lomba",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "penyelenggara_name",
+                        "in": "query",
+                        "description": "Nama Penyelenggara Lomba",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Udin Santoso"
+                    },
+                    {
+                        "name": "pic_name",
+                        "in": "query",
+                        "description": "Nama PIC",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Udin"
+                    },
+                    {
+                        "name": "pic_tel",
+                        "in": "query",
+                        "description": "No Whatsapp PIC",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "089123812383"
+                    },
+                    {
+                        "name": "pic_email",
+                        "in": "query",
+                        "description": "Email PIC",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "pic@gmail.com"
                     },
                     {
                         "name": "roleList",
@@ -1396,6 +1481,34 @@
                         "example": "2025-03-21"
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "poster_kompetisi": {
+                                        "description": "Poster Kompetisi (Image File max 5MB)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "guide_book": {
+                                        "description": "Guide Book (PDF File max 2MB)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "preview_foto_kompetisi": {
+                                        "description": "Preview Foto Kompetisi (Image File max 5MB)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Ok",
@@ -1410,6 +1523,7 @@
                                         "lomba": {
                                             "max_member": 1,
                                             "min_member": 1,
+                                            "total_juara": 1,
                                             "lombaCategory_id": 1,
                                             "start_date": "2025-03-20",
                                             "end_date": "2025-03-20",
@@ -1422,6 +1536,10 @@
                                             "lomba_id": 2,
                                             "title": "Gemastik",
                                             "description": "Lomba Adalah",
+                                            "penyelenggara_name": "Udin Santoso",
+                                            "pic_name": "Udin",
+                                            "pic_tel": "089123812383",
+                                            "pic_email": "pic@gmail.com",
                                             "updated_at": "2025-03-20T16:04:14.000000Z",
                                             "created_at": "2025-03-20T16:04:14.000000Z"
                                         }
@@ -3772,6 +3890,7 @@
                     "id_lomba",
                     "max_member",
                     "min_member",
+                    "total_juara",
                     "roleList",
                     "lombaCategory_id",
                     "start_date",
@@ -3792,16 +3911,22 @@
                         "format": "int64",
                         "readOnly": true
                     },
-                    "roleList": {
-                        "title": "roleList",
-                        "type": "string",
-                        "format": "string",
-                        "readOnly": true
-                    },
                     "min_member": {
                         "title": "min_member",
                         "type": "integer",
                         "format": "int64",
+                        "readOnly": true
+                    },
+                    "total_juara": {
+                        "title": "total_juara",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "roleList": {
+                        "title": "roleList",
+                        "type": "string",
+                        "format": "string",
                         "readOnly": true
                     },
                     "lombaCategory_id": {
@@ -3856,7 +3981,11 @@
                 "required": [
                     "lomba_id",
                     "title",
-                    "description"
+                    "description",
+                    "penyelenggara_name",
+                    "pic_name",
+                    "pic_tel",
+                    "pic_email"
                 ],
                 "properties": {
                     "lomba_id": {
@@ -3872,6 +4001,26 @@
                     },
                     "description": {
                         "title": "description",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "penyelenggara_name": {
+                        "title": "penyelenggara_name",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "pic_name": {
+                        "title": "pic_name",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "pic_tel": {
+                        "title": "pic_tel",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "pic_email": {
+                        "title": "pic_email",
                         "type": "string",
                         "readOnly": true
                     },

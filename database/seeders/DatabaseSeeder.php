@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             LombaHadiahSeeder::class,
             LombaMemberSeeder::class,
             LombaSeeder::class,
+            LombaCategorySeeder::class,
             LombaTeamSeeder::class,
             MahasiswaDetailSeeder::class,
             PenyelenggaraDetailSeeder::class,

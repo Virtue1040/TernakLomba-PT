@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="Lomba",
  *   type="object",
- *   required={"id_lomba", "max_member", "min_member", "roleList", "lombaCategory_id", "start_date", "end_date", "decide_date", "isApproved"},
+ *   required={"id_lomba", "max_member", "min_member", "total_juara", "roleList", "lombaCategory_id", "start_date", "end_date", "decide_date", "isApproved"},
  * )
  * Class Lomba
  * @package Incase\Models
@@ -22,6 +22,7 @@ class Lomba extends Model
     protected $fillable = [
         'max_member',
         'min_member',
+        'total_juara',
         'roleList',
         'lombaCategory_id',
         'created_by',
@@ -56,16 +57,23 @@ class Lomba extends Model
     private $max_member;
 
     /**
+     * @OA\Property(title="min_member", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $min_member;
+
+    /**
+     * @OA\Property(title="total_juara", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $total_juara;
+
+    /**
      * @OA\Property(title="roleList", type="string", format="string", readOnly=true)
      * @var integer
     */
     private $roleList;
 
-    /**
-     * @OA\Property(title="min_member", type="integer", format="int64", readOnly=true)
-     * @var integer
-    */
-    private $min_member;
 
     /**
      * @OA\Property(title="lombaCategory_id", type="integer", format="int64", readOnly=true)

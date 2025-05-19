@@ -42,7 +42,7 @@
                 })
 
                 closeEdit("bio")
-    
+            }
         </script>
     </x-slot>
     <div class="px-4 mx-auto w-full lg:max-w-[1200px]">

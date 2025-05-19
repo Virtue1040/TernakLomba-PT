@@ -16,8 +16,8 @@ return new class extends Migration
             $table->bigInteger("user_id")->primary();
             $table->string("first_name")->nullable();
             $table->string("last_name")->nullable();
-            $table->string("tel")->nullable();
-            $table->string("bio")->default("Hi, I'm new here");
+            $table->string("tel", 50)->nullable();
+            $table->string("bio")->default("Hi, Im new here");
             $table->date("birth_date")->nullable();
             $table->string("birth_place")->nullable();
             $table->enum("gender", ["male", "female"])->default("male")->nullable();

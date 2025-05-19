@@ -15,9 +15,10 @@ return new class extends Migration
             $table->bigInteger("id_lomba", 1)->primary();
             $table->integer("max_member")->default(1);
             $table->integer("min_member")->default(1);
+            $table->integer("total_juara")->default(1);
             $table->bigInteger("lombaCategory_id");
             $table->string("roleList")->default("");
-            $table->bigInteger("created_by");
+            $table->bigInteger("created_by")->nullable();
             $table->date("start_date");
             $table->date("end_date");
             $table->date("decide_date");
