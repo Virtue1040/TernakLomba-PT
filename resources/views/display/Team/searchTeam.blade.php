@@ -7,7 +7,7 @@
             Bergabung Dengan Tim
         </h1>
         <div class="flex justify-center my-8 mb-7">
-            <x-finder class="lg:w-[671px] md:w-[500px] sm:w-[400px] lg:h-[60px] md:h-[55px] sm:h-[50px] h-[45px] !pr-[142px]" placeholder="Masukkan Kode Compspace untuk Join atau Cari dibawah ini">
+            <x-finder :full=false class="lg:w-[671px] md:w-[500px] sm:w-[400px] lg:h-[60px] md:h-[55px] sm:h-[50px] h-[45px] !pr-[142px]" placeholder="Masukkan Kode Compspace untuk Join atau Cari dibawah ini">
                 <x-slot name="icon">
                     <button class="flex justify-center items-center px-4 w-full h-8 text-sm font-bold text-white bg-black rounded-full lg:text-base sm:h-9 md:h-10 lg:h-11 sm:px-5 lg:px-6">
                         Lihat Hasil
