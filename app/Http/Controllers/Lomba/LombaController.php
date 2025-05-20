@@ -9,13 +9,17 @@ use App\Models\bidangMinat;
 use App\Models\Lomba;
 use App\Models\Lomba_detail;
 use App\Models\lombaCategory;
+use App\Models\lombaHadiah;
+use App\Models\lombaTeam;
 use File;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LombaController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:lomba-read', ['only' => ['index', 'show']]);
+        $this->middleware('permission:lomba-read', ['only' => ['index']]);
         // $this->middleware('permission:lomba-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:lomba-approve', ['only' => ['approver', 'approve']]);
         $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);
@@ -24,7 +28,24 @@ class LombaController extends Controller
 
     public function index()
     {
-        //
+        $lombas = Lomba::where("isApproved", 1)->get();
+
+        $users = User::with(['detail', 'mahasiswa', 'prestasi'])
+        ->where('id_user', '!=', auth("sanctum")->user()->id_user)
+        ->get();
+
+        return view('display.dashboard.explore.index', compact('lombas','users'));
+    }
+
+    public function admin() {
+        $lombas = Lomba::all();
+        $lombaTeams = lombaTeam::all();
+        return view('display.dashboard.admin-dashboard.index',  ["lombas" => $lombas, 'lombaTeams' => $lombaTeams]);
+    }
+
+    public function compspace($id_lomba) {
+        $lomba = Lomba::findOrFail($id_lomba);
+        return view('display.Team.searchTeam', ["lomba" => $lomba]);
     }
 
     /**
@@ -432,9 +453,9 @@ class LombaController extends Controller
             "pic_name" => ["required", "string", "max:255", "regex:/^[a-zA-Z\s]*$/"],
             "pic_tel" => ["required", "string", "max:50"],
             "pic_email" => ["required", "email", "max:255"],
-            "poster_kompetisi" => ["image", "max:5120"],
-            "guide_book" => ["mimes:pdf", "max:2048"],
-            "preview_foto_kompetisi" => ["image", "max:5120"],
+            "poster_kompetisi" => ["required", "image", "max:5120"],
+            "guide_book" => ["required", "mimes:pdf", "max:2048"],
+            "preview_foto_kompetisi" => ["required", "image", "max:5120"],
         ]);
         $max_member = $request->max_member;
         $min_member = $request->min_member;
@@ -470,6 +491,12 @@ class LombaController extends Controller
         ]);
 
         $id_lomba = $lomba->id_lomba;
+
+        $lombaHadiah = lombaHadiah::create([
+            "lomba_id" => $id_lomba,
+            "typeHadiah_id" => 1, //Tipe hadiah uang
+            "quantity" => $total_hadiah
+        ]);
 
         $path = public_path() . "/documents/lomba/". $id_lomba;
 
@@ -515,9 +542,14 @@ class LombaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lomba $lomba)
+    public function show(Lomba $lomba, $id_lomba)
     {
-        //
+        $getLomba = $lomba::findOrFail($id_lomba);
+        $isAdmin = auth("sanctum")->user()->hasRole('Admin');
+        if (!$getLomba->isApproved && !$isAdmin) {
+            return route("dashboard-explore");
+        }
+        return view('display.detailLomba.index', ["lomba" => $getLomba]);
     }
 
     /**
@@ -699,14 +731,6 @@ class LombaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function approver(Lomba $lomba)
-    {
-        //
-    }
-
-    /**
      * Approve Lomba
      * @OA\Post(
      *     security={{"bearerAuth":{}}},
@@ -771,6 +795,11 @@ class LombaController extends Controller
         ], 200);
     }
 
+    public function reject(UpdateLombaRequest $request, Lomba $lomba, $id_lomba)
+    {
+
+    }
+
     /**
      * Delete Lomba
      * @OA\Delete(
@@ -827,6 +856,9 @@ class LombaController extends Controller
     {
         $lombas = $lomba::findOrFail($id_lomba);
         $lombas->delete();
+
+        $path = public_path() . "/documents/lomba/". $id_lomba;
+        File::deleteDirectory($path);
 
         return response()->json([
             "success" => true,

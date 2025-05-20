@@ -60,6 +60,22 @@ class User extends Authenticatable
         ];
     }
 
+    public function detail()
+    {
+        return $this->hasOne(Users_detail::class, 'user_id', 'id_user');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa_detail::class, 'user_id', 'id_user');
+    }
+
+    public function prestasi()
+    {
+        return $this->hasMany(history_prestasi::class, 'user_id', 'id_user');
+    }
+
+
     public function user_detail() {
         return $this->hasOne(Users_detail::class, 'user_id', 'id_user');
     }

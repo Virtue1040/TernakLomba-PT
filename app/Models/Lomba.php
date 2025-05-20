@@ -36,12 +36,27 @@ class Lomba extends Model
 
     public function lombaCategory()
     {
-        return $this->belongsTo(lombaCategory::class);
+        return $this->belongsTo(lombaCategory::class, 'lombaCategory_id', 'id_lombaCategory');
     }
 
     public function lombaDetail()
     {
-        return $this->hasOne(Lomba_detail::class);
+        return $this->hasOne(Lomba_detail::class, 'lomba_id', 'id_lomba');
+    }
+
+    public function getTeams()
+    {
+        return $this->hasMany(lombaTeam::class, 'lomba_id', 'id_lomba');
+    }
+
+    public function getHadiahs()
+    {
+        return $this->hasMany(lombaHadiah::class, 'lomba_id', 'id_lomba');
+    }
+    
+    public function getTotalMoneyHadiah()
+    {
+        return $this->getHadiahs()->where("typeHadiah_id", 1)->sum('quantity');
     }
 
     /**

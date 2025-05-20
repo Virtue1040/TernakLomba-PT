@@ -35,6 +35,12 @@ class Users_detail extends Model
 
     protected $primaryKey = 'user_id';
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
+    }
+
+
     // public function full_name()
     // {
     //     return trim("{$this->first_name} {$this->last_name}");

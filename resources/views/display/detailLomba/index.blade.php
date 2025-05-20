@@ -1,11 +1,41 @@
 <x-layouts.default footer=false>
+    <x-slot name="script">
+        <script>
+            function approve(id_lomba) {
+                $.ajax({
+                    url: "/api/v1/lomba" + '/' + id_lomba,
+                    method: "POST",
+                    data: {
+                    },
+                    success: function(data) {
+                        alert("Lomba approved")
+                        window.location.reload()
+                    }
+                })
+            }
+
+            function reject(id_lomba) {
+                $.ajax({
+                    url: "/api/v1/lomba" + '/' + id_lomba,
+                    method: "POST",
+                    data: {
+                        _method: 'DELETE',
+                    },
+                    success: function(data) {
+                        alert("Lomba rejected")
+                        window.location.reload()
+                    }
+                })
+            }
+        </script>
+    </x-slot>
     <div class="mx-auto w-full lg:max-w-[1200px]">
         <div class="mx-auto bg-white md:p-7">
             <x-nav-2 title="Detail Kompetisi" ItemColor="text-black" />
 
             <div class="relative">
                 <div class="w-full h-[200px] md:h-[320px] flex items-center justify-center">
-                    <img src="{{ asset('images/4cnational.png') }}" alt="4C National Competition Banner"
+                    <img src="{{ asset('documents/lomba/' . $lomba->id_lomba . "/preview_foto_kompetisi.png") }}" alt="4C National Competition Banner"
                         class="w-full h-full rounded-t-[16px] object-cover object-center">
                 </div>
                 <div class="absolute left-4 -bottom-10 md:-bottom-12 md:left-8">
@@ -20,23 +50,35 @@
 
             <div x-data="{ formOpen: false }"
                 class="flex flex-col gap-2 justify-end mt-12 mb-2 w-full sm:flex-row sm:gap-4 sm:mt-4 sm:w-auto">
-                <button @click="formOpen = true"
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
-                    Daftar & Buat Compspace
-                </button>
-                <button
-                    class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
-                    Cari Tim & Compspace
-                </button>
+                @guest                    
+                    <button @click="formOpen = true"
+                        class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
+                        Daftar & Buat Compspace
+                    </button>
+                @endguest
 
-                <button
-                    class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
-                    Setuju Kompetisi
-                </button>
-                <button
-                    class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
-                    Tolak Pengajuan
-                </button>
+                @auth       
+                    @if ($user->hasRole('Admin') && !$lomba->isApproved)
+                        <button onclick="approve({{ $lomba->id_lomba }})"
+                            class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
+                            Setuju Kompetisi
+                        </button>
+                        <button onclick="reject({{ $lomba->id_lomba }})"
+                            class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
+                            Tolak Pengajuan
+                        </button>
+                    @else
+                        <button onclick="window.location.href='{{ route('lomba-compspace', $lomba->id_lomba) }}'"
+                            class="px-4 py-2 text-sm font-semibold text-gray-800 bg-white rounded-full border transition sm:px-8 sm:py-3 hover:bg-gray-100 sm:text-base">
+                            Cari Tim & Compspace
+                        </button>
+                        <button @click="formOpen = true"
+                            class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white font-semibold px-4 sm:px-8 py-2 sm:py-3 rounded-full hover:from-[#822bf2] hover:to-[#822bf2] transition text-sm sm:text-base">
+                            Daftar & Buat Compspace
+                        </button>
+                    @endif
+                @endauth
+
 
                 <div x-show="formOpen" x-cloak
                     class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
@@ -51,7 +93,7 @@
                                     Nama Tim
                                 </label>
                                 <input type="text" name="namaTim" id="namaTim"
-                                    class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2"
+                                    class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2"
                                     placeholder="Masukan nama tim" required>
                             </div>
 
@@ -60,12 +102,12 @@
                                     Jumlah Maks Anggota
                                 </label>
                                 <select name="role_position" id="rolePosition"
-                                    class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2" required>
+                                    class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
                                     <option class="text-gray-400" value="">Masukkan Jumlah Aggota</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
-
+                                    <option value="4">4</option>
                                 </select>
                             </div>
 
@@ -74,10 +116,9 @@
                                     Cabang Komepetisi
                                 </label>
                                 <select name="role_position" id="rolePosition"
-                                    class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2" required>
+                                    class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
                                     <option value="">Select the role need</option>
                                     <option value="ui/ux">UI/UX Designer</option>
-
                                 </select>
                             </div>
 
@@ -86,7 +127,7 @@
                                     Opsi Aggota
                                 </label>
                                 <select name="role_position" id="rolePosition"
-                                    class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2" required>
+                                    class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
                                     <option value="">Select the role need</option>
                                     <option value="ui/ux">UI/UX Designer</option>
 
@@ -111,45 +152,33 @@
         </div>
 
         <div class="px-4 md:px-8">
-            <p class="text-sm text-gray-600">Universitas Brawijaya</p>
-            <h2 class="mt-1 text-xl font-bold md:text-2xl">4C National Competition</h2>
+            <p class="text-sm text-gray-600">{{ $lomba->lombaDetail->penyelenggara_name }}</p>
+            <h2 class="mt-1 text-xl font-bold md:text-2xl">{{ $lomba->lombaDetail->title }}</h2>
 
             <div class="flex flex-col gap-6 mt-6 md:flex-row md:mt-8 md:gap-8">
                 <div class="w-full md:w-1/2">
                     <h3 class="mb-3 text-lg font-semibold md:mb-4">Deskripsi Kompetisi</h3>
                     <p class="mb-2 text-gray-700">
-                        4C National Competition adalah kompetisi tingkat nasional yang diselenggarakan oleh Fakultas
+                        {{ $lomba->lombaDetail->description }}
+                        {{-- 4C National Competition adalah kompetisi tingkat nasional yang diselenggarakan oleh Fakultas
                         Ilmu
                         Komputer,
                         Universitas Brawijaya (FILKOM UB) dalam rangkaian peringatan kegiatan Dies Natalis ke-13.
                         Kompetisi ini diperuntukkan bagi para mahasiswa Perguruan Tinggi diseluruh Indonesia yang ingin
-                        mengasah kemampuan berpikir kritis, kolaborasi, kreativitas dan komunikasi.
+                        mengasah kemampuan berpikir kritis, kolaborasi, kreativitas dan komunikasi. --}}
                     </p>
-                    <p class="text-sm text-gray-500">Source: Wikipedia</p>
+                    {{-- <p class="text-sm text-gray-500">Source: Wikipedia</p> --}}
                 </div>
 
                 <div class="w-full md:w-1/2">
-                    <a href="" download
+                    <a href="{{ asset("documents/lomba/" . $lomba->id_lomba . "/guide_book.pdf") }}" download
                         class="flex justify-between items-center py-3 border-b cursor-pointer hover:text-blue-600">
-                        <span class="font-semibold">Download Guidebook Umum</span>
+                        <span class="font-semibold">Download Guidebook</span>
                         <i class="text-gray-500 fas fa-chevron-right"></i>
                     </a>
-
-                    <a href="" download
+                    <a href="{{ asset("documents/lomba/" . $lomba->id_lomba . "/poster_kompetisi.png") }}" download
                         class="flex justify-between items-center py-3 border-b cursor-pointer hover:text-blue-600">
-                        <span class="font-semibold">Download Guidebook Business Case</span>
-                        <i class="text-gray-500 fas fa-chevron-right"></i>
-                    </a>
-
-                    <a href="" download
-                        class="flex justify-between items-center py-3 border-b cursor-pointer hover:text-blue-600">
-                        <span class="font-semibold">Download Guidebook Web Design</span>
-                        <i class="text-gray-500 fas fa-chevron-right"></i>
-                    </a>
-
-                    <a href="" download
-                        class="flex justify-between items-center py-3 border-b cursor-pointer hover:text-blue-600">
-                        <span class="font-semibold">Download Guidebook Mobile Dev</span>
+                        <span class="font-semibold">Download Poster</span>
                         <i class="text-gray-500 fas fa-chevron-right"></i>
                     </a>
                 </div>
@@ -158,7 +187,7 @@
 
             <div class="grid grid-cols-3 gap-2 mt-6 sm:flex sm:flex-wrap md:gap-4 md:mt-8">
                 <div class="border rounded-md p-3 md:p-4 w-[110px] md:w-36 overflow-hidden">
-                    <h4 class="text-lg font-bold md:text-xl">20 Juta</h4>
+                    <h4 class="text-lg font-bold md:text-xl">Rp. {{ $lomba->getTotalMoneyHadiah() }}</h4>
                     <p class="text-xs text-gray-600 md:text-sm">Total Hadiah</p>
                 </div>
                 <div class="border rounded-md p-3 md:p-4 w-[110px] md:w-36">
@@ -166,7 +195,7 @@
                     <p class="text-xs text-gray-600 md:text-sm">Jenis Kompetisi</p>
                 </div>
                 <div class="border rounded-md p-3 md:p-4 w-[110px] md:w-36">
-                    <h4 class="text-lg font-bold md:text-xl">150 Tim</h4>
+                    <h4 class="text-lg font-bold md:text-xl">{{ $lomba->getTeams->count() }} Tim</h4>
                     <p class="text-xs text-gray-600 md:text-sm">Tim Terdaftar</p>
                 </div>
             </div>

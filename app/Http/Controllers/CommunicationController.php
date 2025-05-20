@@ -50,6 +50,10 @@ class CommunicationController extends Controller
     //     return response()->json($user);
     // }
 
+    public function index() {
+        return view('display.dashboard.chat.index');
+    }
+
         
     /**
      * Get Communication Token

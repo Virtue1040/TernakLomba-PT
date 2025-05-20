@@ -16,34 +16,31 @@
             </x-finder>
         </div>
     </div>
+    <div class="px-4 mx-auto w-full lg:max-w-[1200px]">
+        <div class="flex overflow-x-auto gap-2 p-4">
+            <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
+                All
+            </div>
+            <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
+                Finance
+            </div>
+            <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
+                Business
+            </div>
+            <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
+                Design
+            </div>
+            <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
+                AI & Machine Learning
+            </div>
+        </div>
 
-    <div class="flex overflow-x-auto gap-2 p-4">
-        <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
-            All
+        <div class="grid grid-cols-2 gap-4 px-4 pb-4 mx-auto w-full max-w-6xl md:grid-cols-3">
+            @foreach ($lomba->getTeams as $compspace)
+                <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
+                description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
+            @endforeach
         </div>
-        <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
-            Finance
-        </div>
-        <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
-            Business
-        </div>
-        <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
-            Design
-        </div>
-        <div class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
-            AI & Machine Learning
-        </div>
-    </div>
-
-    <div class="grid grid-cols-2 gap-4 px-4 pb-4 mx-auto w-full max-w-6xl md:grid-cols-3">
-        <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
-            description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
-        <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
-            description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
-        <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
-            description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
-        <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
-            description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
     </div>
 </x-layouts.default>
 

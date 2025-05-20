@@ -29,6 +29,11 @@ class Lomba_detail extends Model
         'pic_email',
     ];
 
+    public function lomba()
+    {
+        return $this->belongsTo(Lomba::class, 'lomba_id', 'id_lomba');
+    }
+
     protected $primaryKey = "lomba_id";
 
     /**

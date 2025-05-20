@@ -47,6 +47,12 @@
                     <x-svg.dashboard :active="request()->routeIs('dashboard-index')" />
                 </x-navigation-button>
 
+                @if($user->hasRole("Admin"))
+                    <x-navigation-button href="{{ route('dashboard-admin') }}" :active="request()->routeIs('dashboard-admin')" name="Admin">
+                        <x-svg.fact-check :active="request()->routeIs('dashboard-admin')" />
+                    </x-navigation-button>
+                @endif
+                
                 <x-navigation-button href="{{ route('dashboard-explore') }}" :active="request()->routeIs('dashboard-explore')" name="Explore">
                     <x-svg.explore :active="request()->routeIs('dashboard-explore')" />
                 </x-navigation-button>

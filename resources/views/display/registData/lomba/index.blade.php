@@ -69,7 +69,7 @@ $decoded = json_decode($universities, true);
                         alert(nama + " type must be " + mimeTypes + ".")
                     }   
                 } else {
-                    pass = true //if not required
+                   
                 }
                 return pass
             }
@@ -163,7 +163,7 @@ $decoded = json_decode($universities, true);
                     dataType: "json",
                     success: function(response) {
                         if (response.success) {
-                            
+                            alert("Lomba berhasil diajukan")
                             window.location.href = "{{ route('landing') }}"
                         } else {
                             $("#confirm_button").removeClass("hidden")

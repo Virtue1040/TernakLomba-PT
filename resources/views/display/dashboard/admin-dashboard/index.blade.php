@@ -1,4 +1,34 @@
 <x-layouts.navigation>
+    <x-slot name="script">
+        <script>
+            function approve(id_lomba) {
+                $.ajax({
+                    url: "/api/v1/lomba" + '/' + id_lomba,
+                    method: "POST",
+                    data: {
+                    },
+                    success: function(data) {
+                        alert("Lomba approved")
+                        window.location.reload()
+                    }
+                })
+            }
+
+            function reject(id_lomba) {
+                $.ajax({
+                    url: "/api/v1/lomba" + '/' + id_lomba,
+                    method: "POST",
+                    data: {
+                        _method: 'DELETE',
+                    },
+                    success: function(data) {
+                        alert("Lomba rejected")
+                        window.location.reload()
+                    }
+                })
+            }
+        </script>
+    </x-slot>
     <div class="p-8 w-full max-w-screen">
         <div class="mb-8">
             <div class="flex justify-between items-center">
@@ -29,7 +59,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo Tyler, Selamat Datang!</p>
+            <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo {{ $user->user_detail->first_name }}, Selamat Datang!</p>
             <p class="text-[14px] text-gray-500">Temukan universitas ideal Anda di sini..</p>
         </div>
 
@@ -37,7 +67,7 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
+                    <h3 class="text-[26.35px] font-semibold">{{ $lombas->where("isApproved", 0)->count() }} Lomba</h3>
                     <p class="text-[9.88px]">Belum Disetujui</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -114,7 +144,7 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">30 Compspace</h3>
+                    <h3 class="text-[26.35px] font-semibold">{{ $lombaTeams->count() }} Compspace</h3>
                     <p class="text-[9.88px]">Total Compspace seluruh lomba</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -163,25 +193,27 @@
             </div>
             <div class="grid grid-cols-1 w-full">
                 <div x-show="menu === 'belumSetuju'" class="flex overflow-x-auto gap-6 mb-8">
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum" />
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="belum"/>
+                    @foreach ($lombas as $lomba)
+                        @if (!$lomba->isApproved)
+                            <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="belum" 
+                                gambar="{{ $lomba->id_lomba }}"/>
+                        @endif
+                    @endforeach
                 </div>
                 <div x-show="menu === 'lombaberjalan'" class="flex overflow-x-auto gap-6 mb-8">
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung" />
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="berlangsung"/>
+                    @foreach ($lombas as $lomba)
+                        @if ($lomba->isApproved) {{-- dan sedang beralngsung --}}
+                            <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="berlangsung" 
+                            gambar="{{ $lomba->id_lomba }}"/>
+                        @endif
+                    @endforeach
                 </div>
                 <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai" />
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
-                    <x-cards.persetujuanLomba-card title="4C National Competition" university="Stanford University" status="selesai"/>
+                    @foreach ($lombas as $lomba) {{-- sudah selesai --}}
+                        <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="selesai" 
+                        gambar="{{ $lomba->id_lomba }}"/>
+                    @endforeach
+
                 </div>
             </div>
                 

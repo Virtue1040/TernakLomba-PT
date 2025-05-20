@@ -27,6 +27,11 @@ class Mahasiswa_detail extends Model
 
     protected $primaryKey = 'user_id';
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
+    }
+
     /**
      * @OA\Property(title="user_id", type="integer", format="int64", readOnly=true)
      * @var integer

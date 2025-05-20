@@ -27,6 +27,17 @@ class UserSeeder extends Seeder
                 'born_date' => '2000-01-01',
                 'id_role' => 1,
             ),
+            array(
+                'username' => 'anuco',
+                'email' => 'anuco@gmail.com',
+                'password' => 'password',
+                'first_name' => 'Rafi',
+                'last_name' => 'Hidayat',
+                'bio' => '',
+                'gender' => 'male',
+                'born_date' => '2000-01-01',
+                'id_role' => 3,
+            ),
         );
 
         // Create Admin Starter Account

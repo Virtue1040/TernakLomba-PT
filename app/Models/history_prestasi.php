@@ -19,6 +19,12 @@ class history_prestasi extends Model
 
     protected $primaryKey = "id_prestasi";
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
+    }
+
+
     public function get_minat() {
         return $this->hasMany(history_prestasi_minat::class, 'prestasi_id', 'id_prestasi');
     }

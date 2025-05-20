@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\Lomba\LombaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersDetailController;
@@ -14,22 +15,18 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum', 'profilled', 'web')->group(function () {
     Route::get('/profiling', [UsersDetailController::class, "index"])->name("profiling")->withoutMiddleware('profilled')->middleware("unprofilled");
-   
     Route::get('/profile/{id_user?}',[ProfileController::class, "index"])->name("profile");
 
     // Dashboard Route
     Route::get('/dashboard', function() {
         return view('display.dashboard.index.index');
     })->name("dashboard-index");
-    Route::get('/dashboard/explore', function() {
-        return view('display.dashboard.explore.index');
-    })->name("dashboard-explore");
-    Route::get('/dashboard/chat', function() {
-        return view('display.dashboard.chat.index');
-    })->name("dashboard-chat");
-    Route::get('admin/dashboard', function() {
-        return view('display.dashboard.admin-dashboard.index');
-    })->name("dashboard-admin");
+
+    Route::get('/dashboard/explore', [LombaController::class, "index"])->name("dashboard-explore");
+    Route::get('/dashboard/chat', [CommunicationController::class,"index"])->name("dashboard-chat");
+    Route::get('dashboard/admin', [LombaController::class, "admin"])->name("dashboard-admin");
+
+    Route::get('detail/{id_lomba}/compspace', [LombaController::class,"compspace"])->name("lomba-compspace");
 
     // Test Route
     Route::get('/profiling-test', [UsersDetailController::class, "index"])->name("profiling-test")->withoutMiddleware('profilled');
@@ -43,23 +40,4 @@ Route::middleware('guests', 'web')->group(function () {
     Route::get('/auth/forgot', [PasswordResetLinkController::class, 'create'])->name("forgot-password");
 });
 
-Route::get('language/{locale}', function ($locale) {
-    if (! in_array($locale, config('app.available_locales'))) {
-        abort(400);
-    }
- 
-    App::setLocale($locale);
-    return redirect()->back();
-});
-
-Route::get('/detail', function() {
-    return view('display.detailLomba.index');
-});
-
-Route::get('/searchTeam', function() {
-    return view('display.Team.searchTeam');
-});
-
-Route::get('/test', function() {
-    return view('display.dashboard.admin-dashboard.index');
-});
+Route::get('/detail/{id_lomba}', [LombaController::class, "show"])->name("lomba-detail");

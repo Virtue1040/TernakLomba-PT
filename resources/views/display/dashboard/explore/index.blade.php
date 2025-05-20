@@ -144,25 +144,26 @@
             <div class="grid grid-cols-1 w-full">
 
                 <div x-show="menu === 'kompetisi'" class="flex overflow-x-auto gap-4 pb-2 w-full">
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    @foreach ($lombas as $lomba)
+                        <a href="/detail/{{ $lomba->id_lomba }}">
+                            <x-cards.lomba-card title="{{ $lomba->lombaDetail->title }}"
+                                university="{{ $lomba->lombaDetail->penyelenggara_name }}" startDate="{{ $lomba->start_date }}"
+                                endDate="{{ $lomba->end_date }}" gambar="{{ $lomba->id_lomba }}"/>
+                        </a>
+                    @endforeach
                 </div>
-                <div x-show="menu === 'orang'" class="flex py-1 pb-2 w-full overflow-x-autogap-4">
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
-                    <x-cards.orang-card />
+                <div x-show="menu === 'orang'" class="flex overflow-x-auto gap-4 pb-2 w-full">
+                    @foreach ($users as $user)
+                        @php
+                            $prestasiArray = $user->prestasi->map(function($p) {
+                                return "{$p->title} - Juara {$p->juara} - Tingkat {$p->tingkatan}";
+                            })->toArray();
+                        @endphp
+                        <a href="/profile/{{ $user->id_user }}">
+                            <x-cards.orang-card name="{{ $user->lombaDetail->first_name ?? '' }} {{ $user->lombaDetail->last_name ?? '' }}" 
+                                kampus="{{ $user->mahasiswa->kampus ?? '-' }}" :prestasi="$prestasiArray"/>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
