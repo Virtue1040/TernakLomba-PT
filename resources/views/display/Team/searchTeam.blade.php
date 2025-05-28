@@ -77,6 +77,22 @@
                                     window.location.reload()
                                 }
                             );
+                        } else {
+                            spawnNotification(
+                                "Tidak dapat dilanjut",
+                                data.message,
+                                "error",
+                                1500,
+                                () => {
+                                    console.log("confirmed")
+                                },
+                                () => {
+                                    console.log("denied")
+                                },
+                                () => {
+                                    window.location.reload()
+                                }
+                            );
                         }
                     }
                 })

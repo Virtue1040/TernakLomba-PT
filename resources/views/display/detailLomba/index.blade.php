@@ -27,6 +27,22 @@
                                     window.location.reload()
                                 }
                             );
+                        } else {
+                            spawnNotification(
+                                "Tidak dapat dilanjut",
+                                data.message,
+                                "error",
+                                1500,
+                                () => {
+                                    console.log("confirmed")
+                                },
+                                () => {
+                                    console.log("denied")
+                                },
+                                () => {
+                                    window.location.reload()
+                                }
+                            );
                         }
                     }
                 })
@@ -59,6 +75,22 @@
                                             window.location.reload()
                                         }
                                     );
+                                } else {
+                                    spawnNotification(
+                                        "Tidak dapat dilanjut",
+                                        data.message,
+                                        "error",
+                                        1500,
+                                        () => {
+                                            console.log("confirmed")
+                                        },
+                                        () => {
+                                            console.log("denied")
+                                        },
+                                        () => {
+                                            window.location.reload()
+                                        }
+                                    );
                                 }
                             }
                         })
@@ -72,13 +104,13 @@
 
             function createCompspace() {
                 event.preventDefault()
-                
+
                 if (debounceAjax) {
                     return
                 }
 
                 debounceAjax = true
-                
+
                 $.ajax({
                     url: "{{ route('lombaTeam-store') }}",
                     method: "POST",
@@ -96,6 +128,22 @@
                                 "Team berhasil dibuat",
                                 null,
                                 "success",
+                                1500,
+                                () => {
+                                    console.log("confirmed")
+                                },
+                                () => {
+                                    console.log("denied")
+                                },
+                                () => {
+                                    window.location.reload()
+                                }
+                            );
+                        } else {
+                            spawnNotification(
+                                "Tidak dapat dilanjut",
+                                data.message,
+                                "error",
                                 1500,
                                 () => {
                                     console.log("confirmed")

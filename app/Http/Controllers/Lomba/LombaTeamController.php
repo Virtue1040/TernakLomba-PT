@@ -197,6 +197,14 @@ class LombaTeamController extends Controller
         $role = $request->input("role", "");
         $team = lombaTeam::where("team_code", $team_code)->first();
 
+        if (auth("sanctum")->user()->check_isJoinedLomba($team->lomba_id)) {
+            return response()->json([
+                "success" => false,
+                "status_code" => 400,
+                "message" => "Tidak dapat request join, jika user sudah join tim lain",
+            ]);
+        }
+
         if ($team === null) {
             return response()->json([
                 "success" => false,
@@ -410,6 +418,15 @@ class LombaTeamController extends Controller
         ]);
         $lomba_id = $request->lomba_id;
         $getLomba = lomba::findOrFail($lomba_id);
+
+        if (auth("sanctum")->user()->check_isJoinedLomba($lomba_id)) {
+            return response()->json([
+                "success" => false,
+                "status_code" => 400,
+                "message" => "Tidak dapat membuat team, jika user sudah join tim lain",
+            ]);
+        }
+
         $team_name = $request->team_name;
         $isPrivate = filter_var($request->input('isPrivate'), FILTER_VALIDATE_BOOLEAN);
         $max_member = $request->max_member <= $getLomba->max_member ? $request->max_member : $getLomba->max_member;
