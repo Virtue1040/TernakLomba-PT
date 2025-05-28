@@ -378,12 +378,47 @@
                         id: {{ $user->id_user }}
                     },
                     success: function(response) {
-                        console.log(response)
                         if (response.data.channels.length > 0) {
                             response.data.channels.forEach(data => {
                                 createChannel(data)
                             })
                         }
+                    }
+                })
+            }
+
+            function resetChannel() {
+                $.ajax({
+                    url: "{{ route('chat.resetChannel') }}",
+                    type: 'POST',
+                    success: function(response) {
+                        if (response.success) {
+                            spawnNotification(
+                                    "Berhasil reset channel chat",
+                                    "",
+                                    "success",
+                                    1500,
+                                    () => {
+                                        console.log("confirmed")
+                                    },
+                                    () => {
+                                        console.log("denied")
+                                    },
+                                    () => {
+                                        Object.keys(cardContact).forEach(key => {
+                                            if (cardContact[key] !== undefined) {
+                                                cardContact[key].object.remove();
+                                                cardContact[key] = undefined;
+                                            }
+                                        });
+                                        cardContact = [];
+                                        updateChannel();
+                                    }
+                                );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
                     }
                 })
             }

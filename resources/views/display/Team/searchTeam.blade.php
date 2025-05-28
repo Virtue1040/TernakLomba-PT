@@ -90,7 +90,7 @@
                                     console.log("denied")
                                 },
                                 () => {
-                                    window.location.reload()
+                                    
                                 }
                             );
                         }

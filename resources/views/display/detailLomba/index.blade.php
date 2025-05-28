@@ -40,7 +40,7 @@
                                     console.log("denied")
                                 },
                                 () => {
-                                    window.location.reload()
+                                    
                                 }
                             );
                         }
@@ -88,7 +88,7 @@
                                             console.log("denied")
                                         },
                                         () => {
-                                            window.location.reload()
+                                            
                                         }
                                     );
                                 }
@@ -152,7 +152,7 @@
                                     console.log("denied")
                                 },
                                 () => {
-                                    window.location.reload()
+                                    
                                 }
                             );
                         }
