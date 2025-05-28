@@ -25,7 +25,7 @@
                 <a href="{{ route('login') }}"
                     class="bg-white px-4 py-2 rounded-full text-[#822bf2] font-semibold inline-block">Masuk Sekarang</a>
             @else
-                <a href="{{ route('login') }}" class="inline-block font-semibold">Dashboard</a>
+                <a href="{{ route('dashboard-index') }}" class="bg-white px-4 py-2 rounded-full text-[#822bf2] font-semibold inline-block">Dashboard</a>
             @endguest
         </div>
     </div>
@@ -41,7 +41,7 @@
         @guest
             <a href="{{ route('login') }}" class="px-4 py-2 font-semibold text-[#822bf2] bg-white rounded-full">Masuk Sekarang</a>
         @else
-            <a><img src="images/avatar.png" class="w-[27px] h-[27px] rounded-full" alt=""></a>
+            <a href="{{ route('dashboard-index') }}" class="bg-white px-4 py-2 rounded-full text-[#822bf2] font-semibold inline-block">Dashboard</a>
         @endguest
     </div>
 </nav>

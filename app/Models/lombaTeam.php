@@ -39,7 +39,7 @@ class lombaTeam extends Model
     }
 
     public function is_joinable() {
-        return $this->total_participants() > $this->max_member;
+        return $this->total_participants() < $this->attributes["max_member"];
     }
     
     protected $primaryKey = 'id_team';

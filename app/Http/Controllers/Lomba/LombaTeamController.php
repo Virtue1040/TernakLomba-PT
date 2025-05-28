@@ -413,7 +413,7 @@ class LombaTeamController extends Controller
         $team_name = $request->team_name;
         $isPrivate = filter_var($request->input('isPrivate'), FILTER_VALIDATE_BOOLEAN);
         $max_member = $request->max_member <= $getLomba->max_member ? $request->max_member : $getLomba->max_member;
-        $max_member = $max_member > $getLomba->min_member ? $getLomba->min_member : $max_member;
+        $max_member = $max_member > $getLomba->min_member ? $max_member : $getLomba->min_member;
         $userId = auth("sanctum")->user()->id_user;
 
         $team = lombaTeam::create([

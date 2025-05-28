@@ -41,7 +41,7 @@ class Lomba extends Model
     }
 
     public function get_enddate() {
-        $date = new DateTime($this->end_date);
+        $date = new DateTime($this->attributes["end_date"]);
         return $date->format("d M Y");
     }
 

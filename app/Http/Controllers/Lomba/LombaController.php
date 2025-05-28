@@ -544,12 +544,13 @@ class LombaController extends Controller
      */
     public function show(Lomba $lomba, $id_lomba)
     {
+        $lombas = Lomba::where("isApproved", 1)->get();
         $getLomba = $lomba::findOrFail($id_lomba);
         $isAdmin = auth("sanctum")->user()->hasRole('Admin');
         if (!$getLomba->isApproved && !$isAdmin) {
             return route("dashboard-explore");
         }
-        return view('display.detailLomba.index', ["lomba" => $getLomba]);
+        return view('display.detailLomba.index', ["lomba" => $getLomba, "lombas" => $lombas]);
     }
 
     /**
@@ -755,6 +756,9 @@ class LombaController extends Controller
      *                 "success": true,
      *                 "status_code": 200,
      *                 "message": "Berhasil mengapprove lomba",
+     *                 "data": {
+     *                      "id_lomba": 1
+     *                  }
      *             }
      *         ),
      *     ),
@@ -784,14 +788,17 @@ class LombaController extends Controller
      */
     public function approve(UpdateLombaRequest $request, Lomba $lomba, $id_lomba)
     {
-        $lomba = $lomba::findOrFail($id_lomba);
-        $lomba->isApproved = true;
-        $lomba->save();
+        $lombas = $lomba::findOrFail($id_lomba);
+        $lombas->isApproved = true;
+        $lombas->save();
 
         return response()->json([
             "success" => true,
             "status_code" => 200,
             "message" => "Berhasil mengapprove lomba",
+            "data" => [
+                "id_lomba" => $lombas->id_lomba
+            ]
         ], 200);
     }
 
@@ -825,6 +832,9 @@ class LombaController extends Controller
      *                 "success": true,
      *                 "status_code": 200,
      *                 "message": "Berhasil menghapus data lomba",
+     *                 "data": {
+     *                      "id_lomba": 1
+     *                  }
      *             }
      *         ),
      *     ),
@@ -864,6 +874,9 @@ class LombaController extends Controller
             "success" => true,
             "status_code" => 200,
             "message" => "Berhasil menghapus data lomba",
+            "data" => [
+                "id_lomba" => $lombas->id_lomba
+            ]
         ], 200);
     }
 }

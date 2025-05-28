@@ -1,11 +1,11 @@
 @props(['title', 'university','status' => "selesai", "gambar" => null])
 
-<div data-aos="fade" data-aos-duration="1000" class="w-[303px] min-w-[303px] h-fit rounded-lg border border-[#E7E7E7] overflow-hidden">
+<div data-aos="fade" data-aos-duration="1000" class="w-[303px] min-w-[303px] h-fit rounded-lg border border-[#E7E7E7] overflow-hidden" id="lomba-{{ $gambar }}">
     <img src="{{ asset("documents/lomba/$gambar/preview_foto_kompetisi.png") }}" alt="Preview foto kompetisi"
         class="w-[303px] min-w-[303px] h-[154px] object-cover">
     
     <div class="p-4">
-        <h2 class="text-[16px] font-bold leading-tight">{{ $title }}</h2>
+        <h2 class="text-[16px] font-bold leading-tight" name="title">{{ $title }}</h2>
         <p class="text-gray-500 text-[12px]">{{ $university }}</p>
         <div class="flex gap-2 mt-3">
             <span class="bg-[#F3F3F3] text-gray-700 px-3 py-1 text-xs rounded-full">10 Days Left</span>

@@ -8,24 +8,50 @@
                     data: {
                     },
                     success: function(data) {
-                        alert("Lomba approved")
-                        window.location.reload()
+                        if (data.success) {
+                            let div = $("#lomba-" + data.data.id_lomba)
+                            spawnNotification(
+                                "Lomba berhasil di approve",
+                                "Lomba " + div.find("[name='title']").html() + " berhasil di approve untuk kelanjutan di halaman explore",
+                                "success",
+                                1500,
+                                () => { console.log("confirmed") }, 
+                                () => { console.log("denied") }, 
+                                () => { div.remove() } 
+                            );
+                        }
                     }
                 })
             }
 
             function reject(id_lomba) {
-                $.ajax({
-                    url: "/api/v1/lomba" + '/' + id_lomba,
-                    method: "POST",
-                    data: {
-                        _method: 'DELETE',
-                    },
-                    success: function(data) {
-                        alert("Lomba rejected")
-                        window.location.reload()
-                    }
-                })
+                spawnConfirmationDelete(
+                    () => { 
+                        $.ajax({
+                            url: "/api/v1/lomba" + '/' + id_lomba,
+                            method: "POST",
+                            data: {
+                                _method: 'DELETE',
+                            },
+                            success: function(data) {
+                                if (data.success) {
+                                    let div = $("#lomba-" + data.data.id_lomba)
+                                    spawnNotification(
+                                        "Lomba berhasil di reject dan di hapus",
+                                        "Lomba " + div.find("[name='title']").html() + " berhasil di reject dari list",
+                                        "success",
+                                        1500,
+                                        () => { console.log("confirmed") }, 
+                                        () => { console.log("denied") }, 
+                                        () => { div.remove() } 
+                                    );
+                                }
+                            }
+                        })       
+                    }, 
+                    () => { console.log("denied") }, 
+                    () => {     } 
+                )
             }
         </script>
     </x-slot>

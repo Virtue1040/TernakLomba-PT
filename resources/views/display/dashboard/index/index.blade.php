@@ -178,7 +178,8 @@
                 <div x-show="menu === 'lombaInProgress'" class="flex overflow-x-auto gap-6 mb-8">
                     @foreach ($user->get_joined_compspace as $compspace)
                         @if(now()->between($compspace->team->lomba->start_date, $compspace->team->lomba->decide_date))
-                            <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" progres="belum" gambar="{{ $compspace->team->lomba->id_lomba }}" />
+                            <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" progres="belum" gambar="{{ $compspace->team->lomba->id_lomba }}" 
+                                startDate="{{ $compspace->team->lomba->start_date }}" endDate="{{ $compspace->team->lomba->end_date }}"/>
                         @endif
                     @endforeach
                 </div>

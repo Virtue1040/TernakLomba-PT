@@ -1,6 +1,6 @@
 @props(['team_name', 'date', 'description', 'participants', 'show_join' => true, 'team_code'])
 
-<div x-data="{ formOpen: false }" class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
+<div class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
     <div class="flex justify-between items-center">
         <h3 class="text-sm font-semibold sm:text-lg">{{ $team_name }}</h3>
         <span
@@ -24,58 +24,11 @@
         </div>
 
         @if ($show_join)
-            <button @click="formOpen = true"
+            <button @click="formOpen = true" onclick="sync({{ $team_code }})" id="{{ $team_code }}"
                 class="px-2 py-1 text-xs text-white whitespace-nowrap bg-black rounded-full transition-colors md:px-4 md:py-2 md:text-sm hover:bg-gray-800">
                 Request Join
             </button>
         @endif
-    </div>
-
-    <div x-show="formOpen" x-cloak
-        class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
-        @click.self="formOpen = false">
-        <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
-            <h2 class="text-xl font-semibold">Join Compsace</h2>
-
-            <form action="{{ route("lombaTeam-join", $team_code) }}" method="POST">
-                @csrf
-                <input type="hidden" name="team_name" value="{{ $teamName }}">
-
-                <div class="mb-4">
-                    <label class="block mb-2 text-sm font-bold text-gray-700" for="role">
-                        Role Saya
-                    </label>
-                    <select name="role" id="role"
-                        class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required>
-                        <option value="">Select the role need</option>
-                        <option value="ui/ux">UI/UX Designer</option>
-                        <option value="Front-End">Front End</option>
-                        <option value="Back-End">Back End</option>
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block mb-2 text-sm font-bold text-gray-700" for="message">
-                        Note(Opsional)
-                    </label>
-                    <textarea name="message" id="message"
-                        class="px-3 py-2 w-full h-24 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter your message here" ></textarea>
-                </div>
-
-                <div class="flex justify-end space-x-4">
-                    <button type="button" @click="formOpen = false"
-                        class="px-5 py-2 text-black rounded-md border border-gray-500">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="px-4 py-2 text-white bg-gradient-to-b from-[#822bf2] to-[#b378ff] rounded-md">
-                        Selanjutnya
-                    </button>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 

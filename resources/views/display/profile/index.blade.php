@@ -63,7 +63,9 @@ $isLocal = $user->id_user === $profile->id_user;
 
                 <div class="absolute left-8 -bottom-16">
                     <div class="overflow-hidden w-32 h-32 bg-white rounded-full border-4 border-white">
-                        <img src="{{ asset("documents/profile/$profile->id_user/profile.png") }}" onerror="this.src='{{ asset('images/4cnational.png') }}'" class="object-cover w-full h-full">
+                        <img src="{{ asset("documents/profile/$profile->id_user/profile.png") }}"
+                            onerror="this.src='{{ asset('images/4cnational.png') }}'"
+                            class="object-cover w-full h-full">
                     </div>
                 </div>
             </div>
@@ -84,12 +86,12 @@ $isLocal = $user->id_user === $profile->id_user;
 
 
                 <div x-show="isOpen" @keydown.escape.window="isOpen = false" x-transition
-                    class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
-                    <div class="flex items-center justify-center min-h-screen p-4">
+                    class="overflow-y-auto fixed inset-0 z-50" style="display: none;">
+                    <div class="flex justify-center items-center p-4 min-h-screen">
 
                         <div @click="isOpen = false" class="fixed inset-0 bg-black opacity-50"></div>
 
-                        <div class="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-auto z-10">
+                        <div class="relative z-10 mx-auto w-full max-w-md bg-white rounded-lg shadow-lg">
 
                             <div class="flex justify-between items-center p-4 border-b">
                                 <h3 class="text-lg font-semibold text-gray-900">Edit Profile</h3>
@@ -103,18 +105,17 @@ $isLocal = $user->id_user === $profile->id_user;
                             </div>
 
                             <div class="p-4">
-                                <form action="{{ route("profile.update") }}" method="POST"
+                                <form action="{{ route('profile.update') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
 
                                     <div class="flex flex-col items-center mb-6">
-                                        <div class="mb-2 w-24 h-24 rounded-full bg-gray-200 overflow-hidden relative">
-                                            <img src=""
-                                                class="w-full h-full object-cover" alt="Profile Photo">
+                                        <div class="overflow-hidden relative mb-2 w-24 h-24 bg-gray-200 rounded-full">
+                                            <img src="" class="object-cover w-full h-full" alt="Profile Photo">
                                         </div>
                                         <label for="photo_profile"
-                                            class="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">
+                                            class="px-3 py-1 text-sm text-gray-700 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200">
                                             Upload Foto
                                             <input type="file" id="photo_profile" name="photo_profile"
                                                 accept="image/*" class="hidden">
@@ -124,36 +125,40 @@ $isLocal = $user->id_user === $profile->id_user;
                                     <div class="grid grid-cols-2 gap-4 mb-4">
                                         <div>
                                             <label for="first_name"
-                                                class="block text-sm font-medium text-gray-700 mb-1">Nama Depan</label>
-                                            <input type="text" id="first_name" name="first_name" value="{{ $profile->user_detail->first_name }}"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
+                                                class="block mb-1 text-sm font-medium text-gray-700">Nama Depan</label>
+                                            <input type="text" id="first_name" name="first_name"
+                                                value="{{ $profile->user_detail->first_name }}"
+                                                class="px-3 py-2 w-full rounded-md border border-gray-300 focus:ring-purple-500">
                                         </div>
                                         <div>
                                             <label for="last_name"
-                                                class="block text-sm font-medium text-gray-700 mb-1">Nama
+                                                class="block mb-1 text-sm font-medium text-gray-700">Nama
                                                 Belakang</label>
-                                            <input type="text" id="last_name" name="last_name" value="{{ $profile->user_detail->last_name }}"
-                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
+                                            <input type="text" id="last_name" name="last_name"
+                                                value="{{ $profile->user_detail->last_name }}"
+                                                class="px-3 py-2 w-full rounded-md border border-gray-300 focus:ring-purple-500">
                                         </div>
                                     </div>
 
                                     <div class="mb-6">
                                         <label for="kampus"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Kampus</label>
-                                        <input type="text" id="kampus" name="kampus" value="{{ $profile->get_associated->kampus ?? '' }}"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
+                                            class="block mb-1 text-sm font-medium text-gray-700">Kampus</label>
+                                        <input type="text" id="kampus" name="kampus"
+                                            value="{{ $profile->get_associated->kampus ?? '' }}"
+                                            class="px-3 py-2 w-full rounded-md border border-gray-300 focus:ring-purple-500">
                                     </div>
 
                                     <div class="mb-6">
                                         <label for="jurusan"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Jurusan</label>
-                                        <input type="text" id="jurusan" name="jurusan" value="{{ $profile->get_associated->jurusan ?? '' }}"
-                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
+                                            class="block mb-1 text-sm font-medium text-gray-700">Jurusan</label>
+                                        <input type="text" id="jurusan" name="jurusan"
+                                            value="{{ $profile->get_associated->jurusan ?? '' }}"
+                                            class="px-3 py-2 w-full rounded-md border border-gray-300 focus:ring-purple-500">
                                     </div>
 
                                     <div class="flex justify-end space-x-3">
                                         <button type="button" @click="isOpen = false"
-                                            class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-100">
+                                            class="px-4 py-2 text-gray-700 bg-white rounded-md border border-gray-300 hover:bg-gray-100">
                                             Batal
                                         </button>
                                         <button type="submit"
@@ -258,7 +263,8 @@ $isLocal = $user->id_user === $profile->id_user;
                 <div
                     class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">{{ $profile->get_total_win_lomba() }} Kemenangan</h3>
+                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">{{ $profile->get_total_win_lomba() }}
+                            Kemenangan</h3>
                         <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -358,16 +364,24 @@ $isLocal = $user->id_user === $profile->id_user;
 
                     <div x-show="menu === 'lombaDiikuti'" class="flex overflow-x-auto flex-row gap-4">
                         @foreach ($user->get_joined_compspace as $compspace)
-                            @if(now()->between($compspace->team->lomba->start_date, $compspace->team->lomba->decide_date))
-                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" gambar="{{ $compspace->team->lomba->id_lomba }}"/>
+                            @if (now()->between($compspace->team->lomba->start_date, $compspace->team->lomba->decide_date))
+                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}"
+                                    university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}"
+                                    gambar="{{ $compspace->team->lomba->id_lomba }}"
+                                    startDate="{{ $compspace->team->lomba->start_date }}"
+                                    endDate="{{ $compspace->team->lomba->end_date }}" />
                             @endif
                         @endforeach
                     </div>
 
                     <div x-show="menu === 'lombaSelesai'" class="flex overflow-x-auto flex-row gap-4">
                         @foreach ($user->get_joined_compspace as $compspace)
-                            @if(now()->gt($compspace->team->lomba->decide_date))
-                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" gambar="{{ $compspace->team->lomba->id_lomba }}"/>
+                            @if (now()->gt($compspace->team->lomba->decide_date))
+                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}"
+                                    university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}"
+                                    gambar="{{ $compspace->team->lomba->id_lomba }}"
+                                    startDate="{{ $compspace->team->lomba->start_date }}"
+                                    endDate="{{ $compspace->team->lomba->end_date }}" />
                             @endif
                         @endforeach
                     </div>
@@ -385,7 +399,7 @@ $isLocal = $user->id_user === $profile->id_user;
                         @endif
                     </div>
 
-                    <div class="space-y-4">
+                    <div x-data="{ form1Open: false, form2Open: false }" class="space-y-4">
                         @foreach ($profile->get_prestasi as $prestasi)
                             <x-cards.prestasi-card title="{{ $prestasi->title }}"
                                 case="{{ $prestasi->get_minat_text() }}" juara="{{ $prestasi->juara }}"
@@ -393,11 +407,11 @@ $isLocal = $user->id_user === $profile->id_user;
                         @endforeach
 
                         <div class="grid grid-cols-2 gap-2">
-                            <button class="bg-[#822BF2] text-white text-[15px] md:text-[20px] rounded-lg py-3">
+                            <button @click="form1Open = !form1Open" class="bg-[#822BF2] text-white text-[15px] md:text-[20px] rounded-lg py-3">
                                 <span>+ Tambah Prestasi</span>
                             </button>
                             @if ($isLocal)
-                                <button
+                                <button @click="form2Open = !form2Open"
                                     class="text-[#822BF2] border border-[#822BF2] text-[15px] md:text-[17px] rounded-lg py-3 flex justify-center items-center">
                                     <x-svg.edit-icon height="20" width="20" />
                                     <span class="ml-1">Edit Prestasi</span>
@@ -405,6 +419,115 @@ $isLocal = $user->id_user === $profile->id_user;
                             @endif
 
                         </div>
+
+                        <div x-show="form1Open" x-cloak
+                            class="flex fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50"
+                            @click.self="formOpen = false">
+                            <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
+                                <h2 class="text-xl font-semibold">Join Compsace</h2>
+
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="namaLomba">
+                                            Nama Lomba
+                                        </label>
+                                        <input name="namaLomba" placeholder="Masukkan nama lomba" type="text" class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#822BF2]" required>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="bidangLomba">
+                                            Bidang Lomba
+                                        </label>
+                                        <select name="bidangLomba" id="bidangLomba"
+                                            class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#822BF2]"
+                                            required>
+                                            <option value="" disabled selected>Pilih bidang lomba</option>
+                                            <option value="Business Case">Business Case</option>
+                                            <option value="Business Plan">Business Plan</option>
+                                            <option value="Hackathon">Hackathon</option>
+                                            <option value="Debat Bahasa">Debat Bahasa</option>
+                                            <option value="Web Development">Web Development</option>
+                                            <option value="UI/UX">UI/UX</option>
+                                            <option value="Lainnya">Lainnya</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="juara">
+                                            Juara
+                                        </label>
+                                        <select name="juara" id="juara"
+                                            class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#822BF2]"
+                                            required>
+                                            <option value="" disabled selected>Pilih juara yang kamu raih</option>
+                                            <option value="Juara 1">Juara 1</option>
+                                            <option value="Juara 2">Juara 2</option>
+                                            <option value="Juara 3">Juara 3</option>
+                                            <option value="Favorit">Favorite</option>
+                                            <option value="Finalist">Finalist</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="block mb-2 text-sm font-bold text-gray-700" for="tingkatLomba">
+                                            Tingkat Lomba
+                                        </label>
+                                        <select name="tingkatLomba" id="tingkatLomba"
+                                            class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#822BF2]"
+                                            required>
+                                            <option value="" disabled selected>Pilih tingkatan lomba</option>
+                                            <option value="Internasional">Internasional</option>
+                                            <option value="Nasional">Nasional</option>
+                                            <option value="Regional">Regional<option>
+                                        </select>
+                                    </div>
+
+                                    <div class="flex justify-end space-x-4">
+                                        <button type="button" @click="form1Open = false"
+                                            class="px-5 py-2 text-black rounded-md border border-gray-500">
+                                            Batal
+                                        </button>
+                                        <button type="" @click="form1Open = false; form2Open = true"
+                                            class="px-4 py-2 text-white bg-gradient-to-b from-[#822bf2] to-[#b378ff] rounded-md">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {{--  --}}
+                        <div x-show="form2Open" x-cloak
+                            class="flex fixed inset-0 top-[-17px] z-50 justify-center items-center bg-black bg-opacity-50"
+                            @click.self="formOpen = false">
+                            <div class="bg-white rounded-lg w-full max-w-md mx-4 p-6 space-y-4">
+                                <h2 class="text-[25px] font-bold">Prestasi</h2>
+                                <div class="flex flex-row items-center justify-between bg-[#F7F7F7] rounded-lg p-4">
+                                    <div class="flex flex-col">
+                                        <h2 class="text-[20x] font-bold">4C National Competition</h2>
+                                        <p class=text-[18px]>Business case</p>
+                                        <div class="flex flex-row ">
+                                            <p class="text-[16px]">Juara 1</p><span> • </span>
+                                            <p class="text-[16px]">Nasional</p> 
+                                        </div>
+                                    </div>
+                                    <button @click="form1Open = true; form2Open = false">
+                                        <x-svg.edit-icon height="25" width="25" />
+                                    </button>
+                                </div>
+                                <div class="flex w-full justify-center space-x-4">
+                                    <button type="button" @click="form2Open = false"
+                                        class="px-5 py-2 w-full text-black rounded-md border border-gray-500">
+                                        Batal
+                                    </button>
+                                    <button type="submit" @click="form2Open = false"
+                                        class="px-4 py-2 w-full text-white bg-gradient-to-b from-[#822bf2] to-[#b378ff] rounded-md">
+                                        Konfirmasi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {{--  --}}
                     </div>
                 </div>
             </div>

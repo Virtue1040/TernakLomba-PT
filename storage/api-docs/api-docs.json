@@ -1851,7 +1851,10 @@
                                 "example": {
                                     "success": true,
                                     "status_code": 200,
-                                    "message": "Berhasil mengapprove lomba"
+                                    "message": "Berhasil mengapprove lomba",
+                                    "data": {
+                                        "id_lomba": 1
+                                    }
                                 }
                             }
                         }
@@ -1917,7 +1920,10 @@
                                 "example": {
                                     "success": true,
                                     "status_code": 200,
-                                    "message": "Berhasil menghapus data lomba"
+                                    "message": "Berhasil menghapus data lomba",
+                                    "data": {
+                                        "id_lomba": 1
+                                    }
                                 }
                             }
                         }
@@ -4397,6 +4403,7 @@
                     "id_member",
                     "team_id",
                     "role",
+                    "member_status",
                     "isLeader"
                 ],
                 "properties": {
@@ -4420,6 +4427,11 @@
                     "isLeader": {
                         "title": "isLeader",
                         "type": "boolean",
+                        "readOnly": true
+                    },
+                    "member_status": {
+                        "title": "member_status",
+                        "type": "integer",
                         "readOnly": true
                     },
                     "created_at": {

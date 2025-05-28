@@ -92,6 +92,10 @@ class User extends Authenticatable
         return $this->hasManyThrough(lombaTeam::class, lombaMember::class, 'user_id', 'id_team', 'id_user', 'team_id');
     }
 
+    public function check_isJoinedLomba($id_lomba) {
+        return $this->get_ikut_lomba()->where('lomba_id', $id_lomba)->exists();
+    }
+
     public function get_minat() {
         return $this->hasMany(MahasiswaMinat::class, 'user_id', 'id_user');
     }
