@@ -1486,7 +1486,11 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": [],
+                                "required": [
+                                    "poster_kompetisi",
+                                    "guide_book",
+                                    "preview_foto_kompetisi"
+                                ],
                                 "properties": {
                                     "poster_kompetisi": {
                                         "description": "Poster Kompetisi (Image File max 5MB)",
@@ -2891,8 +2895,11 @@
                                             "id_team": 1,
                                             "lomba_id": 1,
                                             "team_code": "0019",
+                                            "team_name": "Team Kocak Abis",
                                             "isPrivate": false,
-                                            "isApproved": false
+                                            "isApproved": false,
+                                            "updated_at": "2025-05-12T03:00:22.000000Z",
+                                            "created_at": "2025-05-12T03:00:22.000000Z"
                                         }
                                     ]
                                 }
@@ -2959,6 +2966,26 @@
                             "type": "string"
                         },
                         "example": "Team Kocak Abis"
+                    },
+                    {
+                        "name": "max_member",
+                        "in": "query",
+                        "description": "Maks member",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    },
+                    {
+                        "name": "isPrivate",
+                        "in": "query",
+                        "description": "Apakah private?",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "example": "false"
                     }
                 ],
                 "responses": {
@@ -3037,6 +3064,16 @@
                             "type": "string"
                         },
                         "example": "1939"
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "Role",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "UI/UIX Designer"
                     }
                 ],
                 "responses": {
@@ -3054,7 +3091,9 @@
                                             "team_id": 1,
                                             "user_id": 1,
                                             "role": "",
-                                            "isLeader": false
+                                            "isLeader": false,
+                                            "updated_at": "2025-05-12T03:00:22.000000Z",
+                                            "created_at": "2025-05-12T03:00:22.000000Z"
                                         }
                                     ]
                                 }
@@ -3066,11 +3105,18 @@
                         "content": {
                             "application/json": {
                                 "schema": {},
-                                "example": {
-                                    "success": false,
-                                    "status_code": 400,
-                                    "message": "Team tidak ditemukan"
-                                }
+                                "example": [
+                                    {
+                                        "success": false,
+                                        "status_code": 400,
+                                        "message": "Team tidak ditemukan"
+                                    },
+                                    {
+                                        "success": false,
+                                        "status_code": 400,
+                                        "message": "User sudah join didalam tim"
+                                    }
+                                ]
                             }
                         }
                     },
@@ -3142,8 +3188,11 @@
                                         "id_team": 1,
                                         "lomba_id": 1,
                                         "team_code": "0019",
+                                        "team_name": "Team Kocak Abis",
                                         "isPrivate": false,
-                                        "isApproved": false
+                                        "isApproved": false,
+                                        "updated_at": "2025-05-12T03:00:22.000000Z",
+                                        "created_at": "2025-05-12T03:00:22.000000Z"
                                     }
                                 }
                             }
@@ -3227,8 +3276,11 @@
                                         "id_team": 1,
                                         "lomba_id": 1,
                                         "team_code": "0019",
+                                        "team_name": "Team Kocak Abis",
                                         "isPrivate": false,
-                                        "isApproved": false
+                                        "isApproved": false,
+                                        "updated_at": "2025-05-12T03:00:22.000000Z",
+                                        "created_at": "2025-05-12T03:00:22.000000Z"
                                     }
                                 }
                             }
@@ -4389,6 +4441,7 @@
                     "lomba_id",
                     "team_code",
                     "team_name",
+                    "max_member",
                     "created_by",
                     "isPrivate",
                     "isApproved"
@@ -4414,6 +4467,12 @@
                     "team_name": {
                         "title": "team_name",
                         "type": "string",
+                        "readOnly": true
+                    },
+                    "max_member": {
+                        "title": "max_member",
+                        "type": "integer",
+                        "format": "int64",
                         "readOnly": true
                     },
                     "created_by": {

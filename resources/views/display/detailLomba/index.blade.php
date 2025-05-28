@@ -1,5 +1,8 @@
 <x-layouts.default footer=false>
     <x-slot name="script">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+        integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             function approve(id_lomba) {
                 $.ajax({
@@ -86,43 +89,54 @@
                     <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
                         <h2 class="text-xl font-semibold">Buat Compsace</h2>
 
-                        <form action="" method="POST">
+                        <form action="{{ route("lombaTeam-store") }}" method="POST">
                             @csrf
+                            <input name="lomba_id" value="{{ $lomba->id_lomba }}" hidden readonly/>
                             <div class="mb-4">
-                                <label class="block mb-2 text-sm font-bold text-gray-700" for="message">
-                                    Nama Tim
+                                <label class="block mb-2 text-sm font-bold text-gray-700" for="team_name">
+                                    Nama Tim <span class="text-red-400">*</span>
                                 </label>
-                                <input type="text" name="namaTim" id="namaTim"
+                                <input type="text" name="team_name" id="team_name"
                                     class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2"
                                     placeholder="Masukan nama tim" required>
                             </div>
 
                             <div class="mb-4">
-                                <label class="block mb-2 text-sm font-bold text-gray-700" for="rolePosition">
-                                    Jumlah Maks Anggota
+                                <label class="block mb-2 text-sm font-bold text-gray-700" for="max_member">
+                                    Jumlah Maks Anggota <span class="text-red-400">*</span>
                                 </label>
-                                <select name="role_position" id="rolePosition"
+                                <select name="max_member" id="max_member"
                                     class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
                                     <option class="text-gray-400" value="">Masukkan Jumlah Aggota</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    @for ($i = 1; $i <= $lomba->max_member; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
                                 </select>
                             </div>
 
-                            <div class="mb-4">
+                            {{-- <div class="mb-4">
                                 <label class="block mb-2 text-sm font-bold text-gray-700" for="rolePosition">
-                                    Cabang Komepetisi
+                                    Cabang Komepetisi <span class="text-red-400">*</span>
                                 </label>
                                 <select name="role_position" id="rolePosition"
                                     class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
                                     <option value="">Select the role need</option>
                                     <option value="ui/ux">UI/UX Designer</option>
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="mb-4">
+                                <label class="block mb-2 text-sm font-bold text-gray-700" for="isPrivate">
+                                    Apakah private? <span class="text-red-400">*</span>
+                                </label>
+                                <select name="isPrivate" id="isPrivate"
+                                    class="px-3 py-2 w-full rounded-lg border border-[#C6C6C6] focus:outline-none focus:ring-2" required>
+                                    <option value="1">Ya</option>
+                                    <option selected value="0">Tidak</option>
+                                </select>
+                            </div>
+
+                            {{-- <div class="mb-4">
                                 <label class="block mb-2 text-sm font-bold text-gray-700" for="rolePosition">
                                     Opsi Aggota
                                 </label>
@@ -132,7 +146,7 @@
                                     <option value="ui/ux">UI/UX Designer</option>
 
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="flex justify-end space-x-4">
                                 <button type="button" @click="formOpen = false"

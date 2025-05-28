@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger("lomba_id");
             $table->string("team_code");
             $table->string('team_name', 100);
+            $table->integer("max_member");
             $table->bigInteger("created_by");
             $table->boolean("isPrivate")->default(0);
             $table->boolean("isApproved")->default(0);

@@ -6,14 +6,6 @@
                     Explore
                 </h1>
                 <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
-                    <button>
-                        <x-svg.chat2 width=44 height=44 />
-                    </button>
-
-                    <button @click="showPopup = !showPopup">
-                        <x-svg.notif width=64 height=64 />
-                    </button>
-
                     <div x-show="showPopup" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 transform scale-95"
                         x-transition:enter-end="opacity-100 transform scale-100"
@@ -145,11 +137,13 @@
 
                 <div x-show="menu === 'kompetisi'" class="flex overflow-x-auto gap-4 pb-2 w-full">
                     @foreach ($lombas as $lomba)
-                        <a href="/detail/{{ $lomba->id_lomba }}">
-                            <x-cards.lomba-card title="{{ $lomba->lombaDetail->title }}"
-                                university="{{ $lomba->lombaDetail->penyelenggara_name }}" startDate="{{ $lomba->start_date }}"
-                                endDate="{{ $lomba->end_date }}" gambar="{{ $lomba->id_lomba }}"/>
-                        </a>
+                        @if (now()->between($lomba->start_date, $lomba->end_date))
+                            <a href="/detail/{{ $lomba->id_lomba }}">
+                                <x-cards.lomba-card title="{{ $lomba->lombaDetail->title }}"
+                                    university="{{ $lomba->lombaDetail->penyelenggara_name }}" startDate="{{ $lomba->start_date }}"
+                                    endDate="{{ $lomba->end_date }}" gambar="{{ $lomba->id_lomba }}"/>
+                            </a>
+                        @endif
                     @endforeach
                 </div>
                 <div x-show="menu === 'orang'" class="flex overflow-x-auto gap-4 pb-2 w-full">

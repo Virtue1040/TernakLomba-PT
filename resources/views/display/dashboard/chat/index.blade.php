@@ -428,7 +428,7 @@
                         placeholder="Find Messages" />
                     <div class="flex flex-col gap-[14px]">
                         <div class="flex gap-[5px] items-center">
-                            <x-svg.chat2 width=22 height=22 fill="#707070" />
+                            <x-svg.chat2 width=12 height=12 fill="#707070" />
                             <a class="text-[11px] text-[#707070] font-semibold">My Compspace</a>
                         </div>
                         
@@ -469,18 +469,18 @@
                                 <div id="profileChannel"
                                     class="flex justify-center items-center rounded-full w-[35px] h-[35px] bg-white overflow-hidden"
                                     type="messaging" userid="4">
-                                    <img class="" id="username_image"
+                                    <x-svg.chat2 width=16 height=16 />
+                                    {{-- <img class="" id="username_image"
                                         onerror="let getFirst = $(this).attr('name') $(this).parent().find('p').text(getFirst.charAt(0)) $(this).css('display', 'none')"
                                         alt="Profile Image" name="Tim Kocak Abis"
                                         src="https://lh3.googleusercontent.com/a/ACg8ocIQCtG3ch_RzIDd1_vy6LdLNrt8_7TNtjtOBKqMvUIzNFhDm9g=s96-c"
-                                        style="display: block">
+                                        style="display: block"> --}}
                                     <p class="text-black"></p>
                                 </div>
                                 <div class="flex flex-col gap-[1px]">
                                     <span class="font-semibold text-gray-900 dark:text-gray-200" id="channelName">Tim
                                         Kocak Abis</span>
-                                    <span class="text-[12px] text-[#9F9F9F] font-semibold " id="channelLomba">4C
-                                        Competition</span>
+                                    <span class="text-[12px] text-[#9F9F9F] font-semibold " id="channelLomba"></span>
                                 </div>
                             </div>
                         </a>
@@ -534,17 +534,17 @@
                 <input value="" autocomplete="off"
                     class="py-3 px-5 pr-[150px] w-full h-full border-none rounded-[10px]" type="text"
                     placeholder="Type a message..." id="chatBox" maxlength="255">
-                <div class="absolute right-3 top-[50%] -translate-y-1/2 flex justify-between w-[108px]">
-                    <button
-                        class="w-[30px] disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center p-[6px] tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+                <div class="absolute right-3 top-[50%] -translate-y-1/2 flex justify-end w-[108px]">
+                    {{-- <button
+                        class="w-[30px] disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center p-[6px] tracking-widest rounded-[7.5px]  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
                         id="chatAttachment">
                         <x-svg.attachment width=18 height=18 fill="#5645A1" />
                     </button>
                     <button
-                        class="w-[30px] disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center p-[6px] tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 "
+                        class="w-[30px] disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center p-[6px] tracking-widest rounded-[7.5px]  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 "
                         id="chatMic">
                         <x-svg.microphone width=18 height=18 fill="#5645A1" />
-                    </button>
+                    </button> --}}
                     <button
                         class="w-[30px] disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center p-[6px] bg-[#12B740] dark:bg-[#12B740] rounded-[7.5px] text-white dark:text-white tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
                         id="chatSubmit">

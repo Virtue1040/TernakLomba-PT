@@ -35,10 +35,17 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 px-4 pb-4 mx-auto w-full max-w-6xl md:grid-cols-3">
+        <div class="flex flex-row gap-4 justify-center px-4 pb-4 mx-auto mt-2 w-full max-w-6xl">
             @foreach ($lomba->getTeams as $compspace)
-                <x-cards.team-card team-name="Sayonara Team" date="Des 2021"
-                description="Halo gais, kami lagi butuh UI/UX Designer dengan UX Researcher" participants="2/4" />
+                @if (!$compspace->is_joinable())
+                    <x-cards.team-card team_name="{{ $compspace->team_name }}" date="{{ $compspace->lomba->get_enddate() }}" team_code="{{ $compspace->team_code }}"
+                    description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita" participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}" 
+                    :show_join=true/>
+                @else
+                    <x-cards.team-card team_name="{{ $compspace->team_name }}" date="{{ $compspace->lomba->get_enddate() }}" team_code="{{ $compspace->team_code }}"
+                    description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita" participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}" 
+                    :show_join=false/>
+                @endif
             @endforeach
         </div>
     </div>

@@ -1,39 +1,44 @@
 <x-layouts.default footer=false>
-    @isset($script)
-        <x-slot name="script">
-            <script type=module>
-                import { StreamChat } from 'https://cdn.jsdelivr.net/npm/stream-chat'
+    <x-slot name="script">
+        <script type=module>
+            import { StreamChat } from 'https://cdn.jsdelivr.net/npm/stream-chat'
 
-                //GETSTREAM API AUTHORIZATION
-                const apiKey = "{{ env('STREAM_API_KEY') }}"
-                const userId = "{{ $user->id_user }}"
-                const userToken = "{{ $streamToken ?? '' }}"
-                const client = new StreamChat(apiKey)
-                // async function refreshUnread() {
-                //     const unreadCounts = await client.getUnreadCount()
-                //     if (unreadCounts['total_unread_count'] > 0) {
-                //         $("#chatNotification").css('display', 'flex')
-                //     } else {
-                //         $("#chatNotification").css('display', 'none')
-                //     }
-                //     $("#chatNotification").html(unreadCounts['total_unread_count'])
-                // }
-                async function connectUser() {
-                    await client.connectUser({
-                            id: userId,
-                            name: "{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}",
-                        },
-                        userToken)
-                    // refreshUnread()
-                    // setInterval(() => {
-                    //     refreshUnread()
-                    // }, 5000)
+            //GETSTREAM API AUTHORIZATION
+            const apiKey = "{{ env('STREAM_API_KEY') }}"
+            const userId = "{{ $user->id_user }}"
+            const userToken = "{{ $streamToken ?? '' }}"
+            const client = new StreamChat(apiKey)
+
+            async function refreshUnread() {
+                const unreadCounts = await client.getUnreadCount()
+                if (unreadCounts['total_unread_count'] > 0) {
+                    $("[name='unread_signal']").each(function() {
+                        $(this).removeClass("hidden")
+                    })
+                } else {
+                    $("[name='unread_signal']").each(function() {
+                        $(this).addClass("hidden")
+                    })
                 }
-                connectUser()
-            </script>
+            }
+
+            async function connectUser() {
+                await client.connectUser({
+                        id: userId,
+                        name: "{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}",
+                    },
+                    userToken)
+                refreshUnread()
+                setInterval(() => {
+                    refreshUnread()
+                }, 5000)
+            }
+            connectUser()
+        </script>
+        @isset($script)
             {{ $script }}
-        </x-slot>
-    @endisset
+        @endisset
+    </x-slot>
     <div x-data="{ menu: 'dashboard' }" class="flex w-full min-h-screen h-fit">
         <div class="lg:flex border-r bg-white p-8 hidden flex-col w-[294px] ">
             <div
@@ -57,18 +62,24 @@
                     <x-svg.explore :active="request()->routeIs('dashboard-explore')" />
                 </x-navigation-button>
 
-                <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" name="Chat">
-                    <x-svg.chat :active="request()->routeIs('dashboard-chat')" />
+                <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" class="" name="Chat">
+                    <div class="relative">
+                        <x-svg.chat2 :active="request()->routeIs('dashboard-chat')" />
+                            <div class="hidden" name="unread_signal">
+                                <span class="inline-flex absolute top-0 right-0 w-[10px] h-[10px] bg-[#822BF2] rounded-full opacity-100 animate-ping "></span>
+                                <span class="inline-flex absolute right-0 top-0 justify-center items-center w-[10px] h-[10px] bg-[#822BF2] rounded-full"></span>
+                            </div>
+                    </div>
                 </x-navigation-button>
 
-                <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" name="Penyelenggara (Temp)">
+                {{-- <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" name="Penyelenggara (Temp)">
                     <x-svg.chat :active="request()->routeIs('dashboard-chat')" />
-                </x-navigation-button>
+                </x-navigation-button> --}}
             </nav>
 
             <div class="flex flex-col p-[14px] border-[1px] border-[#E9E9E9] rounded-[10px] mt-auto ">
                 <div onclick="window.location.href = '{{ route('profile') }}'" class="flex items-center p-1 mb-5 rounded-xl cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
-                    <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-10 h-10 rounded-full">
+                    <img src="{{ asset("documents/profile/$user->id_user/profile.png") }}" oerror="this.src='{{ asset('images/4cnational.png') }}'" alt="Profile" class="mr-3 w-10 h-10 rounded-full">
                     <div>
                         <div class="font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}
                         </div>
@@ -118,7 +129,7 @@
     
                         <a href="{{ route('dashboard-chat') }}"
                             class="flex flex-col items-center justify-center {{ request()->routeIs('dashboard-chat') ? 'text-[#822BF2]' : 'text-[#757575]' }}">
-                            <x-svg.chat :active="request()->routeIs('dashboard-chat')" class="w-6 h-6" />
+                            <x-svg.chat2 :active="request()->routeIs('dashboard-chat')" class="w-6 h-6" />
                             <span class="mt-1 text-xs">Chat</span>
                         </a>
     
@@ -145,7 +156,7 @@
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-95">
                 <div class="flex items-center p-1 pb-3 mb-4 rounded-xl border-b cursor-pointer hover:bg-gray-100 hover:bg-opacity-50">
-                    <img src="{{ asset('images/juara2.png') }}" alt="Profile" class="mr-3 w-8 h-8 rounded-full">
+                    <img src="{{ asset("documents/profile/$user->id_user/profile.png") }}" alt="Profile" class="mr-3 w-8 h-8 rounded-full">
                     <div>
                         <div class="text-sm font-semibold">{{ $user->user_detail->first_name }} {{ $user->user_detail->last_name }}</div>
                         <div class="text-xs text-gray-500">

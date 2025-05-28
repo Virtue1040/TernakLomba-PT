@@ -58,8 +58,11 @@ class LombaTeamController extends Controller
      *                          "id_team": 1,
      *                          "lomba_id": 1,
      *                          "team_code": "0019",
+     *                          "team_name": "Team Kocak Abis",
      *                          "isPrivate": false,
-     *                          "isApproved": false
+     *                          "isApproved": false,
+     *                          "updated_at": "2025-05-12T03:00:22.000000Z",
+     *                          "created_at": "2025-05-12T03:00:22.000000Z",
      *                      }
      *                 },
      *             }
@@ -117,6 +120,14 @@ class LombaTeamController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
+     *     @OA\Parameter(
+     *         name="role",
+     *         in="query",
+     *         description="Role",
+     *         example = "UI/UIX Designer",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Ok",
@@ -131,6 +142,8 @@ class LombaTeamController extends Controller
      *                          "user_id": 1,
      *                          "role": "",
      *                          "isLeader": false,
+     *                          "updated_at": "2025-05-12T03:00:22.000000Z",
+     *                          "created_at": "2025-05-12T03:00:22.000000Z",
      *                      }
      *                 },
      *             }
@@ -140,11 +153,15 @@ class LombaTeamController extends Controller
      *         response="400",
      *         description="Error: Team tidak ditemukan",
      *         @OA\JsonContent(
-     *             example={
+     *             example={{
      *                 "success": false,
      *                 "status_code": 400,
      *                 "message": "Team tidak ditemukan"
-     *             }
+     *             },{
+     *                 "success": false,
+     *                 "status_code": 400,
+     *                 "message": "User sudah join didalam tim"
+     *             }}
      *         ),
      *     ),
      *     @OA\Response(
@@ -173,6 +190,11 @@ class LombaTeamController extends Controller
      */
     public function join(Request $request, $team_code)
     {
+        $request->validate([
+            "role" => ["required", "string", "max:100"]
+        ]);
+
+        $role = $request->input("role", "");
         $team = lombaTeam::where("team_code", $team_code)->first();
 
         if ($team === null) {
@@ -182,6 +204,17 @@ class LombaTeamController extends Controller
                 "message" => "Team tidak ditemukan",
             ], 400);
         }
+        
+        $userId = auth("sanctum")->user()->id_user;
+        $isJoined = lombaMember::where("team_id", $team->id_team)->where("user_id", $userId)->first();
+
+        if ($isJoined) {
+            return response()->json([
+                "success" => false,
+                "status_code" => 400,
+                "message" => "User sudah join didalam tim",
+            ], 400);
+        }
 
         $channel = $this->streamChatService->client->Channel(
             "team",
@@ -189,12 +222,12 @@ class LombaTeamController extends Controller
             [
                 "compspace_name" => $team->team_name
             ]);
-        $channel->addMembers([strval(Auth::user()->id_user)]);
+        $channel->addMembers([strval($userId)]);
 
         $member = lombaMember::create([
             'team_id' => $team->id_team,
-            'user_id' => Auth::user()->id_user,
-            'role' => '',
+            'user_id' => $userId,
+            'role' => $role,
             'isLeader' => 0
         ]);
 
@@ -235,8 +268,11 @@ class LombaTeamController extends Controller
      *                          "id_team": 1,
      *                          "lomba_id": 1,
      *                          "team_code": "0019",
+     *                          "team_name": "Team Kocak Abis",
      *                          "isPrivate": false,
-     *                          "isApproved": false
+     *                          "isApproved": false,
+     *                          "updated_at": "2025-05-12T03:00:22.000000Z",
+     *                          "created_at": "2025-05-12T03:00:22.000000Z",
      *                 },
      *             }
      *         ),
@@ -303,6 +339,22 @@ class LombaTeamController extends Controller
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
+     *     @OA\Parameter(
+     *         name="max_member",
+     *         in="query",
+     *         description="Maks member",
+     *         example = "3",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="isPrivate",
+     *         in="query",
+     *         description="Apakah private?",
+     *         example = "false",
+     *         required=true,
+     *         @OA\Schema(type="boolean")
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Ok",
@@ -352,16 +404,25 @@ class LombaTeamController extends Controller
     {
         $request->validate([
             'lomba_id' => ["required", "integer", "exists:".Lomba::class.",id_lomba"],
+            'team_name' => ["required", "string", "max:255"],
+            'max_member' => ["required", "integer", "min:1"],
+            'isPrivate' => ["required", "boolean"]
         ]);
         $lomba_id = $request->lomba_id;
+        $getLomba = lomba::findOrFail($lomba_id);
         $team_name = $request->team_name;
+        $isPrivate = filter_var($request->input('isPrivate'), FILTER_VALIDATE_BOOLEAN);
+        $max_member = $request->max_member <= $getLomba->max_member ? $request->max_member : $getLomba->max_member;
+        $max_member = $max_member > $getLomba->min_member ? $getLomba->min_member : $max_member;
+        $userId = auth("sanctum")->user()->id_user;
 
         $team = lombaTeam::create([
             'lomba_id' => $lomba_id,
             'team_code' => rand(1000, 9999),
             'team_name' => $team_name,
-            'created_by' => Auth::user()->id_user,
-            'isPrivate' => false,
+            'created_by' => auth("sanctum")->user()->id_user,
+            'max_member' => $max_member,
+            'isPrivate' => $isPrivate,
             'isApproved' => true
         ]);
 
@@ -371,12 +432,12 @@ class LombaTeamController extends Controller
             [
                 "compspace_name" => $team_name
             ]);
-            $channel->create(strval(Auth::user()->id_user));
-            $channel->addMembers([strval(Auth::user()->id_user)]);
+            $channel->create(strval($userId));
+            $channel->addMembers([strval($userId)]);
 
         $member = lombaMember::create([
             'team_id' => $team->id_team,
-            'user_id' => Auth::user()->id_user,
+            'user_id' => $userId,
             'role' => '',
             'isLeader' => 1
         ]);
@@ -442,8 +503,11 @@ class LombaTeamController extends Controller
      *                          "id_team": 1,
      *                          "lomba_id": 1,
      *                          "team_code": "0019",
+     *                          "team_name": "Team Kocak Abis",
      *                          "isPrivate": false,
-     *                          "isApproved": false
+     *                          "isApproved": false,
+     *                          "updated_at": "2025-05-12T03:00:22.000000Z",
+     *                          "created_at": "2025-05-12T03:00:22.000000Z",
      *                  }
      *             }
      *         ),

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger("team_id");
             $table->bigInteger("user_id");
             $table->string("role")->default('');
+            $table->enum("member_status", ["pending", "approved", "rejected"])->default("pending");
             $table->boolean("isLeader")->default(0);
 
             $table->unique(["team_id", "user_id"]);

@@ -353,7 +353,7 @@ class LombaController extends Controller
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             @OA\Schema(
-     *                 required={},
+     *                 required={"poster_kompetisi","guide_book","preview_foto_kompetisi"},
      *             @OA\Property(
      *                 property="poster_kompetisi",
      *                 description="Poster Kompetisi (Image File max 5MB)",
@@ -453,9 +453,9 @@ class LombaController extends Controller
             "pic_name" => ["required", "string", "max:255", "regex:/^[a-zA-Z\s]*$/"],
             "pic_tel" => ["required", "string", "max:50"],
             "pic_email" => ["required", "email", "max:255"],
-            "poster_kompetisi" => ["required", "image", "max:5120"],
+            "poster_kompetisi" => ["required", "mimes:jpg,png,jpeg", "max:5120"],
             "guide_book" => ["required", "mimes:pdf", "max:2048"],
-            "preview_foto_kompetisi" => ["required", "image", "max:5120"],
+            "preview_foto_kompetisi" => ["required", "mimes:jpg,png,jpeg", "max:5120"],
         ]);
         $max_member = $request->max_member;
         $min_member = $request->min_member;

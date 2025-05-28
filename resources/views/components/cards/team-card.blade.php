@@ -1,8 +1,8 @@
-@props(['teamName', 'date', 'description', 'participants'])
+@props(['team_name', 'date', 'description', 'participants', 'show_join' => true, 'team_code'])
 
 <div x-data="{ formOpen: false }" class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
     <div class="flex justify-between items-center">
-        <h3 class="text-sm font-semibold sm:text-lg">{{ $teamName }}</h3>
+        <h3 class="text-sm font-semibold sm:text-lg">{{ $team_name }}</h3>
         <span
             class="px-1 whitespace-nowrap text-[12px] text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">{{ $date }}</span>
     </div>
@@ -23,10 +23,12 @@
             <span class="text-[12px]">{{ $participants }}</span>
         </div>
 
-        <button @click="formOpen = true"
-            class="px-2 py-1 text-xs text-white whitespace-nowrap bg-black rounded-full transition-colors md:px-4 md:py-2 md:text-sm hover:bg-gray-800">
-            Request Join
-        </button>
+        @if ($show_join)
+            <button @click="formOpen = true"
+                class="px-2 py-1 text-xs text-white whitespace-nowrap bg-black rounded-full transition-colors md:px-4 md:py-2 md:text-sm hover:bg-gray-800">
+                Request Join
+            </button>
+        @endif
     </div>
 
     <div x-show="formOpen" x-cloak
@@ -35,15 +37,15 @@
         <div class="bg-white rounded-[16px] w-full max-w-md mx-4 p-6 space-y-4">
             <h2 class="text-xl font-semibold">Join Compsace</h2>
 
-            <form action="" method="POST">
+            <form action="{{ route("lombaTeam-join", $team_code) }}" method="POST">
                 @csrf
                 <input type="hidden" name="team_name" value="{{ $teamName }}">
 
                 <div class="mb-4">
-                    <label class="block mb-2 text-sm font-bold text-gray-700" for="rolePosition">
+                    <label class="block mb-2 text-sm font-bold text-gray-700" for="role">
                         Role Saya
                     </label>
-                    <select name="role_position" id="rolePosition"
+                    <select name="role" id="role"
                         class="px-3 py-2 w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required>
                         <option value="">Select the role need</option>
@@ -59,7 +61,7 @@
                     </label>
                     <textarea name="message" id="message"
                         class="px-3 py-2 w-full h-24 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter your message here" required></textarea>
+                        placeholder="Enter your message here" ></textarea>
                 </div>
 
                 <div class="flex justify-end space-x-4">

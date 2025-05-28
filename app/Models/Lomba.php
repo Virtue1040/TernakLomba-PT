@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +38,11 @@ class Lomba extends Model
     public function lombaCategory()
     {
         return $this->belongsTo(lombaCategory::class, 'lombaCategory_id', 'id_lombaCategory');
+    }
+
+    public function get_enddate() {
+        $date = new DateTime($this->end_date);
+        return $date->format("d M Y");
     }
 
     public function lombaDetail()

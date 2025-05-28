@@ -1,6 +1,6 @@
 <div @click="selectedChannel=$el.id" x-bind:class="selectedChannel == $el.id ? '!bg-gray-100 !bg-opacity-50' : ''" class="hover:bg-gray-100 hover:bg-opacity-50 flex gap-2 p-[10px] py-[12px] rounded-lg w-full animate-pulse bg-[#ebebeb] hidden cursor-pointer" id="chat-channel-sample">
     <div class="rounded-full min-w-[38px] h-[38px] bg-[#331D2C26] bg-opacity-15 flex justify-center items-center">
-        <x-svg.chat2 width=25 height=25/>
+        <x-svg.chat2 width=16 height=16/>
     </div>
     <div class="flex gap-[1px] flex-col max-w-[170px] 2xl:max-w-[275px] justify-between w-full">
         <div class="flex justify-between items-center w-full">

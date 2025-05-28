@@ -34,10 +34,6 @@
             <div class="flex justify-between items-center">
                 <h1 class="text-[36px] font-semibold">Dashboard</h1>
                 <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
-                    <button>
-                        <x-svg.chat2 width=44 height=44 />
-                    </button>
-
                     <button @click="showPopup = !showPopup">
                         <x-svg.notif width=64 height=64 />
                     </button>
@@ -96,7 +92,12 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">5 Lomba</h3>
+                    <?php
+                        $lombas_progress = $lombas->filter(function ($lomba) {
+                            return now()->between($lomba->start_date, $lomba->end_date) && now()->gt($lomba->decide_date);
+                        });
+                    ?>
+                    <h3 class="text-[26.35px] font-semibold">{{ $lombas_progress->count() }} Lomba</h3>
                     <p class="text-[9.88px]">Sedang Berjalan</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -202,7 +203,7 @@
                 </div>
                 <div x-show="menu === 'lombaberjalan'" class="flex overflow-x-auto gap-6 mb-8">
                     @foreach ($lombas as $lomba)
-                        @if ($lomba->isApproved) {{-- dan sedang beralngsung --}}
+                        @if ($lomba->isApproved && now()->lt($lomba->decide_date)) {{-- dan sedang beralngsung --}}
                             <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="berlangsung" 
                             gambar="{{ $lomba->id_lomba }}"/>
                         @endif
@@ -210,8 +211,10 @@
                 </div>
                 <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
                     @foreach ($lombas as $lomba) {{-- sudah selesai --}}
-                        <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="selesai" 
-                        gambar="{{ $lomba->id_lomba }}"/>
+                        @if (now()->gt($lomba->decide_date))
+                            <x-cards.persetujuanLomba-card title="{{ $lomba->lombaDetail->title }}" university="{{ $lomba->lombaDetail->penyelenggara_name }}" status="selesai" 
+                            gambar="{{ $lomba->id_lomba }}"/>
+                        @endif
                     @endforeach
 
                 </div>

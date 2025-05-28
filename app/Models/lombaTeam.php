@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *   schema="LombaTeam",
  *   type="object",
- *   required={"id_team", "lomba_id", "team_code","team_name", "created_by", "isPrivate","isApproved"},
+ *   required={"id_team", "lomba_id", "team_code","team_name", "max_member", "created_by", "isPrivate","isApproved"},
  * )
  * Class LombaTeam
  * @package Incase\Models
@@ -24,10 +24,23 @@ class lombaTeam extends Model
         'lomba_id',
         'team_code',
         'team_name',
+        'max_member',
         'created_by',
         'isPrivate',
         'isApproved'
     ];
+
+    public function lomba() {
+        return $this->belongsTo(Lomba::class, "lomba_id", "id_lomba");
+    }
+
+    public function total_participants() {
+        return $this->hasMany(lombaMember::class, "team_id", "id_team")->count();
+    }
+
+    public function is_joinable() {
+        return $this->total_participants() > $this->max_member;
+    }
     
     protected $primaryKey = 'id_team';
 
@@ -45,15 +58,21 @@ class lombaTeam extends Model
 
     /**
      * @OA\Property(title="team_code", type="string", readOnly=true)
-     * @var integer
+     * @var string
     */
     private $team_code;
 
     /**
      * @OA\Property(title="team_name", type="string", readOnly=true)
-     * @var integer
+     * @var string
     */
     private $team_name;
+
+    /**
+     * @OA\Property(title="max_member", type="integer", format="int64", readOnly=true)
+     * @var integer
+    */
+    private $max_member;
 
     /**
      * @OA\Property(title="created_by", type="integer", format="int64", readOnly=true)

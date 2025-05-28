@@ -1,6 +1,7 @@
 <?php
 
 use App\Exceptions\CustomValidationException;
+use App\Http\Middleware\admin;
 use App\Http\Middleware\AttachAuthToken;
 use App\Http\Middleware\Guest;
 use App\Http\Middleware\Profilled;
@@ -30,7 +31,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'localization' => \App\Http\Middleware\Localization::class,
             'guests' => Guest::class,
             'profilled' => Profilled::class,
-            'unprofilled' => Unprofilled::class
+            'unprofilled' => Unprofilled::class,
+            'admin' => admin::class
         ]);
         $middleware->statefulApi();
         $middleware->use([

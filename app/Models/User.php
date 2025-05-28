@@ -100,6 +100,22 @@ class User extends Authenticatable
         return $this->get_minat()->get()->map(fn ($minat) => $minat->bidang->name)->implode(', ');
     }
 
+    public function get_joined_compspace() {
+        return $this->hasMany(lombaMember::class, 'user_id', 'id_user');
+    }
+
+    public function get_total_joined_lomba() {
+        return $this->get_joined_compspace()->select('user_id')->distinct()->count();
+    }
+
+    public function get_total_win_lomba() {
+        return $this->hasMany(winner::class, 'user_id', 'id_user')->count();
+    }
+
+    public function get_winrate() {
+        return $this->get_total_win_lomba() > 0 ? ($this->get_total_joined_lomba() / $this->get_total_win_lomba()) * 100 : 0;
+    }
+
     /**
      * Override createToken.
      *

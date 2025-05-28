@@ -5,7 +5,13 @@
                 <h1 class="text-[36px] font-semibold">Dashboard</h1>
                 <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
                     <button>
-                        <x-svg.chat2 width=44 height=44 />
+                        <div class="relative">
+                            <x-svg.chat2 width=30 height=30 />
+                            <div class="hidden" name="unread_signal">
+                                <span class="inline-flex absolute top-0 right-0 w-[10px] h-[10px] bg-[#822BF2] rounded-full opacity-100 animate-ping "></span>
+                                <span class="inline-flex absolute right-0 top-0 justify-center items-center w-[10px] h-[10px] bg-[#822BF2] rounded-full"></span>
+                            </div>
+                        </div>
                     </button>
 
                     <button @click="showPopup = !showPopup">
@@ -25,11 +31,10 @@
 
                         <!-- N 2 -->
                         <x-notif2 />
-
                     </div>
                 </div>
             </div>
-            <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo Tyler, Selamat Datang!</p>
+            <p class="text-[24px] font-semibold sm:mt-10 mt-4">Halo {{ $user->user_detail->first_name }}, Selamat Datang!</p>
             <p class="text-[14px] text-gray-500">Temukan universitas ideal Anda di sini..</p>
         </div>
 
@@ -37,7 +42,7 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">20 Lomba</h3>
+                    <h3 class="text-[26.35px] font-semibold">{{ $user->get_total_joined_lomba() }} Lomba</h3>
                     <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -66,7 +71,7 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">50%</h3>
+                    <h3 class="text-[26.35px] font-semibold">{{ $user->get_winrate() }}%</h3>
                     <p class="text-[9.88px]">Tingkat Kemenangan</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -114,7 +119,7 @@
             <div
                 class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-fit md:h-[111px] relative overflow-hidden">
                 <div class="relative z-10">
-                    <h3 class="text-[26.35px] font-semibold">4 Kemenangan</h3>
+                    <h3 class="text-[26.35px] font-semibold">{{ $user->get_total_win_lomba() }} Kemenangan</h3>
                     <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                 </div>
                 <div class="absolute right-0 -bottom-16">
@@ -162,36 +167,29 @@
                 </button>
             </div>
             <div class="grid grid-cols-1 w-full">
-                <div x-show="menu === 'kompetisi'" class="grid grid-cols-2 gap-6 mb-8 md:grid-cols-3">
-                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                        participants="2/4" />
-                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                        participants="2/4" />
-                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                        participants="2/4" />
-                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                        participants="2/4" />
-                    <x-cards.lombaDiikuti-card title="4C National Competitions" university="Stanford University"
-                        participants="2/4" />
+                <div x-show="menu === 'kompetisi'" class="flex flex-col flex-wrap gap-6 mb-8 md:flex-row">
+                    @foreach ($user->get_joined_compspace as $compspace)
+                        @if(!now()->gt(($compspace->team->lomba->decide_date)))
+                            <x-cards.lombaDiikuti-card title="{{ $compspace->team->lomba->lombaDetail->title }}" teamName="{{ $compspace->team->team_name }}"
+                            participants="{{ $compspace->team->total_participants() }} / {{ $compspace->team->max_member }}" />
+                        @endif
+                    @endforeach
                 </div>
                 <div x-show="menu === 'lombaInProgress'" class="flex overflow-x-auto gap-6 mb-8">
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="belum" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="berlangsung"/>
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" progres="selesai"/>
+                    @foreach ($user->get_joined_compspace as $compspace)
+                        @if(now()->between($compspace->team->lomba->start_date, $compspace->team->lomba->decide_date))
+                            <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" progres="belum" gambar="{{ $compspace->team->lomba->id_lomba }}" />
+                        @endif
+                    @endforeach
                 </div>
 
                 <div x-show="menu === 'lombaFinish'" class="flex overflow-x-auto gap-6 mb-8">
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                    <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                    @foreach ($user->get_joined_compspace as $compspace)
+                        @if(now()->gt($compspace->team->lomba->decide_date))
+                            <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" progres="belum" gambar="{{ $compspace->team->lomba->id_lomba }}" 
+                                startDate="{{ $compspace->team->lomba->start_date }}" endDate="{{ $compspace->team->lomba->end_date }}"/>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

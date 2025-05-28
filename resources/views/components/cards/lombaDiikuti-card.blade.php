@@ -1,10 +1,10 @@
-@props(['title','university','participants'])
+@props(['title','teamName','participants'])
 
 <div class="w-full max-w-[367px] min-h-[194px] rounded-[24px] border flex flex-col justify-between p-3 md:p-4">
-    <div class="flex overflow-x-auto justify-start items-start">
-        <span class="px-2 md:px-3 py-1 bg-[#B378FF1A] text-[#822BF2] rounded-full text-xs whitespace-nowrap">
+    <div class="flex overflow-x-auto gap-2 justify-start items-start">
+        {{-- <span class="px-2 md:px-3 py-1 bg-[#B378FF1A] text-[#822BF2] rounded-full text-xs whitespace-nowrap">
             UI/UX Design
-        </span>
+        </span> --}}
         <span class="px-2 md:px-3 py-1 bg-[#1548D10D] text-[#1548D1] rounded-full text-xs whitespace-nowrap">
             Sudah Daftar
         </span>
@@ -12,7 +12,7 @@
     
     <div class="my-2">
         <h2 class="text-lg font-bold md:text-xl line-clamp-2">{{ $title }}</h2>
-        <p class="text-xs text-gray-600">{{ $university }}</p>
+        <p class="text-xs text-gray-600">{{ $teamName }}</p>
     </div>
     
     <div class="flex flex-col gap-3 justify-between items-start sm:flex-row sm:items-center sm:gap-0">

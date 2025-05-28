@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -94,10 +95,29 @@ class ProfileController extends Controller
         $validate = $request->validate([
             "bio" => ["string", "max:255"],
             "first_name" => ["string", "max:255"],
-            "last_name" => ["string", "max:255"]
+            "last_name" => ["string", "max:255"],
+            "kampus" => ["string", "max:255"],
+            "jurusan" => ["string", "max:255"],
+            "photo_profile" => ["mimes:jpg,png,jpeg", "max:10240"],
         ]);
 
+        $userId = auth("sanctum")->user()->id_user;
+        $path = public_path() . "/documents/profile/". $userId;
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+
+        $photo_profile = $request->photo_profile;
+
         auth("sanctum")->user()->user_detail->update($validate);
+        if (auth("sanctum")->user()->get_associated) {
+            auth("sanctum")->user()->get_associated->update($validate);
+        }
+        
+        if ($photo_profile) {
+            $photo_profile->move($path, "profile.png");
+        }
 
         return response()->json([
             'success' => true,

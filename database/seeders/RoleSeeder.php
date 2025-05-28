@@ -178,17 +178,17 @@ class RoleSeeder extends Seeder
         $Admin->syncPermissions(Permission::all());
 
         // Sync Permission to Penyelenggara
-        $Penyelenggara->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request, $lomba_approve,
+        $Penyelenggara->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request,
         $team_approve, $team_decline, $team_read, $team_create, $team_edit, $team_delete,
-        $member_read, $member_create, $member_edit, $member_delete,
+        $member_read, $member_delete,
         $typeHadiah_read, $typeHadiah_create, $typeHadiah_edit, $typeHadiah_delete,
         $lombaAlbum_read, $lombaAlbum_create, $lombaAlbum_edit, $lombaAlbum_delete,
         $lombaHadiah_read, $lombaHadiah_create, $lombaHadiah_edit, $lombaHadiah_delete);
 
         // Sync Permission to User
-        $User->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request, $lomba_approve,
+        $User->syncPermissions($lomba_read, $lomba_create, $lomba_edit, $lomba_delete, $lomba_request,
         $team_approve, $team_decline, $team_read, $team_create, $team_edit, $team_delete,
-        $member_read, $member_create, $member_edit, $member_delete,
+        $member_read, $member_delete,
         $typeHadiah_read, $typeHadiah_create, $typeHadiah_edit, $typeHadiah_delete,
         $lombaAlbum_read, $lombaAlbum_create, $lombaAlbum_edit, $lombaAlbum_delete,
         $lombaHadiah_read, $lombaHadiah_create, $lombaHadiah_edit, $lombaHadiah_delete);

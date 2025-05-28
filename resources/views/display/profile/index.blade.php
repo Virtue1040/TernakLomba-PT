@@ -63,7 +63,7 @@ $isLocal = $user->id_user === $profile->id_user;
 
                 <div class="absolute left-8 -bottom-16">
                     <div class="overflow-hidden w-32 h-32 bg-white rounded-full border-4 border-white">
-                        <img src="{{ asset('images/4cnational.png') }}" class="object-cover w-full h-full">
+                        <img src="{{ asset("documents/profile/$profile->id_user/profile.png") }}" onerror="this.src='{{ asset('images/4cnational.png') }}'" class="object-cover w-full h-full">
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@ $isLocal = $user->id_user === $profile->id_user;
                             </div>
 
                             <div class="p-4">
-                                <form action="" method="POST"
+                                <form action="{{ route("profile.update") }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
@@ -113,10 +113,10 @@ $isLocal = $user->id_user === $profile->id_user;
                                             <img src=""
                                                 class="w-full h-full object-cover" alt="Profile Photo">
                                         </div>
-                                        <label for="profile-photo"
+                                        <label for="photo_profile"
                                             class="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-md text-sm">
                                             Upload Foto
-                                            <input type="file" id="profile-photo" name="profile_photo"
+                                            <input type="file" id="photo_profile" name="photo_profile"
                                                 accept="image/*" class="hidden">
                                         </label>
                                     </div>
@@ -137,17 +137,17 @@ $isLocal = $user->id_user === $profile->id_user;
                                         </div>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <label for="location"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Lokasi</label>
-                                        <input type="text" id="location" name="location" value="{{ $profile->get_associated }}"
+                                    <div class="mb-6">
+                                        <label for="kampus"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Kampus</label>
+                                        <input type="text" id="kampus" name="kampus" value="{{ $profile->get_associated->kampus ?? '' }}"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
                                     </div>
 
                                     <div class="mb-6">
-                                        <label for="campus"
-                                            class="block text-sm font-medium text-gray-700 mb-1">Kampus</label>
-                                        <input type="text" id="campus" name="campus" value="{{ $profile->get_associated->kampus ?? '' }}"
+                                        <label for="jurusan"
+                                            class="block text-sm font-medium text-gray-700 mb-1">Jurusan</label>
+                                        <input type="text" id="jurusan" name="jurusan" value="{{ $profile->get_associated->jurusan ?? '' }}"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-purple-500">
                                     </div>
 
@@ -181,7 +181,7 @@ $isLocal = $user->id_user === $profile->id_user;
                     class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
                         <h3 class="text-[17px] sm:text-[26.35px] font-semibold">
-                            {{ $profile->get_ikut_lomba->count() }} Lomba</h3>
+                            {{ $profile->get_total_joined_lomba() }} Lomba</h3>
                         <p class="text-[9.88px]">Lomba yang telah diikuti</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -210,7 +210,7 @@ $isLocal = $user->id_user === $profile->id_user;
                 <div
                     class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">50%</h3>
+                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">{{ $profile->get_winrate() }}%</h3>
                         <p class="text-[9.88px]">Tingkat Kemenangan</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -258,7 +258,7 @@ $isLocal = $user->id_user === $profile->id_user;
                 <div
                     class="bg-gradient-to-b from-[#822bf2] to-[#b378ff] text-white p-4 sm:p-6 rounded-xl h-[111px] relative overflow-hidden">
                     <div class="relative z-10">
-                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">4 Kemenangan</h3>
+                        <h3 class="text-[17px] sm:text-[26.35px] font-semibold">{{ $profile->get_total_win_lomba() }} Kemenangan</h3>
                         <p class="text-[9.88px]">Jumlah Kemenangan Kompetisi</p>
                     </div>
                     <div class="absolute right-0 -bottom-16">
@@ -357,14 +357,19 @@ $isLocal = $user->id_user === $profile->id_user;
                     </div>
 
                     <div x-show="menu === 'lombaDiikuti'" class="flex overflow-x-auto flex-row gap-4">
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                        @foreach ($user->get_joined_compspace as $compspace)
+                            @if(now()->between($compspace->team->lomba->start_date, $compspace->team->lomba->decide_date))
+                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" gambar="{{ $compspace->team->lomba->id_lomba }}"/>
+                            @endif
+                        @endforeach
                     </div>
 
                     <div x-show="menu === 'lombaSelesai'" class="flex overflow-x-auto flex-row gap-4">
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
-                        <x-cards.lomba-card title="4C National Competition" university="Stanford University" />
+                        @foreach ($user->get_joined_compspace as $compspace)
+                            @if(now()->gt($compspace->team->lomba->decide_date))
+                                <x-cards.lomba-card title="{{ $compspace->team->lomba->lombaDetail->title }}" university="{{ $compspace->team->lomba->lombaDetail->penyelenggara_name }}" gambar="{{ $compspace->team->lomba->id_lomba }}"/>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
