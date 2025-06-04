@@ -30,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
             return auth('sanctum')->check();
         });
 
+        Blade::if('admin', function () {
+            if (auth('sanctum')->check()) {
+                return auth('sanctum')->user()->hasRole("Admin");
+            }
+        });
+
         Blade::if('guest', function () {
             return !auth('sanctum')->check();
         });

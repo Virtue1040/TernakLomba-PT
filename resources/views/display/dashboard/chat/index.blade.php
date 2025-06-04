@@ -23,7 +23,6 @@
             }
 
             connect()
-
             $(document).ready(function() {
                 async function sendMessage() {
                     if (activeChannel === null) {
@@ -91,6 +90,14 @@
                 $("#reset_button").click(function() {
                     resetChannel()
                 })
+                $("[name='search_chat']").on("keyup", function() {
+                    let input = $(this).val().toLowerCase();
+
+                    $("#channelContainer > div").each(function() {
+                        let nameAttr = $(this).attr("name")?.toLowerCase() || "";
+                        $(this).toggle(nameAttr.includes(input)); 
+                    });
+                });
             })
 
             function scrollBottom() {
@@ -298,6 +305,8 @@
                 let messages = data.messages
                 let id_channel = data.channel.id
 
+                console.log(data)
+
                 let clone = $("#chat-channel-sample").clone()
                 clone.attr("id", id_channel)
                 clone.removeClass('hidden')
@@ -308,13 +317,13 @@
 
                     let new_channel = cardContact[id_channel]['channel']
                     let compspace_name = new_channel.data.compspace_name
-                    console.log(new_channel.state)
                     let messageSets = new_channel.state.messageSets[0].messages
                     let getLastChatTime = messageSets.length > 0 ? formatLastChatTime(messageSets[messageSets.length - 1].updated_at) : '00:00'
                     let getLastMessage = messageSets.length > 0 ? messageSets[messageSets.length - 1].text : 'No message'
                     clone.find('a[name="team_name"]').html(compspace_name)
                     clone.find('a[name="last_update"]').html(getLastChatTime)
                     clone.find('a[name="last_message"]').html(getLastMessage)
+                    clone.attr("name", compspace_name)
 
                     let getUnreadMessage = cardContact[id_channel]['channel'].state.read[userId]['unread_messages']
 
@@ -451,18 +460,18 @@
                                 <a class="text-sm">+ Chat</a>
                             </div>
                         </button> --}}
-                        @if ($user->hasRole('Admin'))
+                        @admin
                             <button id="reset_button"
                                 class="disabled:bg-gray-300 disabled:text-gray-500 disabled:dark:bg-gray-800 disabled:cursor-not-allowed inline-flex items-center px-4 py-2 border-[1px] border-gray-200 bg-[#5E93DA] dark:bg-[#5E93DA] border border-transparent rounded-md font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-[#315079] focus:bg-gray-700 dark:focus:bg-[#5E93DA] active:bg-gray-900 dark:active:bg-[#5E93DA] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 !rounded-full !bg-red-500 hover:!bg-red-600 !p-[8px] !py-[5px] !bg-opacity-90">
                                 <div class="flex relative justify-center items-center w-full h-full">
                                     <a class="text-sm">Reset</a>
                                 </div>
                             </button>
-                        @endif
+                        @endadmin
                     </div>
                 </h3>
                 <div x-data="{ selectedChannel: '' }" class="flex flex-col px-6 py-8 h-full gap-[25px]">
-                    <x-finder class="w-full !border-1px !border-[#DADADA]" icon_pos="left"
+                    <x-finder name="search_chat" class="w-full !border-1px !border-[#DADADA]" icon_pos="left"
                         placeholder="Find Messages" />
                     <div class="flex flex-col gap-[14px]">
                         <div class="flex gap-[5px] items-center">

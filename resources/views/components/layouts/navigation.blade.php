@@ -52,26 +52,26 @@
                     <x-svg.dashboard :active="request()->routeIs('dashboard-index')" />
                 </x-navigation-button>
 
-                @if($user->hasRole("Admin"))
+                @admin
                     <x-navigation-button href="{{ route('dashboard-admin') }}" :active="request()->routeIs('dashboard-admin')" name="Admin">
                         <x-svg.fact-check :active="request()->routeIs('dashboard-admin')" />
                     </x-navigation-button>
-                @endif
+                @else
+                    <x-navigation-button href="{{ route('dashboard-explore') }}" :active="request()->routeIs('dashboard-explore')" name="Explore">
+                        <x-svg.explore :active="request()->routeIs('dashboard-explore')" />
+                    </x-navigation-button>
+
+                    <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" class="" name="Chat">
+                        <div class="relative">
+                            <x-svg.chat2 :active="request()->routeIs('dashboard-chat')" />
+                                <div class="hidden" name="unread_signal">
+                                    <span class="inline-flex absolute top-0 right-0 w-[10px] h-[10px] bg-[#822BF2] rounded-full opacity-100 animate-ping "></span>
+                                    <span class="inline-flex absolute right-0 top-0 justify-center items-center w-[10px] h-[10px] bg-[#822BF2] rounded-full"></span>
+                                </div>
+                        </div>
+                    </x-navigation-button>
+                @endadmin
                 
-                <x-navigation-button href="{{ route('dashboard-explore') }}" :active="request()->routeIs('dashboard-explore')" name="Explore">
-                    <x-svg.explore :active="request()->routeIs('dashboard-explore')" />
-                </x-navigation-button>
-
-                <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" class="" name="Chat">
-                    <div class="relative">
-                        <x-svg.chat2 :active="request()->routeIs('dashboard-chat')" />
-                            <div class="hidden" name="unread_signal">
-                                <span class="inline-flex absolute top-0 right-0 w-[10px] h-[10px] bg-[#822BF2] rounded-full opacity-100 animate-ping "></span>
-                                <span class="inline-flex absolute right-0 top-0 justify-center items-center w-[10px] h-[10px] bg-[#822BF2] rounded-full"></span>
-                            </div>
-                    </div>
-                </x-navigation-button>
-
                 {{-- <x-navigation-button href="{{ route('dashboard-chat') }}" :active="request()->routeIs('dashboard-chat')" name="Penyelenggara (Temp)">
                     <x-svg.chat :active="request()->routeIs('dashboard-chat')" />
                 </x-navigation-button> --}}

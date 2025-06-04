@@ -58,7 +58,7 @@
     <div class="p-8 w-full max-w-screen">
         <div class="mb-8">
             <div class="flex justify-between items-center">
-                <h1 class="text-[36px] font-semibold">Dashboard</h1>
+                <h1 class="text-[36px] font-semibold">Admin Dashboard</h1>
                 <div x-data="{ showPopup: false }" class="flex relative items-center space-x-4">
                     <button @click="showPopup = !showPopup">
                         <x-svg.notif width=64 height=64 />

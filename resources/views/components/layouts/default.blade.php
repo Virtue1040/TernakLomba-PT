@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>{{ env('APP_NAME') }}</title>
     <script>
+        $(document).ready(function() {
+            @if (session('alert'))
+                spawnNotification(
+                    "{{ session('alert')['title'] }}",
+                    "{{ session('alert')['message'] }}",
+                    "{{ session('alert')['icon'] }}"
+                )
+            @endif
+        });
+        
         (function($) {
             $.fn.onEnter = function(func) {
                 this.bind('keypress', function(e) {

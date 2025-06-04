@@ -166,7 +166,7 @@
                     Lomba yang telah selesai
                 </button>
             </div>
-            <div class="grid grid-cols-1 w-full">
+            <div x-data="{ menu: 'kompetisi', openDetail: false }" @open-detail.window="openDetail = true" class="grid grid-cols-1 w-full">
                 <div x-show="menu === 'kompetisi'" class="flex flex-col flex-wrap gap-6 mb-8 md:flex-row">
                     @foreach ($user->get_joined_compspace as $compspace)
                         @if(!now()->gt(($compspace->team->lomba->decide_date)))
@@ -191,6 +191,47 @@
                                 startDate="{{ $compspace->team->lomba->start_date }}" endDate="{{ $compspace->team->lomba->end_date }}"/>
                         @endif
                     @endforeach
+                </div>
+
+                <div x-show="openDetail" @click.self="openDetail = false" class="flex flex-col fixed inset-0 top-[-15px] z-50 justify-center items-center bg-black bg-opacity-50">
+                    <div class="w-80 absolute bg-white rounded-2xl shadow-lg overflow-y-auto max-h-screen">
+                        <div class="p-6">
+                            <div class="flex justify-start">
+                                <img src="images/4cnational.png" alt="" class="w-20 h-20 rounded-full flex-shrink-0 object-cover" />
+                            </div>
+                            
+                            <h1 class="text-2xl font-bold text-gray-900 mb-2">FUFUFAFA Team</h1>
+                            
+                            <div class="flex items-center justify-start text-gray-500 text-sm mb-2">
+                                <span>Compspace</span>
+                                <span class="mx-2">•</span>
+                                <span>5 Orang</span>
+                            </div>
+                            
+                            <div class="flex gap-3 justify-start mb-4">
+                                <button class="bg-black text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+                                    Akhiri Compspace
+                                </button>
+                                <button class="bg-white border border-gray-200 text-gray-600 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div  class="px-6 pb-6">
+                            <h2 class="text-gray-500 text-sm font-medium mb-4">Anggota</h2>
+                            
+                            <div class="space-y-3">
+                                <x-cards.anggota-team nama="M Fathir Ramadhennis" jobdesk="UI/UX Designer" />
+                                <x-cards.anggota-team nama="M Fathir Ramadhennis" jobdesk="UI/UX Designer" />
+                                <x-cards.anggota-team nama="M Fathir Ramadhennis" jobdesk="UI/UX Designer" />
+                                <x-cards.anggota-team nama="M Fathir Ramadhennis" jobdesk="UI/UX Designer" />
+                            </div>
+                        </div>
+                    </div>
+                    {{--  --}}
                 </div>
             </div>
         </div>

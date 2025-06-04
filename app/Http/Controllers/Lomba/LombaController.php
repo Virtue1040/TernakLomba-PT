@@ -20,6 +20,7 @@ class LombaController extends Controller
     function __construct()
     {
         $this->middleware('permission:lomba-read', ['only' => ['index']]);
+        $this->middleware('role:Admin', ['only' => ['admin']]);
         // $this->middleware('permission:lomba-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:lomba-approve', ['only' => ['approver', 'approve']]);
         $this->middleware('permission:lomba-edit', ['only' => ['edit', 'update']]);

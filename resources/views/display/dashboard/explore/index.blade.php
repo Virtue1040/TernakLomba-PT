@@ -1,4 +1,18 @@
 <x-layouts.navigation>
+    <x-slot name="script">
+        <script>
+            $(document).ready(function() {
+                $("[name='search_lomba']").on("keyup", function() {
+                    let input = $(this).val().toLowerCase();
+
+                    $("#kompetisi_list > a").each(function() {
+                        let nameAttr = $(this).attr("name")?.toLowerCase() || "";
+                        $(this).toggle(nameAttr.includes(input)); 
+                    });
+                });
+            })
+        </script>
+    </x-slot>
     <section class="text-center px-6 relative bg-gradient-to-b from-[#822bf2] to-[#b378ff] h-fit">
         <div class="flex flex-col gap-8 p-6 px-4 w-full">
             <div class="flex justify-between items-center">
@@ -85,9 +99,9 @@
             </div>
             <div class="flex sm:flex-row flex-col gap-3 mt-[100px]">
                 <div class="w-full md:w-full lg:w-[500px] h-auto">
-                    <x-finder class="w-full" icon_pos="left" placeholder="Cari Lomba" />
+                    <x-finder name="search_lomba" class="w-full" icon_pos="left" placeholder="Cari Lomba" />
                 </div>
-                <x-filter class="w-full md:w-auto lg:w-[112px] h-auto md:h-[50px]" />
+                {{-- <x-filter class="w-full md:w-auto lg:w-[112px] h-auto md:h-[50px]" /> --}}
             </div>
         </div>
     </section>
@@ -105,8 +119,8 @@
                         <b>Orang</b>
                     </button>
                 </div>
-                <div class="flex gap-4 w-full h-[52px] items-center" name="filter">
-                    {{-- <x-filter class="w-[105px] !bg-[#F0F0F0] h-[44px]" /> --}}
+                {{-- <div class="flex gap-4 w-full h-[52px] items-center" name="filter">
+                    <x-filter class="w-[105px] !bg-[#F0F0F0] h-[44px]" />
                     <div class="w-[1px] h-[50%] bg-[#F0F0F0]">
                     </div>
                     <div class="flex overflow-x-auto gap-2">
@@ -131,14 +145,14 @@
                             AI & Machine Learning
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="grid grid-cols-1 w-full">
 
-                <div x-show="menu === 'kompetisi'" class="flex overflow-x-auto gap-4 pb-2 w-full">
+                <div x-show="menu === 'kompetisi'" class="flex overflow-x-auto gap-4 pb-2 w-full" id="kompetisi_list">
                     @foreach ($lombas as $lomba)
                         @if (now()->between($lomba->start_date, $lomba->end_date))
-                            <a href="/detail/{{ $lomba->id_lomba }}">
+                            <a href="/detail/{{ $lomba->id_lomba }}" name="{{ $lomba->lombaDetail->title }}">
                                 <x-cards.lomba-card title="{{ $lomba->lombaDetail->title }}"
                                     university="{{ $lomba->lombaDetail->penyelenggara_name }}" startDate="{{ $lomba->start_date }}"
                                     endDate="{{ $lomba->end_date }}" gambar="{{ $lomba->id_lomba }}"/>
@@ -146,7 +160,7 @@
                         @endif
                     @endforeach
                 </div>
-                <div x-show="menu === 'orang'" class="flex overflow-x-auto gap-4 pb-2 w-full">
+                <div x-show="menu === 'orang'" class="flex overflow-x-auto gap-4 pb-2 w-full" name="orang_list">
                     @foreach ($users as $user)
                         @php
                             $prestasiArray = $user->prestasi->map(function($p) {

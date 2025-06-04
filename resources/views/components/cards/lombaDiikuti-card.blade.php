@@ -1,6 +1,6 @@
 @props(['title','teamName','participants'])
 
-<div class="w-full max-w-[367px] min-h-[194px] rounded-[24px] border flex flex-col justify-between p-3 md:p-4">
+<div class="relative w-full max-w-[367px] min-h-[194px] rounded-[24px] border flex flex-col justify-between p-3 md:p-4">
     <div class="flex overflow-x-auto gap-2 justify-start items-start">
         {{-- <span class="px-2 md:px-3 py-1 bg-[#B378FF1A] text-[#822BF2] rounded-full text-xs whitespace-nowrap">
             UI/UX Design
@@ -17,7 +17,7 @@
     
     <div class="flex flex-col gap-3 justify-between items-start sm:flex-row sm:items-center sm:gap-0">
         <div class="flex gap-2">
-            <button class="px-3 py-1.5 text-xs text-white bg-black rounded-full md:text-sm md:px-4 md:py-2">
+            <button @click="$dispatch('open-detail')" class="px-3 py-1.5 text-xs text-white bg-black rounded-full md:text-sm md:px-4 md:py-2">
                 Lihat Detail
             </button>
 
@@ -45,4 +45,7 @@
             <p class="text-[#6B6CF7] text-xs">{{ $participants }}</p>
         </div>
     </div>
+
+    
 </div>
+

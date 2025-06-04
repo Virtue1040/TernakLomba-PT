@@ -121,7 +121,7 @@
         </div>
     </div>
     <div x-data="{ formOpen: false }" class="px-4 mx-auto w-full lg:max-w-[1200px]">
-        <div class="flex overflow-x-auto gap-2 p-4">
+        {{-- <div class="flex overflow-x-auto gap-2 p-4">
             <div
                 class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                 All
@@ -142,7 +142,7 @@
                 class="flex gap-4 justify-center items-center p-4 px-4 border-[#F0F0F0] border-[1px] w-auto h-[44px] rounded-full whitespace-nowrap">
                 AI & Machine Learning
             </div>
-        </div>
+        </div> --}}
 
         <div class="flex flex-row gap-4 justify-center px-4 pb-4 mx-auto mt-2 w-full max-w-6xl">
             @foreach ($lomba->getTeams as $compspace)

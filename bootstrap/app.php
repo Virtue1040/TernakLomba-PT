@@ -50,24 +50,34 @@ return Application::configure(basePath: dirname(__DIR__))
     
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        // Custom exception for Unauntherized not login yet
+        // Custom exception for Unautherized not login yet
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->wantsJson()) {
                 $response["success"] = false;
                 $response['status_code'] = 401;
-                $response['message'] = 'Unauthorized';
+                $response['message'] = 'Unautherized';
                 return response()->json($response, 401);
-            }
+            } 
 
             return redirect()->guest(route('login'));
         });
 
         // Custom exception for UnauthorizedException (dont have permission)
         $exceptions->render(function (UnauthorizedException $e, Request $request) {
-            $response["success"] = false;
-            $response['status_code'] = 403;
-            $response['message'] = 'Forbidden - You do not have permission';
-            return response()->json($response, 403);
+            if ($request->wantsJson()) {
+                $response["success"] = false;
+                $response['status_code'] = 403;
+                $response['message'] = 'Forbidden - You do not have permission';
+                return response()->json($response, 403);
+            }
+
+            session()->flash('alert', [
+                'icon' => 'error',
+                'message' => 'You dont have permissions',
+                'title' => 'Unauthorized'
+            ]);
+
+            return redirect()->back();
         });
 
         // Custom exception for validation form

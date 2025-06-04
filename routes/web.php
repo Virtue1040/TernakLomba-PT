@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum', 'profilled', 'web')->group(function () {
 
     Route::get('/dashboard/explore', [LombaController::class, "index"])->name("dashboard-explore");
     Route::get('/dashboard/chat', [CommunicationController::class,"index"])->name("dashboard-chat");
-    Route::get('dashboard/admin', [LombaController::class, "admin"])->name("dashboard-admin")->middleware('admin');
+    Route::get('dashboard/admin', [LombaController::class, "admin"])->name("dashboard-admin");
 
     Route::get('detail/{id_lomba}/compspace', [LombaController::class,"compspace"])->name("lomba-compspace");
 
