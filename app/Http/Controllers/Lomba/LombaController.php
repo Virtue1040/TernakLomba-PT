@@ -476,11 +476,6 @@ class LombaController extends Controller
         $poster_kompetisi = $request->poster_kompetisi;
         $guide_book = $request->guide_book;
         $preview_foto_kompetisi = $request->preview_foto_kompetisi;
-
-        $path = public_path() . "/documents/lomba/". $id_lomba;
-        if (!File::exists($path)) {
-            File::makeDirectory($path, $mode = 0777, true, true);
-        }
         
         $user = auth("sanctum")->user();
 
@@ -497,6 +492,11 @@ class LombaController extends Controller
         ]);
 
         $id_lomba = $lomba->id_lomba;
+
+        $path = public_path() . "/documents/lomba/". $id_lomba;
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
 
         $lombaHadiah = lombaHadiah::create([
             "lomba_id" => $id_lomba,
