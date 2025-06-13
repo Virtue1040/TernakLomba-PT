@@ -477,6 +477,11 @@ class LombaController extends Controller
         $guide_book = $request->guide_book;
         $preview_foto_kompetisi = $request->preview_foto_kompetisi;
 
+        $path = public_path() . "/documents/lomba/". $id_lomba;
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+        
         $user = auth("sanctum")->user();
 
         $lomba = Lomba::create([
@@ -498,12 +503,6 @@ class LombaController extends Controller
             "typeHadiah_id" => 1, //Tipe hadiah uang
             "quantity" => $total_hadiah
         ]);
-
-        $path = public_path() . "/documents/lomba/". $id_lomba;
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path, $mode = 0777, true, true);
-        }
 
         if ($poster_kompetisi) {
             $poster_kompetisi->move($path, "poster_kompetisi.png");
