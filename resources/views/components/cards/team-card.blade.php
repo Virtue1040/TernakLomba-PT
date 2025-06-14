@@ -1,8 +1,14 @@
-@props(['team_name', 'date', 'description', 'participants', 'show_join' => true, 'team_code'])
+@props(['team_name', 'date', 'description', 'participants', 'show_join' => true, 'show_joined' => false, 'team_code'])
 
 <div class="p-4 space-y-3 w-full max-w-xs bg-white rounded-[25px] border border-gray-200">
     <div class="flex justify-between items-center">
-        <h3 class="text-sm font-semibold sm:text-lg">{{ $team_name }}</h3>
+        <div class="flex flex-row gap-2">
+            <h3 class="text-sm font-semibold sm:text-lg">{{ $team_name }}</h3>
+            @if ($show_joined) 
+                <span
+                class="px-1 whitespace-nowrap text-[12px] flex items-center text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">Tim Kamu</span>
+            @endif
+        </div>
         <span
             class="px-1 whitespace-nowrap text-[12px] text-gray-500 bg-[#FCFCFD] border border-[#c1c1c1] rounded-full">{{ $date }}</span>
     </div>

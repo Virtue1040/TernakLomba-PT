@@ -144,21 +144,24 @@
             </div>
         </div> --}}
 
-        <div class="flex flex-row gap-4 justify-center px-4 pb-4 mx-auto mt-2 w-full max-w-6xl">
+        <div class="flex flex-row gap-4 justify-center px-4 pb-4 mx-auto mt-10 w-full max-w-6xl">
             @foreach ($lomba->getTeams as $compspace)
-                @if ($compspace->is_joinable() && !$user->check_isJoinedLomba($lomba->id_lomba))
-                    <x-cards.team-card team_name="{{ $compspace->team_name }}"
-                        date="{{ $compspace->lomba->get_enddate() }}" team_code="{{ $compspace->team_code }}"
-                        description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita"
-                        participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}"
-                        :show_join=true />
-                @else
-                    <x-cards.team-card team_name="{{ $compspace->team_name }}"
-                        date="{{ $compspace->lomba->get_enddate() }}" team_code="{{ $compspace->team_code }}"
-                        description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita"
-                        participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}"
-                        :show_join=false />
-                @endif
+                @php
+                    $isJoinable = $compspace->is_joinable();
+                    $hasJoined = $user->check_isJoinedLomba($lomba->id_lomba);
+                    $joinedTeamId = $user->get_lomba_joined_team($lomba->id_lomba);
+                    $isMyTeam = $joinedTeamId === $compspace->id_team;
+                @endphp
+                
+                <x-cards.team-card
+                    team_name="{{ $compspace->team_name }}"
+                    date="{{ $compspace->lomba->get_enddate() }}"
+                    team_code="{{ $compspace->team_code }}"
+                    description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita"
+                    participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}"
+                    :show_join="($isJoinable && !$hasJoined)"
+                    :show_joined="(!$isJoinable || $hasJoined) && !$isMyTeam"
+                />
             @endforeach
         </div>
 

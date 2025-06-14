@@ -92,6 +92,18 @@ class User extends Authenticatable
         return $this->hasManyThrough(lombaTeam::class, lombaMember::class, 'user_id', 'id_team', 'id_user', 'team_id');
     }
 
+    public function get_lomba_joined_team($id_lomba) {
+        return $this->get_ikut_lomba()->where('lomba_id', $id_lomba)->first()->id_team;
+    }
+
+       // public function get_ikut_lomba() {
+    //     return $this->lombaMembers->pluck('team')->filter();
+    // }
+
+    // public function check_isJoinedLomba($id_lomba) {
+    //     return $this->get_ikut_lomba()->contains('lomba_id', $id_lomba);
+    // }
+
     public function check_isJoinedLomba($id_lomba) {
         return $this->get_ikut_lomba()->where('lomba_id', $id_lomba)->exists();
     }
