@@ -93,7 +93,8 @@ class User extends Authenticatable
     }
 
     public function get_lomba_joined_team($id_lomba) {
-        return $this->get_ikut_lomba()->where('lomba_id', $id_lomba)->first()->id_team;
+        $get = $this->get_ikut_lomba()->where('lomba_id', $id_lomba);
+        return $get->first() ? $get->first()->id_team : null;
     }
 
        // public function get_ikut_lomba() {

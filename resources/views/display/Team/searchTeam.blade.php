@@ -160,7 +160,7 @@
                     description="Hai gais, kita lagi butuh anggota nih, ayo join team {{ $compspace->team_name }} kita"
                     participants="{{ $compspace->total_participants() }} / {{ $compspace->max_member }}"
                     :show_join="($isJoinable && !$hasJoined)"
-                    :show_joined="(!$isJoinable || $hasJoined) && !$isMyTeam"
+                    :show_joined="$isMyTeam"
                 />
             @endforeach
         </div>
